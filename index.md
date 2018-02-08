@@ -48,9 +48,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 - ## 入门指南
     - [安装](/docs/{{version}}/installation)
     - [配置信息](/docs/{{version}}/configuration)
-    - [文件夹结构](/docs/{{version}}/structure)
-    - [Homestead](/docs/{{version}}/homestead)
-    - [Valet](/docs/{{version}}/valet)
+    - [文件夹结构](/docs/{{version}}/structure)    
     - [部署](/docs/{{version}}/deployment)
 - ## 核心架构
     - [请求周期](/docs/{{version}}/lifecycle)
