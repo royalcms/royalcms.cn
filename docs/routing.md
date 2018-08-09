@@ -24,7 +24,7 @@
 
 构建最基本的路由只需要一个 URI 与一个 `闭包`，这里提供了一个非常简单优雅的定义路由的方法：
 
-    Route::get('foo', function () {
+    RC_Route::get('foo', function () {
         return 'Hello World';
     });
 
@@ -34,7 +34,7 @@
 
 大多数的应用构建，都是以在 `routes/web.php` 文件定义路由开始的。可以通过在浏览器中输入定义的路由 URL 来访问 `routes/web.php` 中定义的路由。例如，你可以在浏览器中输入 `http://your-app.dev/user` 来访问以下路由：
 
-    Route::get('/user', 'UsersController@index');
+    RC_Route::get('/user', 'UsersController@index');
 
 `routes/api.php` 文件中定义的路由通过 `RouteServiceProvider` 被嵌套到一个路由组里面。在这个路由组中，会自动添加 URL 前缀 `/api` 到此文件中的每个路由，这样你就无需再手动添加了。你可以在 `RouteServiceProvider` 类中修改此前缀以及其他路由组选项。
 
@@ -42,20 +42,20 @@
 
 路由器允许你注册能响应任何 HTTP 请求的路由：
 
-    Route::get($uri, $callback);
-    Route::post($uri, $callback);
-    Route::put($uri, $callback);
-    Route::patch($uri, $callback);
-    Route::delete($uri, $callback);
-    Route::options($uri, $callback);
+    RC_Route::get($uri, $callback);
+    RC_Route::post($uri, $callback);
+    RC_Route::put($uri, $callback);
+    RC_Route::patch($uri, $callback);
+    RC_Route::delete($uri, $callback);
+    RC_Route::options($uri, $callback);
 
 有的时候你可能需要注册一个可响应多个 HTTP 请求的路由，这时你可以使用 `match` 方法，也可以使用 `any` 方法注册一个实现响应所有 HTTP 请求的路由：
 
-    Route::match(['get', 'post'], '/', function () {
+    RC_Route::match(['get', 'post'], '/', function () {
         //
     });
     
-    Route::any('foo', function () {
+    RC_Route::any('foo', function () {
         //
     });
 
@@ -71,18 +71,18 @@
 <a name="redirect-routes"></a>
 ### 重定向路由
 
-如果要定义重定向到另一个 URI 的路由，可以使用 `Route::redirect` 方法。这个方法可以快速地实现重定向，而不再需要去定义完整的路由或者控制器。
+如果要定义重定向到另一个 URI 的路由，可以使用 `RC_Route::redirect` 方法。这个方法可以快速地实现重定向，而不再需要去定义完整的路由或者控制器。
 
-    Route::redirect('/here', '/there', 301);
+    RC_Route::redirect('/here', '/there', 301);
 
 <a name="view-routes"></a>
 ### 视图路由
 
-如果你的路由只需要返回一个视图，可以使用 `Route::view` 方法。它和 `redirect` 一样方便，不需要定义完整的路由或控制器。`view` 方法有三个参数，其中前两个是必填参数，分别是 URL 和视图名称。第三个参数选填，可以传入一个数组，数组中的数据会被传递给视图。
+如果你的路由只需要返回一个视图，可以使用 `RC_Route::view` 方法。它和 `redirect` 一样方便，不需要定义完整的路由或控制器。`view` 方法有三个参数，其中前两个是必填参数，分别是 URL 和视图名称。第三个参数选填，可以传入一个数组，数组中的数据会被传递给视图。
 
-    Route::view('/welcome', 'welcome');
+    RC_Route::view('/welcome', 'welcome');
     
-    Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+    RC_Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 
 <a name="route-parameters"></a>
 ## 路由参数
@@ -92,13 +92,13 @@
 
 当然，有时需要在路由中捕获一些 URL 片段。例如，从 URL 中捕获用户的 ID，可以通过定义路由参数来执行此操作：
 
-    Route::get('user/{id}', function ($id) {
+    RC_Route::get('user/{id}', function ($id) {
         return 'User '.$id;
     });
 
 也可以根据需要在路由中定义多个参数：
 
-    Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
+    RC_Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
         //
     });
 
@@ -109,11 +109,11 @@
 
 有时，你可能需要指定一个路由参数，但你希望这个参数是可选的。你可以在参数后面加上 `?` 标记来实现，但前提是要确保路由的相应变量有默认值：
 
-    Route::get('user/{name?}', function ($name = null) {
+    RC_Route::get('user/{name?}', function ($name = null) {
         return $name;
     });
     
-    Route::get('user/{name?}', function ($name = 'John') {
+    RC_Route::get('user/{name?}', function ($name = 'John') {
         return $name;
     });
 
@@ -122,15 +122,15 @@
 
 你可以使用路由实例上的 `where` 方法约束路由参数的格式。`where` 方法接受参数名称和定义参数应如何约束的正则表达式：
 
-    Route::get('user/{name}', function ($name) {
+    RC_Route::get('user/{name}', function ($name) {
         //
     })->where('name', '[A-Za-z]+');
     
-    Route::get('user/{id}', function ($id) {
+    RC_Route::get('user/{id}', function ($id) {
         //
     })->where('id', '[0-9]+');
     
-    Route::get('user/{id}/{name}', function ($id, $name) {
+    RC_Route::get('user/{id}/{name}', function ($id, $name) {
         //
     })->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
 
@@ -146,14 +146,14 @@
      */
     public function boot()
     {
-        Route::pattern('id', '[0-9]+');
+        RC_Route::pattern('id', '[0-9]+');
     
         parent::boot();
     }
 
 定义好之后，便会自动应用到所有使用该参数名称的路由上：
 
-    Route::get('user/{id}', function ($id) {
+    RC_Route::get('user/{id}', function ($id) {
         // 仅在 {id} 为数字时执行...
     });
 
@@ -162,13 +162,13 @@
 
 命名路由可以方便地为指定路由生成 `URL` 或者重定向。通过在路由定义上链式调用 `name` 方法指定路由名称：
 
-    Route::get('user/profile', function () {
+    RC_Route::get('user/profile', function () {
         //
     })->name('profile');
 
 你还可以指定控制器行为的路由名称：
 
-    Route::get('user/profile', 'UserController@showProfile')->name('profile');
+    RC_Route::get('user/profile', 'UserController@showProfile')->name('profile');
 
 #### 为命名路由生成链接
 
@@ -182,7 +182,7 @@
 
 如果是有定义参数的命名路由，可以把参数作为 `route` 函数的第二个参数传入，指定的参数将会自动插入到 URL 中对应的位置：
 
-    Route::get('user/{id}/profile', function ($id) {
+    RC_Route::get('user/{id}/profile', function ($id) {
         //
     })->name('profile');
     
@@ -211,19 +211,19 @@
 <a name="route-groups"></a>
 ## 路由组
 
-路由组允许你在大量路由之间共享路由属性，例如中间件或命名空间，而不需要为每个路由单独定义这些属性。共享属性应该以数组的形式传入 `Route::group` 方法的第一个参数中。
+路由组允许你在大量路由之间共享路由属性，例如中间件或命名空间，而不需要为每个路由单独定义这些属性。共享属性应该以数组的形式传入 `RC_Route::group` 方法的第一个参数中。
 
 <a name="route-group-middleware"></a>
 ### 中间件
 
 要给路由组中所有的路由分配中间件，可以在 `group` 之前调用 `middleware` 方法.中间件会依照它们在数组中列出的顺序来运行：
 
-    Route::middleware(['first', 'second'])->group(function () {
-        Route::get('/', function () {
+    RC_Route::middleware(['first', 'second'])->group(function () {
+        RC_Route::get('/', function () {
             // 使用 first 和 second 中间件
         });
     
-        Route::get('user/profile', function () {
+        RC_Route::get('user/profile', function () {
             // 使用 first 和 second 中间件
         });
     });
@@ -233,7 +233,7 @@
 
 另一个常见用例是使用 `namespace` 方法将相同的 PHP 命名空间分配给路由组的中所有的控制器：
 
-    Route::namespace('Admin')->group(function () {
+    RC_Route::namespace('Admin')->group(function () {
         // 在 "App\Http\Controllers\Admin" 命名空间下的控制器
     });
 
@@ -244,8 +244,8 @@
 
 路由组也可以用来处理子域名。子域名可以像路由 URI 一样被分配路由参数，允许你获取一部分子域名作为参数给路由或控制器使用。可以在 `group` 之前调用 `domain` 方法来指定子域名：
 
-    Route::domain('{account}.myapp.com')->group(function () {
-        Route::get('user/{id}', function ($account, $id) {
+    RC_Route::domain('{account}.myapp.com')->group(function () {
+        RC_Route::get('user/{id}', function ($account, $id) {
             //
         });
     });
@@ -255,8 +255,8 @@
 
 可以用 `prefix` 方法为路由组中给定的 URL 增加前缀。例如，你可以为组中所有路由的 URI 加上 `admin` 前缀：
 
-    Route::prefix('admin')->group(function () {
-        Route::get('users', function () {
+    RC_Route::prefix('admin')->group(function () {
+        RC_Route::get('users', function () {
             // 匹配包含 "/admin/users" 的 URL
         });
     });
@@ -271,7 +271,7 @@
 
 Royalcms 会自动解析定义在路由或控制器行为中与类型提示的变量名匹配的路由段名称的 Eloquent 模型。例如：
 
-    Route::get('api/users/{user}', function (App\User $user) {
+    RC_Route::get('api/users/{user}', function (App\User $user) {
         return $user->email;
     });
 
@@ -300,12 +300,12 @@ Royalcms 会自动解析定义在路由或控制器行为中与类型提示的�
     {
         parent::boot();
     
-        Route::model('user', App\User::class);
+        RC_Route::model('user', App\User::class);
     }
 
 接着，定义一个包含 `{user}` 参数的路由：
 
-    Route::get('profile/{user}', function (App\User $user) {
+    RC_Route::get('profile/{user}', function (App\User $user) {
         //
     });
 
@@ -315,13 +315,13 @@ Royalcms 会自动解析定义在路由或控制器行为中与类型提示的�
 
 #### 自定义解析逻辑
 
-如果你想要使用自定义的解析逻辑，就使用 `Route::bind` 方法。传递到 `bind` 方法的闭包会接受 URI 中大括号对应的值，并且返回你想要在该路由中注入的类的实例：
+如果你想要使用自定义的解析逻辑，就使用 `RC_Route::bind` 方法。传递到 `bind` 方法的闭包会接受 URI 中大括号对应的值，并且返回你想要在该路由中注入的类的实例：
 
     public function boot()
     {
         parent::boot();
     
-        Route::bind('user', function ($value) {
+        RC_Route::bind('user', function ($value) {
             return App\User::where('name', $value)->first();
         });
     }
@@ -345,10 +345,10 @@ HTML 表单不支持 `PUT`、`PATCH` 或 `DELETE` 行为。所以当你要从 HT
 
 你可以使用 `Route` Facade 上的 `current`、`currentRouteName` 和 `currentRouteAction` 方法来访问处理传入请求的路由的信息：
 
-    $route = Route::current();
+    $route = RC_Route::current();
     
-    $name = Route::currentRouteName();
+    $name = RC_Route::currentRouteName();
     
-    $action = Route::currentRouteAction();
+    $action = RC_Route::currentRouteAction();
 
 想知道所有可访问的方法，可以查看 API 文档，了解 [Route facade](http://Royalcms.com/api/{{version}}/Illuminate/Routing/Router.html) 和 [Route 实例](http://Royalcms.com/api/{{version}}/Illuminate/Routing/Route.html) 的基础类。

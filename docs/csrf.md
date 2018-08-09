@@ -1,4 +1,4 @@
-# Laravel 下的伪造跨站请求保护 CSRF
+# Royalcms 下的伪造跨站请求保护 CSRF
 
 - [简介](#csrf-introduction)
 - [CSRF 白名单](#csrf-excluding-uris)
@@ -8,9 +8,9 @@
 <a name="csrf-introduction"></a>
 ## 简介
 
-Laravel 可以轻松地保护应用程序免受 [跨站请求伪造](https://en.wikipedia.org/wiki/Cross-site_request_forgery) (CSRF) 的攻击。跨站请求伪造是一种恶意的攻击，它凭借已通过身份验证的用户身份来运行未经过授权的命令。
+Royalcms 可以轻松地保护应用程序免受 [跨站请求伪造](https://en.wikipedia.org/wiki/Cross-site_request_forgery) (CSRF) 的攻击。跨站请求伪造是一种恶意的攻击，它凭借已通过身份验证的用户身份来运行未经过授权的命令。
 
-Laravel 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。该令牌用于验证经过身份验证的用户是否是向应用程序发出请求的用户。
+Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。该令牌用于验证经过身份验证的用户是否是向应用程序发出请求的用户。
 
 任何情况下当你在应用程序中定义 HTML 表单时，都应该在表单中包含一个隐藏的 CSRF 令牌字段，以便 CSRF 保护中间件可以验证该请求。可以使用辅助函数 `csrf_field` 来生成令牌字段：
 
@@ -70,4 +70,4 @@ Laravel 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。�
 <a name="csrf-x-xsrf-token"></a>
 ## X-XSRF-TOKEN
 
-Laravel 将当前的 CSRF 令牌存储在由框架生成的每个响应中包含的一个 `XSRF-TOKEN` cookie 中。为方便起见，你可以使用 cookie 值来设置 X-XSRF-TOKEN 请求头，而一些 JavaScript 框架和库（如 Angular 和 Axios）会自动将这个值添加到 `X-XSRF-TOKEN` 头中。
+Royalcms 将当前的 CSRF 令牌存储在由框架生成的每个响应中包含的一个 `XSRF-TOKEN` cookie 中。为方便起见，你可以使用 cookie 值来设置 X-XSRF-TOKEN 请求头，而一些 JavaScript 框架和库（如 Angular 和 Axios）会自动将这个值添加到 `X-XSRF-TOKEN` 头中。
