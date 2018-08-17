@@ -38,7 +38,7 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
         /**
          * 处理传入的请求
          *
-         * @param  \Illuminate\Http\Request  $request
+         * @param  \Royalcms\Http\Request  $request
          * @param  \Closure  $next
          * @return mixed
          */
@@ -115,12 +115,12 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
     // 在 App\Http\Kernel 类中
     
     protected $routeMiddleware = [
-        'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Illuminate\Auth\Middleware\Authorize::class,
+        'auth' => \Royalcms\Auth\Middleware\Authenticate::class,
+        'auth.basic' => \Royalcms\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Royalcms\Routing\Middleware\SubstituteBindings::class,
+        'can' => \Royalcms\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'throttle' => \Royalcms\Routing\Middleware\ThrottleRequests::class,
     ];
 
 一旦在 Kernel 中定义了中间件，就可使用 `middleware` 方法将中间件分配给路由：
@@ -158,11 +158,11 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
-            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Illuminate\Session\Middleware\StartSession::class,
-            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+            \Royalcms\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Royalcms\Session\Middleware\StartSession::class,
+            \Royalcms\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Royalcms\Routing\Middleware\SubstituteBindings::class,
         ],
     
         'api' => [
@@ -201,7 +201,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
         /**
          * 处理传入的请求
          *
-         * @param  \Illuminate\Http\Request  $request
+         * @param  \Royalcms\Http\Request  $request
          * @param  \Closure  $next
          * @param  string  $role
          * @return mixed
@@ -230,7 +230,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
     <?php
     
-    namespace Illuminate\Session\Middleware;
+    namespace Royalcms\Session\Middleware;
     
     use Closure;
     
@@ -249,4 +249,4 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
 `terminate` 方法应该同时接收和响应。一旦定义了这个中间件，你应该将它添加到路由列表或 `app/Http/Kernel.php` 文件的全局中间件中。
 
-在你的中间件上调用 `terminate` 调用时，Royalcms 会从 [服务容器](/docs/{{version}}/container) 中解析出一个新的中间件实例。如果要在调用 `handle` 和 `terminate` 方法时使用同一个中间件实例，就使用容器的 `singleton` 方法向容器注册中间件。
+在你的中间件上调用 `terminate` 调用时，Royalcms 会从服务容器中解析出一个新的中间件实例。如果要在调用 `handle` 和 `terminate` 方法时使用同一个中间件实例，就使用容器的 `singleton` 方法向容器注册中间件。

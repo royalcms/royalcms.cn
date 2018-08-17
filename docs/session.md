@@ -78,7 +78,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -121,7 +121,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
         session(['key' => 'value']);
     });
 
-> {tip} 通过 HTTP 请求实例操作 Session 与使用全局辅助函数 `session` 两者之间并没有实质上的区别。这两种方法都可以通过所有测试用例中可用的 `assertSessionHas` 方法进行 [测试](/docs/{{version}}/testing)。
+> {tip} 通过 HTTP 请求实例操作 Session 与使用全局辅助函数 `session` 两者之间并没有实质上的区别。这两种方法都可以通过所有测试用例中可用的 `assertSessionHas` 方法进行 [测试](/docs/testing)。
 
 #### 获取所有 Session 数据
 
@@ -235,15 +235,15 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
 <a name="registering-the-driver"></a>
 #### 注册驱动
 
-你的 Session 驱动实现之后，你还需要在框架中注册该驱动，即将该扩展驱动添加到 Royalcms Session 后台。然后在 [服务提供者](/docs/{{version}}/providers) 的 `boot` 方法内调用 `Session` Facade 的 `extend` 方法。之后你就可以从现有的 `AppServiceProvider` 或者新创建的提供器中执行此操作。
+你的 Session 驱动实现之后，你还需要在框架中注册该驱动，即将该扩展驱动添加到 Royalcms Session 后台。然后在服务提供者的 `boot` 方法内调用 `Session` Facade 的 `extend` 方法。之后你就可以从现有的 `AppServiceProvider` 或者新创建的提供器中执行此操作。
 
     <?php
     
     namespace App\Providers;
     
     use App\Extensions\MongoSessionStore;
-    use Illuminate\Support\Facades\Session;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\Facades\Session;
+    use Royalcms\Support\ServiceProvider;
     
     class SessionServiceProvider extends ServiceProvider
     {

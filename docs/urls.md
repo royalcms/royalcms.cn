@@ -30,7 +30,7 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
 <a name="accessing-the-current-url"></a>
 ### 访问当前 URL
 
-如果没有给辅助函数 `url` 提供路径，则会返回一个 `Illuminate\Routing\UrlGenerator` 实例，来允许你访问有关当前 URL 的信息：
+如果没有给辅助函数 `url` 提供路径，则会返回一个 `Royalcms\Routing\UrlGenerator` 实例，来允许你访问有关当前 URL 的信息：
 
     // 获取没有查询字符串的当前的 URL ...
     echo url()->current();
@@ -41,9 +41,9 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
     // 获取上一个请求的完整的 URL...
     echo url()->previous();
 
-上面的这些方法都可以通过 `URL` [facade](/docs/{{version}}/facades) 访问:
+上面的这些方法都可以通过 `URL` facade访问:
 
-    use Illuminate\Support\Facades\URL;
+    use Royalcms\Support\Facades\URL;
     
     echo URL::current();
 
@@ -61,7 +61,7 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
     echo route('post.show', ['post' => 1]);
     
     // http://example.com/post/1
-将 [Eloquent 模型](/docs/{{version}}/eloquent) 作为参数值传给 `route` 方法，它会自动提取模型的主键来生成 URL。
+将 [Eloquent 模型](/docs/eloquent) 作为参数值传给 `route` 方法，它会自动提取模型的主键来生成 URL。
 
     echo route('post.show', ['post' => $post]);
 
@@ -86,14 +86,14 @@ For some applications, you may wish to specify request-wide default values for c
         //
     })->name('post.index');
 
-每次都通过 `locale` 来调用辅助函数 `route` 也是一件很麻烦的事情。因此，使用 `URL::defaults` 方法定义这个参数的默认值，可以让该参数始终存在当前请求中。然后就能从 [路由中间件](/docs/{{version}}/middleware#assigning-middleware-to-routes) 调用此方法来访问当前请求：
+每次都通过 `locale` 来调用辅助函数 `route` 也是一件很麻烦的事情。因此，使用 `URL::defaults` 方法定义这个参数的默认值，可以让该参数始终存在当前请求中。然后就能从 [路由中间件](/docs/middleware#assigning-middleware-to-routes) 调用此方法来访问当前请求：
 
     <?php
     
     namespace App\Http\Middleware;
     
     use Closure;
-    use Illuminate\Support\Facades\URL;
+    use Royalcms\Support\Facades\URL;
     
     class SetDefaultLocaleForUrls
     {

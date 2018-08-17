@@ -8,7 +8,7 @@
 <a name="creating-views"></a>
 ## 创建视图
 
-> {tip} 想寻找有关如何编写 Blade 模板的更多信息？查看完整的 [Blade 文档](/docs/{{version}}/blade)。
+> {tip} 想寻找有关如何编写 Blade 模板的更多信息？查看完整的 [Blade 文档](/docs/blade)。
 
 视图包含应用程序的 HTML，并且将控制器／应用程序逻辑与演示逻辑分开。视图文件存放于 `resources/views` 目录下。一个简单的视图如下所示：
 
@@ -26,7 +26,7 @@
         return view('greeting', ['name' => 'James']);
     });
 
-如你所见，`view` 函数中，传入的第一个参数对应着 `resources/views` 目录中视图文件的名称，第二个参数是可在视图文件中使用的数据数组。在示例中，我们传递 `name` 变量，该变量可以使用 [Blade 模板语言](/docs/{{version}}/blade) 在视图中显示。
+如你所见，`view` 函数中，传入的第一个参数对应着 `resources/views` 目录中视图文件的名称，第二个参数是可在视图文件中使用的数据数组。在示例中，我们传递 `name` 变量，该变量可以使用 [Blade 模板语言](/docs/blade) 在视图中显示。
 
 当然，视图文件也可以嵌套在 `resources/views` 目录的子目录中。「点」符号可以用来引用嵌套视图。例如，如果你的视图存储在 `resources/views/admin/profile.blade.php`，则可以这样引用它：
 
@@ -36,7 +36,7 @@
 
 如果需要判断视图文件是否存在，可以使用 `View` Facade 上的 `exists` 方法。如果视图文件存在，该方法会返回 `true` ：
 
-    use Illuminate\Support\Facades\View;
+    use Royalcms\Support\Facades\View;
     
     if (View::exists('emails.customer')) {
         //
@@ -61,7 +61,7 @@
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\View;
+    use Royalcms\Support\Facades\View;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -91,14 +91,14 @@
 
 视图合成器是在渲染视图时调用的回调或者类方法。如果你每次渲染视图时都要绑定视图的数据，视图合成器可以帮你将这些逻辑整理到特定的位置。
 
-在下面这个例子中，我们会在一个 [服务提供器](/docs/{{version}}/providers) 中注册视图合成器，使用 `View` Facade 来访问底层的 `Illuminate\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
+在下面这个例子中，我们会在一个服务提供器中注册视图合成器，使用 `View` Facade 来访问底层的 `Illuminate\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
 
     <?php
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\View;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\Facades\View;
+    use Royalcms\Support\ServiceProvider;
     
     class ComposerServiceProvider extends ServiceProvider
     {
@@ -139,7 +139,7 @@
     
     namespace App\Http\ViewComposers;
     
-    use Illuminate\View\View;
+    use Royalcms\View\View;
     use App\Repositories\UserRepository;
     
     class ProfileComposer
@@ -175,9 +175,9 @@
         }
     }
 
-视图合成器的 `compose` 方法会在视图渲染之前被调用，并传入一个 `Illuminate\View\View` 实例。你可以使用 `with` 方法将数据绑定到视图。
+视图合成器的 `compose` 方法会在视图渲染之前被调用，并传入一个 `Royalcms\View\View` 实例。你可以使用 `with` 方法将数据绑定到视图。
 
-> {tip} 所有的视图合成器都会通过 [服务容器](/docs/{{version}}/container) 进行解析，所以你可以在视图合成器的构造函数中类型提示需要注入的依赖项。
+> {tip} 所有的视图合成器都会通过服务容器进行解析，所以你可以在视图合成器的构造函数中类型提示需要注入的依赖项。
 
 #### 将视图构造器添加到多个视图
 

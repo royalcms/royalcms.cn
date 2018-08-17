@@ -13,7 +13,7 @@ Royalcms 并没有规定你使用哪个 JavaScript 或 CSS 预处理器，不过
 
 #### CSS
 
-[Royalcms Mix](/docs/{{version}}/mix) 提供了一个内容丰富且简洁的 API 用以编译 SASS 或 Less，这些 CSS 预处理语言扩充了 CSS 语言，增加了诸如变量、mixins 及其他一些功能强大的扩展让编写 CSS 代码变得更加有趣。尽管我们会在这里简要的讨论 CSS 编译的内容，但你应该查阅 [Royalcms Mix 文档](/docs/{{version}}/mix) 获取更多关于编译 SASS 或 Less 的信息。
+[Royalcms Mix](/docs/mix) 提供了一个内容丰富且简洁的 API 用以编译 SASS 或 Less，这些 CSS 预处理语言扩充了 CSS 语言，增加了诸如变量、mixins 及其他一些功能强大的扩展让编写 CSS 代码变得更加有趣。尽管我们会在这里简要的讨论 CSS 编译的内容，但你应该查阅 [Royalcms Mix 文档](/docs/mix) 获取更多关于编译 SASS 或 Less 的信息。
 
 #### JavaScript
 
@@ -33,11 +33,11 @@ Royalcms 并不需要你使用特定的 JavsScript 框架或者库来构建应�
 
     npm install
 
-使用 `npm install` 成功安装依赖后，你就可以使用 [Royalcms Mix](/docs/{{version}}/mix#working-with-stylesheets) 来将 SASS 文件编译为纯 CSS。`npm run dev` 命令会处理 `webpack.mix.js` 文件中的指令。通常情况下，编译好的 CSS 代码会被放置在 `public/css` 目录：
+使用 `npm install` 成功安装依赖后，你就可以使用 [Royalcms Mix](/docs/mix#working-with-stylesheets) 来将 SASS 文件编译为纯 CSS。`npm run dev` 命令会处理 `webpack.mix.js` 文件中的指令。通常情况下，编译好的 CSS 代码会被放置在 `public/css` 目录：
 
     npm run dev
 
-Royalcms 自带的 `webpack.mix.js` 默认会编译 `resources/assets/sass/app.scss` SASS 文件。`app.scss` 文件导入了一个包含 SASS 变量的文件，并加载 Bootstrap，这对大多数程序来说很方便。你也可以根据自己的需要去定制 `app.scss` 文件的内容，甚至使用完全不同的预处理器，详细配置见 [配置 Royalcms Mix](/docs/{{version}}/mix)。
+Royalcms 自带的 `webpack.mix.js` 默认会编译 `resources/assets/sass/app.scss` SASS 文件。`app.scss` 文件导入了一个包含 SASS 变量的文件，并加载 Bootstrap，这对大多数程序来说很方便。你也可以根据自己的需要去定制 `app.scss` 文件的内容，甚至使用完全不同的预处理器，详细配置见 [配置 Royalcms Mix](/docs/mix)。
 
 <a name="writing-javascript"></a>
 ## 编写 JavaScript
@@ -47,7 +47,7 @@ Royalcms 自带的 `webpack.mix.js` 默认会编译 `resources/assets/sass/app.s
     npm install
 > {tip} 默认情况下，Royalcms `package.json` 文件默认会包含一些依赖包来帮助你构建 JavaScript 应用程序，例如 `vue` 和 `axios` 。你可以根据需要在 `package.json` 中添加或者移除依赖。
 
-安装依赖之后，就可以使用  `npm run dev`  命令来 [编译资源文件](/docs/{{version}}/mix) 。Webpack 是一个为现代 JavaScript 应用而生的模块构建工具。当你运行 `npm run dev` 命令时，Webpack 会执行 `webpack.mix.js` 文件中的指令：
+安装依赖之后，就可以使用  `npm run dev`  命令来 [编译资源文件](/docs/mix) 。Webpack 是一个为现代 JavaScript 应用而生的模块构建工具。当你运行 `npm run dev` 命令时，Webpack 会执行 `webpack.mix.js` 文件中的指令：
 
     npm run dev
 

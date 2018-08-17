@@ -127,11 +127,11 @@ Royalcms 支持 `single` 、`daily` 、 `syslog` 和 `errorlog` 四种日志写�
      * @var array
      */
     protected $dontReport = [
-        \Illuminate\Auth\AuthenticationException::class,
-        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Royalcms\Auth\AuthenticationException::class,
+        \Royalcms\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
-        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
-        \Illuminate\Validation\ValidationException::class,
+        \Royalcms\Database\Eloquent\ModelNotFoundException::class,
+        \Royalcms\Validation\ValidationException::class,
     ];
 
 <a name="render-method"></a>
@@ -142,9 +142,9 @@ Royalcms 支持 `single` 、`daily` 、 `syslog` 和 `errorlog` 四种日志写�
     /**
      * 渲染异常到 HTTP 响应中.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Royalcms\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Royalcms\Http\Response
      */
     public function render($request, Exception $exception)
     {
@@ -181,7 +181,7 @@ Royalcms 支持 `single` 、`daily` 、 `syslog` 和 `errorlog` 四种日志写�
         /**
          * 将异常渲染到 HTTP 响应中。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return void
          */
         public function render($request)
@@ -218,7 +218,7 @@ Royalcms 在强大的 [Monolog](https://github.com/seldaek/monolog) 库上提供
     namespace App\Http\Controllers;
     
     use App\User;
-    use Illuminate\Support\Facades\Log;
+    use Royalcms\Support\Facades\Log;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller

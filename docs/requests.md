@@ -15,13 +15,13 @@
 <a name="accessing-the-request"></a>
 ## 获取请求
 
-要通过依赖注入的方式来获取当前 HTTP 请求的实例，你应该在控制器方法中类型提示 `Illuminate\Http\Request`。传入的请求的实例将通过 [服务容器](/docs/{{version}}/container) 自动注入：
+要通过依赖注入的方式来获取当前 HTTP 请求的实例，你应该在控制器方法中类型提示 `Royalcms\Http\Request`。传入的请求的实例将通过服务容器自动注入：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     class UserController extends Controller
     {
@@ -45,13 +45,13 @@
 
     Route::put('user/{id}', 'UserController@update');
 
-如下所示使用类型提示 `Illuminate\Http\Request`，就可以通过定义控制器方法获取路由参数 `id`：
+如下所示使用类型提示 `Royalcms\Http\Request`，就可以通过定义控制器方法获取路由参数 `id`：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     class UserController extends Controller
     {
@@ -70,9 +70,9 @@
 
 #### 通过路由闭包获取请求
 
-你也可以在路由闭包中类型提示 `Illuminate\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
+你也可以在路由闭包中类型提示 Royalcms\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
 
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     Route::get('/', function (Request $request) {
         //
@@ -81,7 +81,7 @@
 <a name="request-path-and-method"></a>
 ### 请求路径 & 方法
 
-`Illuminate\Http\Request` 实例提供了多种方法来检查应用程序的 HTTP 请求，并继承了 `Symfony\Component\HttpFoundation\Request` 类。下面是该类几个有用的方法：
+`Royalcms\Http\Request` 实例提供了多种方法来检查应用程序的 HTTP 请求，并继承了 `Symfony\Component\HttpFoundation\Request` 类。下面是该类几个有用的方法：
 
 ####  获取请求路径
 
@@ -151,7 +151,7 @@
 
 #### 获取指定输入值
 
-使用几种简单的方法（不需要特别指定哪个 HTTP 动作），就可以访问 `Illuminate\Http\Request` 实例中所有的用户输入。也就是说无论是什么样的 HTTP 动作，`input` 方法都可以被用来获取用户输入数据：
+使用几种简单的方法（不需要特别指定哪个 HTTP 动作），就可以访问 `Royalcms\Http\Request` 实例中所有的用户输入。也就是说无论是什么样的 HTTP 动作，`input` 方法都可以被用来获取用户输入数据：
 
     $name = $request->input('name');
 
@@ -181,7 +181,7 @@
 
 #### 通过动态属性获取输入
 
-你也可以通过 `Illuminate\Http\Request` 实例的动态属性来获取用户输入。例如，如果你应用的表单中包含 `name` 字段，那么可以像这样访问该字段的值：
+你也可以通过 `Royalcms\Http\Request` 实例的动态属性来获取用户输入。例如，如果你应用的表单中包含 `name` 字段，那么可以像这样访问该字段的值：
 
     $name = $request->name;
 
@@ -230,11 +230,11 @@ Royalcms 在处理动态属性的优先级是，先在请求的数据中查找�
 <a name="old-input"></a>
 ### 旧输入
 
-Royalcms 允许你将本次请求的数据保留到下一次请求发送前。如果第一次请求的表单不能通过验证，就可以使用这个功能重新填充表单。但是，如果你使用了 Royalcms 的 [验证功能](/docs/{{version}}/validation)，你就不需要在手动实现这些方法，因为 Royalcms 内置的验证工具会自动调用他们。
+Royalcms 允许你将本次请求的数据保留到下一次请求发送前。如果第一次请求的表单不能通过验证，就可以使用这个功能重新填充表单。但是，如果你使用了 Royalcms 的 [验证功能](/docs/validation)，你就不需要在手动实现这些方法，因为 Royalcms 内置的验证工具会自动调用他们。
 
 #### 将输入闪存至 Session
 
-`Illuminate\Http\Request` 的 `flash` 方法会将当前输入的数据存进 [session](/docs/{{version}}/session) 中，以便在用户下次发送请求到应用程序之前可以使用它们：
+`Royalcms\Http\Request` 的 `flash` 方法会将当前输入的数据存进 [session](/docs/session) 中，以便在用户下次发送请求到应用程序之前可以使用它们：
 
     $request->flash();
 
@@ -257,10 +257,10 @@ Royalcms 允许你将本次请求的数据保留到下一次请求发送前。�
 
 #### 获取旧输入
 
-若要获取上一次请求中闪存的输入，则可以使用 `Request` 实例中的 `old` 方法。`old` 方法会从 [Session](/docs/{{version}}/session) 取出之前被闪存的输入数据：
+若要获取上一次请求中闪存的输入，则可以使用 `Request` 实例中的 `old` 方法。`old` 方法会从 [Session](/docs/session) 取出之前被闪存的输入数据：
 
     $username = $request->old('username');
-Royalcms 也提供了全局辅助函数 `old`。如果你要在 [Blade 模板](/docs/{{version}}/blade) 中显示旧的输入，使用 `old` 会更加方便。如果给定字段没有旧的输入，则返回 `null`：
+Royalcms 也提供了全局辅助函数 `old`。如果你要在 [Blade 模板](/docs/blade) 中显示旧的输入，使用 `old` 会更加方便。如果给定字段没有旧的输入，则返回 `null`：
 
     <input type="text" name="username" value="{{ old('username') }}">
 
@@ -269,13 +269,13 @@ Royalcms 也提供了全局辅助函数 `old`。如果你要在 [Blade 模板](/
 
 #### 从请求中获取 Cookie
 
-Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签名，这意味着如果客户端更改了它们，便视为无效。若要从请求中获取 cookie 值，你可以在 `Illuminate\Http\Request` 实例上使用 `cookie` 方法：
+Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签名，这意味着如果客户端更改了它们，便视为无效。若要从请求中获取 cookie 值，你可以在 `Royalcms\Http\Request` 实例上使用 `cookie` 方法：
 
     $value = $request->cookie('name');
 
 #### 将 Cookies 附加到响应
 
-你可以使用 `cookie` 方法将 cookie 附加到传出的 `Illuminate\Http\Response` 实例。你需要传递 Cookie 名称、值、以及有效期（分钟）到这个方法：
+你可以使用 `cookie` 方法将 cookie 附加到传出的 `Royalcms\Http\Response` 实例。你需要传递 Cookie 名称、值、以及有效期（分钟）到这个方法：
 
     return response('Hello World')->cookie(
         'name', 'value', $minutes
@@ -300,7 +300,7 @@ Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签
 <a name="retrieving-uploaded-files"></a>
 ### 获取上传文件
 
-你可以使用 `file` 方法或使用动态属性从 `Illuminate\Http\Request` 实例中访问上传的文件。该 `file` 方法返回一个 `Illuminate\Http\UploadedFile` 类的实例，该类继承了PHP 的 `SplFileInfo` 类的同时也提供了各种与文件交互的方法：
+你可以使用 `file` 方法或使用动态属性从 `Royalcms\Http\Request` 实例中访问上传的文件。该 `file` 方法返回一个 `Royalcms\Http\UploadedFile` 类的实例，该类继承了PHP 的 `SplFileInfo` 类的同时也提供了各种与文件交互的方法：
 
     $file = $request->file('photo');
     
@@ -336,7 +336,7 @@ Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签
 ### 存储上传文件
 
 
-要存储上传的文件，先配置好 [文件系统](/docs/{{version}}/filesystem)。你可以使用 `UploadedFile` 的 `store` 方法把上传文件移动到你的某个磁盘上，该文件可能是本地文件系统中的一个位置，甚至像 Amazon S3 这样的云存储位置。
+要存储上传的文件，先配置好 [文件系统](/docs/filesystem)。你可以使用 `UploadedFile` 的 `store` 方法把上传文件移动到你的某个磁盘上，该文件可能是本地文件系统中的一个位置，甚至像 Amazon S3 这样的云存储位置。
 
 `store` 方法接受相对于文件系统配置的存储文件根目录的路径。这个路径不能包含文件名，因为系统会自动生成唯一的 ID 作为文件名。
 
@@ -363,7 +363,7 @@ Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签
     
     namespace App\Http\Middleware;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use Fideloper\Proxy\TrustProxies as Middleware;
     
     class TrustProxies extends Middleware

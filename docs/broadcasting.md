@@ -136,12 +136,12 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
     
     namespace App\Events;
     
-    use Illuminate\Broadcasting\Channel;
-    use Illuminate\Queue\SerializesModels;
-    use Illuminate\Broadcasting\PrivateChannel;
-    use Illuminate\Broadcasting\PresenceChannel;
-    use Illuminate\Broadcasting\InteractsWithSockets;
-    use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+    use Royalcms\Broadcasting\Channel;
+    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Broadcasting\PrivateChannel;
+    use Royalcms\Broadcasting\PresenceChannel;
+    use Royalcms\Broadcasting\InteractsWithSockets;
+    use Royalcms\Contracts\Broadcasting\ShouldBroadcast;
     
     class ShippingStatusUpdated implements ShouldBroadcast
     {
@@ -189,7 +189,7 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
 <a name="defining-broadcast-events"></a>
 ## 定义广播事件
 
-要告知 Royalcms 一个给定的事件是广播类型，只需在事件类中实现 `Illuminate\Contracts\Broadcasting\ShouldBroadcast` 接口即可。该接口已经被导入到所有由框架生成的事件类中，所以你可以很方便地将它添加到你自己的事件中。
+要告知 Royalcms 一个给定的事件是广播类型，只需在事件类中实现 `Royalcms\Contracts\Broadcasting\ShouldBroadcast` 接口即可。该接口已经被导入到所有由框架生成的事件类中，所以你可以很方便地将它添加到你自己的事件中。
 
 `ShouldBroadcast` 接口要求你实现一个方法：`broadcastOn`. `broadcastOn` 方法返回一个频道或一个频道数组，事件会被广播到这些频道。频道必须是 `Channel`、`PrivateChannel` 或 `PresenceChannel` 的实例。`Channel` 实例表示任何用户都可以订阅的公开频道，而 `PrivateChannels` 和 `PresenceChannels` 则表示需要 [频道授权](#authorizing-channels) 的私有频道：
 
@@ -198,12 +198,12 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
     
     namespace App\Events;
     
-    use Illuminate\Broadcasting\Channel;
-    use Illuminate\Queue\SerializesModels;
-    use Illuminate\Broadcasting\PrivateChannel;
-    use Illuminate\Broadcasting\PresenceChannel;
-    use Illuminate\Broadcasting\InteractsWithSockets;
-    use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+    use Royalcms\Broadcasting\Channel;
+    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Broadcasting\PrivateChannel;
+    use Royalcms\Broadcasting\PresenceChannel;
+    use Royalcms\Broadcasting\InteractsWithSockets;
+    use Royalcms\Contracts\Broadcasting\ShouldBroadcast;
     
     class ServerCreated implements ShouldBroadcast
     {
@@ -298,7 +298,7 @@ Royalcms 默认会使用事件的类名作为广播名称来广播事件。不�
 
     <?php
     
-    use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+    use Royalcms\Contracts\Broadcasting\ShouldBroadcastNow;
     
     class ShippingStatusUpdated implements ShouldBroadcastNow
     {

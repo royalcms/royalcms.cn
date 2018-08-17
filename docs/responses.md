@@ -32,11 +32,11 @@
         return [1, 2, 3];
     });
 
-> {tip} 你还可以从路由或控制器中直接返回 [Eloquent 集合](/docs/{{version}}/eloquent-collections)，它们会自动转为 JSON 响应。
+> {tip} 你还可以从路由或控制器中直接返回 [Eloquent 集合](/docs/eloquent-collections)，它们会自动转为 JSON 响应。
 
 #### 响应对象
 
-一般来说，你不会只从路由行为返回简单的字符串或数组。你也许会返回完整的 `Illuminate\Http\Response` 实例或 [视图](/docs/{{version}}/views)。
+一般来说，你不会只从路由行为返回简单的字符串或数组。你也许会返回完整的 `Royalcms\Http\Response` 实例或 [视图](/docs/views)。
 
 返回完整的 `Response` 实例允许你自定义响应的 HTTP 状态码和响应头信息。`Response` 实例继承自 `Symfony\Component\HttpFoundation\Response` 类，该类提供了各种构建 HTTP 响应的方法：
 
@@ -94,13 +94,13 @@
 <a name="redirects"></a>
 ## 重定向
 
-重定向响应是 `Illuminate\Http\RedirectResponse` 类的实例，并且包含用户需要重定向至另一个 URL 所需的头信息。Royalcms 提供了几种方法用于生成 `RedirectResponse` 实例。其中最简单的方法是使用全局辅助函数 `redirect`：
+重定向响应是 `Royalcms\Http\RedirectResponse` 类的实例，并且包含用户需要重定向至另一个 URL 所需的头信息。Royalcms 提供了几种方法用于生成 `RedirectResponse` 实例。其中最简单的方法是使用全局辅助函数 `redirect`：
 
     Route::get('dashboard', function () {
         return redirect('home/dashboard');
     });
 
-有时候你可能希望将用户重定向到之前的位置，比如提交的表单无效时。这时你可以使用全局辅助函数 `back` 来执行此操作。由于这个功能利用了 [Session](/docs/{{version}}/session)，请确保调用 `back` 函数的路由使用 `web` 中间件组或所有 Session 中间件：
+有时候你可能希望将用户重定向到之前的位置，比如提交的表单无效时。这时你可以使用全局辅助函数 `back` 来执行此操作。由于这个功能利用了 [Session](/docs/session)，请确保调用 `back` 函数的路由使用 `web` 中间件组或所有 Session 中间件：
 
     Route::post('user/profile', function () {
         // 验证请求...
@@ -144,7 +144,7 @@
 <a name="redirecting-controller-actions"></a>
 ### 重定向至控制器行为
 
-你可能需要生成重定向到 [控制器行为](/docs/{{version}}/controllers) 的响应。为此，你要将控制器和行为名称传递给 `action` 方法来实现。另外，你不一定要为控制器指定完整的命名空间，因为 Royalcms 的 `RouteServiceProvider` 会自动设置基本的控制器命名空间：
+你可能需要生成重定向到 [控制器行为](/docs/controllers) 的响应。为此，你要将控制器和行为名称传递给 `action` 方法来实现。另外，你不一定要为控制器指定完整的命名空间，因为 Royalcms 的 `RouteServiceProvider` 会自动设置基本的控制器命名空间：
 
     return redirect()->action('HomeController@index');
 
@@ -157,7 +157,7 @@
 <a name="redirecting-with-flashed-session-data"></a>
 ### 重定向并使用闪存的 Session 数据
 
-通常，重定向到新的 URL 的同时会将 [数据闪存到 Session](/docs/{{version}}/session#flash-data)。并且成功执行将信息闪存到 Seesion 后才算完成此操作。方便起见，你可以创建一个 `RedirectResponse` 的实例并链式调用 `with` 方法将数据闪存在 Session 中：
+通常，重定向到新的 URL 的同时会将 [数据闪存到 Session](/docs/session#flash-data)。并且成功执行将信息闪存到 Seesion 后才算完成此操作。方便起见，你可以创建一个 `RedirectResponse` 的实例并链式调用 `with` 方法将数据闪存在 Session 中：
 
     Route::post('user/profile', function () {
         // 更新用户的信息...
@@ -165,7 +165,7 @@
         return redirect('dashboard')->with('status', 'Profile updated!');
     });
 
-用户重定向后，你可以从 [session](/docs/{{version}}/session) 中读取闪存的信息。例如，使用 [Blade 语法](/docs/{{version}}/blade):
+用户重定向后，你可以从 [session](/docs/session) 中读取闪存的信息。例如，使用 [Blade 语法](/docs/blade):
 
     @if (session('status'))
         <div class="alert alert-success">
@@ -176,12 +176,12 @@
 <a name="other-response-types"></a>
 ## 其他响应类型
 
-使用辅助函数 `response` 可以用来生成其他类型的响应实例。当不带参数调用辅助函数 `response` 时，会返回 `Illuminate\Contracts\Routing\ResponseFactory` [契约](/docs/{{version}}/contracts) 的实例。 契约提供了几种辅助生成响应的方法。
+使用辅助函数 `response` 可以用来生成其他类型的响应实例。当不带参数调用辅助函数 `response` 时，会返回 `Illuminate\Contracts\Routing\ResponseFactory`契约的实例。 契约提供了几种辅助生成响应的方法。
 
 <a name="view-responses"></a>
 ### 视图响应
 
-如果你需要控制响应的状态和标题，还需要返回 [视图](/docs/{{version}}/views) 作为响应的内容，则应使用 `view` 方法：
+如果你需要控制响应的状态和标题，还需要返回 [视图](/docs/views) 作为响应的内容，则应使用 `view` 方法：
 
     return response()
                 ->view('hello', $data, 200)
@@ -231,14 +231,14 @@
 <a name="response-macros"></a>
 ## 响应宏
 
-如果要定义可以在各种路由和控制器中重复使用的自定义响应，可以在 `Response` Facade 上使用 `macro` 方法。例如，你可以在 [服务提供器](/docs/{{version}}/providers) 的 `boot` 方法中这样写：
+如果要定义可以在各种路由和控制器中重复使用的自定义响应，可以在 `Response` Facade 上使用 `macro` 方法。例如，你可以在服务提供器的 `boot` 方法中这样写：
 
     <?php
     
     namespace App\Providers;
     
-    use Illuminate\Support\ServiceProvider;
-    use Illuminate\Support\Facades\Response;
+    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Support\Facades\Response;
     
     class ResponseMacroServiceProvider extends ServiceProvider
     {

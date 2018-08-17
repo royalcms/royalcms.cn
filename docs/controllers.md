@@ -99,7 +99,7 @@
 <a name="controller-middleware"></a>
 ## 控制器中间件
 
-[中间件](/docs/{{version}}/middleware) 可以在路由文件中被分配给控制器路由：
+[中间件](/docs/middleware) 可以在路由文件中被分配给控制器路由：
 
     Route::get('profile', 'UserController@show')->middleware('auth');
 
@@ -224,7 +224,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 默认情况下，`Route::resource` 将会用英文动词创建资源 URI。如果需要本地化 `create` 和 `edit` 行为动作名，可以在 `AppServiceProvider` 的 `boot` 中使用 `Route::resourceVerbs` 方法实现：
 
-    use Illuminate\Support\Facades\Route;
+    use Royalcms\Support\Facades\Route;
     
     /**
      * 引导任何应用服务。
@@ -261,7 +261,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 #### 构造函数注入
 
-Royalcms 使用 [服务容器](/docs/{{version}}/container) 来解析所有的控制器。因此，你可以在控制器的构造函数中使用类型提示需要的依赖项，而声明的依赖项会自动解析并注入控制器实例中：
+Royalcms 使用服务容器来解析所有的控制器。因此，你可以在控制器的构造函数中使用类型提示需要的依赖项，而声明的依赖项会自动解析并注入控制器实例中：
 
     <?php
     
@@ -288,17 +288,17 @@ Royalcms 使用 [服务容器](/docs/{{version}}/container) 来解析所有的�
         }
     }
 
-当然，你也可以类型提示 [Royalcms 契约](/docs/{{version}}/contracts)，只要它能被解析。根据你的应用，将你的依赖项注入控制器能提供更好的可测试性。
+当然，你也可以类型提示Royalcms契约，只要它能被解析。根据你的应用，将你的依赖项注入控制器能提供更好的可测试性。
 
 #### 方法注入
 
-除了构造函数注入之外，你还可以在控制器方法中类型提示依赖项。最常见的用法就是将 `Illuminate\Http\Request` 实例注入到控制器方法中：
+除了构造函数注入之外，你还可以在控制器方法中类型提示依赖项。最常见的用法就是将 `Royalcms\Http\Request` 实例注入到控制器方法中：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     class UserController extends Controller
     {
@@ -319,13 +319,13 @@ Royalcms 使用 [服务容器](/docs/{{version}}/container) 来解析所有的�
 如果控制器方法需要从路由参数中获取输入内容，只需要在其他依赖项后列出路由参数即可。比如，如果你的路由是这样定义的：
 
     Route::put('user/{id}', 'UserController@update');
-你仍然可以类型提示 `Illuminate\Http\Request` 并通过定义控制器方法获取 `id` 参数，如下所示：
+你仍然可以类型提示 `Royalcms\Http\Request` 并通过定义控制器方法获取 `id` 参数，如下所示：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     class UserController extends Controller
     {

@@ -435,7 +435,7 @@ Blade 可以被推送到在其他视图或布局中的其他位置渲染的命�
 <a name="service-injection"></a>
 ## 服务注入
 
-`@inject` 命令可用于从 Larvel [服务容器](/docs/{{version}}/container) 中检索服务。传递给 `@inject` 的第一个参数为置放该服务的变量名称，而第二个参数是要解析的服务的类或是接口的名称：
+`@inject` 命令可用于从 Larvel服务容器中检索服务。传递给 `@inject` 的第一个参数为置放该服务的变量名称，而第二个参数是要解析的服务的类或是接口的名称：
 
     @inject('metrics', 'App\Services\MetricsService')
     
@@ -454,8 +454,8 @@ Blade 甚至允许你使用 `directive` 方法来定义自定义指令。当 Bla
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\Blade;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\Facades\Blade;
+    use Royalcms\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -493,7 +493,7 @@ Blade 甚至允许你使用 `directive` 方法来定义自定义指令。当 Bla
 
 编写自定义指令有时候比定义简单、常见的条件语句更复杂，但是它又非常必要。因此，Blade 提供了一个 `Blade::if` 方法，它能使用闭包来快速定义自定义条件指令。 例如，定义一个自定义条件来检查当前的应用程序环境。我们可以在 `AppServiceProvider` 的 `boot` 方法中这样做：
 
-    use Illuminate\Support\Facades\Blade;
+    use Royalcms\Support\Facades\Blade;
     
     /**
      * Perform post-registration booting of services.

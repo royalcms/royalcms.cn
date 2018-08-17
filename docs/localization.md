@@ -98,7 +98,7 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
     
     echo __('I love programming.');
 
-如果使用 [Blade 模板引擎](/docs/{{version}}/blade)，可以在视图文件中使用 `{{ }}` 语法或者使用 `@lang` 指令来打印翻译字符串：
+如果使用 [Blade 模板引擎](/docs/blade)，可以在视图文件中使用 `{{ }}` 语法或者使用 `@lang` 指令来打印翻译字符串：
 
     {{ __('messages.welcome') }}
     

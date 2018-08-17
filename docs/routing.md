@@ -61,7 +61,7 @@
 
 #### CSRF 保护
 
-指向 `web` 路由文件中定义的 `POST`、`PUT` 或 `DELETE` 路由的任何 HTML 表单都应该包含一个 CSRF 令牌字段，否则，这个请求将会被拒绝。可以在 [CSRF 文档](/docs/{{version}}/csrf) 中阅读有关 CSRF 保护的更多信息：
+指向 `web` 路由文件中定义的 `POST`、`PUT` 或 `DELETE` 路由的任何 HTML 表单都应该包含一个 CSRF 令牌字段，否则，这个请求将会被拒绝。可以在 [CSRF 文档](/docs/csrf) 中阅读有关 CSRF 保护的更多信息：
 
     <form method="POST" action="/profile">
         {{ csrf_field() }}
@@ -195,7 +195,7 @@
     /**
      * 处理一次请求。
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Royalcms\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
      */
@@ -350,5 +350,3 @@ HTML 表单不支持 `PUT`、`PATCH` 或 `DELETE` 行为。所以当你要从 HT
     $name = RC_Route::currentRouteName();
     
     $action = RC_Route::currentRouteAction();
-
-想知道所有可访问的方法，可以查看 API 文档，了解 [Route facade](http://Royalcms.com/api/{{version}}/Illuminate/Routing/Router.html) 和 [Route 实例](http://Royalcms.com/api/{{version}}/Illuminate/Routing/Route.html) 的基础类。

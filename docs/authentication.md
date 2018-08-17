@@ -37,7 +37,7 @@ Royalcms 中实现用户认证非常简单。实际上，几乎所有东西都�
 <a name="introduction-database-considerations"></a>
 ### 数据库注意事项
 
-默认情况下，Royalcms 在 `app` 目录中包含了一个 [Eloquent 模型](/docs/{{version}}/eloquent) `App\User`。这个模型和默认的 Eloquent 认证驱动一起使用。如果你的应用不使用 Eloquent，也可以使用 Royalcms 查询构造器的 `database` 认证驱动。
+默认情况下，Royalcms 在 `app` 目录中包含了一个 [Eloquent 模型](/docs/eloquent) `App\User`。这个模型和默认的 Eloquent 认证驱动一起使用。如果你的应用不使用 Eloquent，也可以使用 Royalcms 查询构造器的 `database` 认证驱动。
 
 为 `App\User` 模型创建数据库表结构时，确保密码字段长度至少为 60 个字符以及默认字符串列长度为 255 个字符。
 
@@ -96,7 +96,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 你还可以自定义用于认证和注册用户的「看守器」。要实现这一功能，需要在 `LoginController`、`RegisterController` 和 `ResetPasswordController` 中定义 `guard` 方法。该方法需要返回一个看守器实例：
 
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     
     protected function guard()
     {
@@ -109,14 +109,14 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 `RegisterController` 的 `validator` 方法包含了应用验证新用户的规则，你可以按需要自定义该方法。
 
-`RegisterController` 的 `create` 方法负责使用 [Eloquent ORM](/docs/{{version}}/eloquent) 在数据库中创建新的 `App\User` 记录。你可以根据数据库的需要自定义该方法。
+`RegisterController` 的 `create` 方法负责使用 [Eloquent ORM](/docs/eloquent) 在数据库中创建新的 `App\User` 记录。你可以根据数据库的需要自定义该方法。
 
 <a name="retrieving-the-authenticated-user"></a>
 ### 检索认证用户
 
 你可以通过 `Auth` facade 来访问认证的用户：
 
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     
     // 获取当前已认证的用户...
     $user = Auth::user();
@@ -124,13 +124,13 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
     // 获取当前已认证的用户 ID...
     $id = Auth::id();
 
-或者，你还可以通过 `Illuminate\Http\Request` 实例来访问已认证的用户。请记住，类型提示的类会被自动注入到您的控制器方法中：
+或者，你还可以通过 `Royalcms\Http\Request` 实例来访问已认证的用户。请记住，类型提示的类会被自动注入到您的控制器方法中：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     class ProfileController extends Controller
     {
@@ -150,24 +150,24 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 你可以使用 `Auth` facade 的 `check` 方法来检查用户是否登录，如果已经认证，将会返回 `true`：
 
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     
     if (Auth::check()) {
         // 用户已登录...
     }
 
-> {tip} 即使可以使用 `check` 方法确定用户是否被认证，在允许用户访问某些路由／控制器之前，通常还是会使用中间件来验证用户是否进行身份验证。要了解更多信息，请查看有关 [保护路由](/docs/{{version}}/authentication#protecting-routes) 的文档。
+> {tip} 即使可以使用 `check` 方法确定用户是否被认证，在允许用户访问某些路由／控制器之前，通常还是会使用中间件来验证用户是否进行身份验证。要了解更多信息，请查看有关 [保护路由](/docs/authentication#protecting-routes) 的文档。
 
 <a name="protecting-routes"></a>
 ### 保护路由
 
-[路由中间件](/docs/{{version}}/middleware) 用于只允许通过认证的用户访问指定的路由。Royalcms 自带了在 `Illuminate\Auth\Middleware\Authenticate` 中定义的 `auth` 中间件。由于这个中间件已经在 HTTP 内核中注册，所以只需要将中间件附加到路由定义中：
+[路由中间件](/docs/middleware) 用于只允许通过认证的用户访问指定的路由。Royalcms 自带了在 `Royalcms\Auth\Middleware\Authenticate` 中定义的 `auth` 中间件。由于这个中间件已经在 HTTP 内核中注册，所以只需要将中间件附加到路由定义中：
 
     Route::get('profile', function () {
         // 只有认证过的用户可以...
     })->middleware('auth');
 
-当然，如果使用 [控制器](/docs/{{version}}/controllers)，则可以在构造器中调用 `middleware` 方法来代替在路由中直接定义：
+当然，如果使用 [控制器](/docs/controllers)，则可以在构造器中调用 `middleware` 方法来代替在路由中直接定义：
 
     public function __construct()
     {
@@ -186,20 +186,20 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 <a name="login-throttling"></a>
 ### 登录限制
 
-Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Foundation\Auth\ThrottlesLogins` trait。默认情况下，如果用户在进行几次尝试后仍不能提供正确的凭证，该用户将在一分钟内无法进行登录。这个限制基于用户的用户名／邮件地址和 IP 地址。
+Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundation\Auth\ThrottlesLogins` trait。默认情况下，如果用户在进行几次尝试后仍不能提供正确的凭证，该用户将在一分钟内无法进行登录。这个限制基于用户的用户名／邮件地址和 IP 地址。
 
 <a name="authenticating-users"></a>
 ## 手动认证用户
 
 当然，不一定要使用 Royalcms 内置的认证控制器。如果选择删除这些控制器，你可以直接调用 Royalcms 的认证类来管理用户认证。别担心，这简单得很。
 
-我们可以通过 `Auth` [facade](/docs/{{version}}/facades) 来访问 Royalcms 的认证服务，因此需要确认类的顶部引入了 `Auth` facade。接下来让我们看一下 `attempt` 方法：
+我们可以通过 `Auth`facade来访问 Royalcms 的认证服务，因此需要确认类的顶部引入了 `Auth` facade。接下来让我们看一下 `attempt` 方法：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     
     class LoginController extends Controller
     {
@@ -271,7 +271,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 
 #### 验证用户实例
 
-如果需要将现有用户实例记录到应用，可以使用用户实例调用 `login` 方法。给定的对象必须实现了 `Illuminate\Contracts\Auth\Authenticatable` [契约](/docs/{{version}}/contracts) 。当然，Royalcms 自带的 `App\User` 模型已经实现了这个接口：
+如果需要将现有用户实例记录到应用，可以使用用户实例调用 `login` 方法。给定的对象必须实现了 `Royalcms\Contracts\Auth\Authenticatable`契约。当然，Royalcms 自带的 `App\User` 模型已经实现了这个接口：
 
     Auth::login($user);
     
@@ -302,7 +302,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 <a name="http-basic-authentication"></a>
 ## HTTP 基础认证
 
-[HTTP 基础认证](https://en.wikipedia.org/wiki/Basic_access_authentication) 提供一种快速方式来认证应用的用户，而且不需要设置专用的「登录」页面。开始之前，先把 `auth.basic` [中间件](/docs/{{version}}/middleware) 添加到你的路由。`auth.basic` 中间件已经被包含在 Royalcms 框架中，所以你不需要定义它：
+[HTTP 基础认证](https://en.wikipedia.org/wiki/Basic_access_authentication) 提供一种快速方式来认证应用的用户，而且不需要设置专用的「登录」页面。开始之前，先把 `auth.basic` [中间件](/docs/middleware) 添加到你的路由。`auth.basic` 中间件已经被包含在 Royalcms 框架中，所以你不需要定义它：
 
     Route::get('profile', function () {
         // 只有认证过的用户可进入...
@@ -320,20 +320,20 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 <a name="stateless-http-basic-authentication"></a>
 ### 无状态 HTTP 基础认证
 
-你可以使用 HTTP 基础认证，而不在会话中设置用户标识符 cookie，这对于 API 认证来说特别有用。为此，请 [定义一个中间件](/docs/{{version}}/middleware) 并调用 `onceBasic` 方法。如果 `onceBasic` 方法没有返回任何响应的话，这个请求可以进一步传递到应用程序中：
+你可以使用 HTTP 基础认证，而不在会话中设置用户标识符 cookie，这对于 API 认证来说特别有用。为此，请 [定义一个中间件](/docs/middleware) 并调用 `onceBasic` 方法。如果 `onceBasic` 方法没有返回任何响应的话，这个请求可以进一步传递到应用程序中：
 
     <?php
     
-    namespace Illuminate\Auth\Middleware;
+    namespace Royalcms\Auth\Middleware;
     
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     
     class AuthenticateOnceWithBasicAuth
     {
         /**
          * 处理传入的请求。
          *
-         * @param  \Illuminate\Http\Request  $request
+         * @param  \Royalcms\Http\Request  $request
          * @param  \Closure  $next
          * @return mixed
          */
@@ -344,7 +344,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
     
     }
 
-接着，[注册路由中间件](/docs/{{version}}/middleware#registering-middleware) ，然后将它附加到路由：
+接着，[注册路由中间件](/docs/middleware#registering-middleware) ，然后将它附加到路由：
 
     Route::get('api/user', function () {
         // 只有认证过的用户可以进入...
@@ -353,15 +353,15 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 <a name="adding-custom-guards"></a>
 ## 增加自定义的看守器
 
-你可以使用 `Auth` facade 的 `extend` 方法来定义自己的身份验证提供器。 你需要在 [服务提供器](/docs/{{version}}/providers) 中调用这个提供器。由于 Royalcms 已经配备了 `AuthServiceProvider`，我们可以把代码放在这个提供器中：
+你可以使用 `Auth` facade 的 `extend` 方法来定义自己的身份验证提供器。 你需要在服务提供器中调用这个提供器。由于 Royalcms 已经配备了 `AuthServiceProvider`，我们可以把代码放在这个提供器中：
 
     <?php
     
     namespace App\Providers;
     
     use App\Services\Auth\JwtGuard;
-    use Illuminate\Support\Facades\Auth;
-    use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -375,14 +375,14 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
             $this->registerPolicies();
     
             Auth::extend('jwt', function ($app, $name, array $config) {
-                // 返回一个 Illuminate\Contracts\Auth\Guard 实例...
+                // 返回一个 Royalcms\Contracts\Auth\Guard 实例...
     
                 return new JwtGuard(Auth::createUserProvider($config['provider']));
             });
         }
     }
 
-正如上面的代码所示，传递给 `extend` 方法的回调应该返回 `Illuminate\Contracts\Auth\Guard` 的实现的实例。 这个接口包含你需要实现的方法来定义一个自定义看守器。定义完之后，你可以在 `auth.php` 配置文件的 `guards` 配置中使用这个看守器：
+正如上面的代码所示，传递给 `extend` 方法的回调应该返回 `Royalcms\Contracts\Auth\Guard` 的实现的实例。 这个接口包含你需要实现的方法来定义一个自定义看守器。定义完之后，你可以在 `auth.php` 配置文件的 `guards` 配置中使用这个看守器：
 
     'guards' => [
         'api' => [
@@ -400,9 +400,9 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\Auth;
+    use Royalcms\Support\Facades\Auth;
     use App\Extensions\RiakUserProvider;
-    use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -416,7 +416,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
             $this->registerPolicies();
     
             Auth::provider('riak', function ($app, array $config) {
-                // 返回 Illuminate\Contracts\Auth\UserProvider 实例...
+                // 返回 Royalcms\Contracts\Auth\UserProvider 实例...
     
                 return new RiakUserProvider($app->make('riak.connection'));
             });
@@ -443,13 +443,13 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 <a name="the-user-provider-contract"></a>
 ### 用户提供器契约
 
-`Illuminate\Contracts\Auth\UserProvider` 的实现只负责从永久存储系统（如 MySQL、Riak 等）中获取 `Illuminate\Contracts\Auth\Authenticatable` 的实现实例。这两个接口允许 Royalcms 认证机制继续运行，无论用户数据如何被存储或使用什么类型的类实现它。
+`Royalcms\Contracts\Auth\UserProvider` 的实现只负责从永久存储系统（如 MySQL、Riak 等）中获取 `Royalcms\Contracts\Auth\Authenticatable` 的实现实例。这两个接口允许 Royalcms 认证机制继续运行，无论用户数据如何被存储或使用什么类型的类实现它。
 
-让我们来看看 `Illuminate\Contracts\Auth\UserProvider` 契约：
+让我们来看看 `Royalcms\Contracts\Auth\UserProvider` 契约：
 
     <?php
     
-    namespace Illuminate\Contracts\Auth;
+    namespace Royalcms\Contracts\Auth;
     
     interface UserProvider {
     
@@ -478,7 +478,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 
     <?php
     
-    namespace Illuminate\Contracts\Auth;
+    namespace Royalcms\Contracts\Auth;
     
     interface Authenticatable {
     
@@ -496,7 +496,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Illuminate\Founda
 <a name="events"></a>
 ## 事件
 
-Royalcms 在认证过程中引发了各种各样的 [事件](/docs/{{version}}/events)。你可以在 `EventServiceProvider` 中对这些事件做监听：
+Royalcms 在认证过程中引发了各种各样的 [事件](/docs/events)。你可以在 `EventServiceProvider` 中对这些事件做监听：
 
     /**
      * 应用程序的事件监听器映射。
@@ -504,31 +504,31 @@ Royalcms 在认证过程中引发了各种各样的 [事件](/docs/{{version}}/e
      * @var array
      */
     protected $listen = [
-        'Illuminate\Auth\Events\Registered' => [
+        'Royalcms\Auth\Events\Registered' => [
             'App\Listeners\LogRegisteredUser',
         ],
     
-        'Illuminate\Auth\Events\Attempting' => [
+        'Royalcms\Auth\Events\Attempting' => [
             'App\Listeners\LogAuthenticationAttempt',
         ],
     
-        'Illuminate\Auth\Events\Authenticated' => [
+        'Royalcms\Auth\Events\Authenticated' => [
             'App\Listeners\LogAuthenticated',
         ],
     
-        'Illuminate\Auth\Events\Login' => [
+        'Royalcms\Auth\Events\Login' => [
             'App\Listeners\LogSuccessfulLogin',
         ],
     
-        'Illuminate\Auth\Events\Failed' => [
+        'Royalcms\Auth\Events\Failed' => [
             'App\Listeners\LogFailedLogin',
         ],
     
-        'Illuminate\Auth\Events\Logout' => [
+        'Royalcms\Auth\Events\Logout' => [
             'App\Listeners\LogSuccessfulLogout',
         ],
     
-        'Illuminate\Auth\Events\Lockout' => [
+        'Royalcms\Auth\Events\Lockout' => [
             'App\Listeners\LogLockout',
         ],
     ];

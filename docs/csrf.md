@@ -36,7 +36,7 @@ Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。
     
     namespace App\Http\Middleware;
     
-    use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+    use Royalcms\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
     
     class VerifyCsrfToken extends BaseVerifier
     {
