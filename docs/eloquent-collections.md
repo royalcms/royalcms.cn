@@ -7,9 +7,9 @@
 <a name="introduction"></a>
 ## 简介
 
-Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collection` 对象的实例，
+Eloquent 返回的所有多结果集都是 `Royalcms\Database\Eloquent\Collection` 对象的实例，
 
-默认情况下 Eloquent 返回的都是一个 `Illuminate\Database\Eloquent\Collection` 对象的实例，包括通过 `get` 方法检索或通过访问关联关系获取到的结果。Eloquent 的集合对象继承了 Royalcms 的 [集合基类](/docs/{{version}}/collections)，因此它自然也继承了数十种能优雅地处理 Eloquent 模型底层数组的方法。
+默认情况下 Eloquent 返回的都是一个 `Royalcms\Database\Eloquent\Collection` 对象的实例，包括通过 `get` 方法检索或通过访问关联关系获取到的结果。Eloquent 的集合对象继承了 Royalcms 的 [集合基类](/docs/collections)，因此它自然也继承了数十种能优雅地处理 Eloquent 模型底层数组的方法。
 
 当然，所有的集合都可以作为迭代器，可以就像简单的 PHP 数组一样来遍历它们：
 
@@ -30,7 +30,7 @@ Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collect
         return $user->name;
     });
 
-> {note} 大多数 Eloquent 集合方法会返回新的 Eloquent 集合实例，但是 `pluck`, `keys`, `zip`, `collapse`, `flatten` 和 `flip` 方法除外，它们会返回 [集合基类](/docs/{{version}}/collections) 实例。同样，如果 `map` 操作返回的集合不包含任何 Eloquent 模型，那么它会被自动转换成集合基类。
+> {note} 大多数 Eloquent 集合方法会返回新的 Eloquent 集合实例，但是 `pluck`, `keys`, `zip`, `collapse`, `flatten` 和 `flip` 方法除外，它们会返回 [集合基类](/docs/collections) 实例。同样，如果 `map` 操作返回的集合不包含任何 Eloquent 模型，那么它会被自动转换成集合基类。
 
 
 <a name="available-methods"></a>
@@ -38,7 +38,7 @@ Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collect
 
 ### 集合基类
 
-所有 Eloquent 集合都继承了基础的 [Royalcms 集合](/docs/{{version}}/collections) 对象。因此，它们也继承了所有集合基类提供的强大的方法：
+所有 Eloquent 集合都继承了基础的 [Royalcms 集合](/docs/collections) 对象。因此，它们也继承了所有集合基类提供的强大的方法：
 
 <style>
     #collection-method-list > p {
@@ -53,85 +53,85 @@ Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collect
 
 <div id="collection-method-list" markdown="1">
 
-[all](/docs/{{version}}/collections#method-all)
-[average](/docs/{{version}}/collections#method-average)
-[avg](/docs/{{version}}/collections#method-avg)
-[chunk](/docs/{{version}}/collections#method-chunk)
-[collapse](/docs/{{version}}/collections#method-collapse)
-[combine](/docs/{{version}}/collections#method-combine)
-[contains](/docs/{{version}}/collections#method-contains)
-[containsStrict](/docs/{{version}}/collections#method-containsstrict)
-[count](/docs/{{version}}/collections#method-count)
-[diff](/docs/{{version}}/collections#method-diff)
-[diffKeys](/docs/{{version}}/collections#method-diffkeys)
-[each](/docs/{{version}}/collections#method-each)
-[every](/docs/{{version}}/collections#method-every)
-[except](/docs/{{version}}/collections#method-except)
-[filter](/docs/{{version}}/collections#method-filter)
-[first](/docs/{{version}}/collections#method-first)
-[flatMap](/docs/{{version}}/collections#method-flatmap)
-[flatten](/docs/{{version}}/collections#method-flatten)
-[flip](/docs/{{version}}/collections#method-flip)
-[forget](/docs/{{version}}/collections#method-forget)
-[forPage](/docs/{{version}}/collections#method-forpage)
-[get](/docs/{{version}}/collections#method-get)
-[groupBy](/docs/{{version}}/collections#method-groupby)
-[has](/docs/{{version}}/collections#method-has)
-[implode](/docs/{{version}}/collections#method-implode)
-[intersect](/docs/{{version}}/collections#method-intersect)
-[isEmpty](/docs/{{version}}/collections#method-isempty)
-[isNotEmpty](/docs/{{version}}/collections#method-isnotempty)
-[keyBy](/docs/{{version}}/collections#method-keyby)
-[keys](/docs/{{version}}/collections#method-keys)
-[last](/docs/{{version}}/collections#method-last)
-[map](/docs/{{version}}/collections#method-map)
-[mapWithKeys](/docs/{{version}}/collections#method-mapwithkeys)
-[max](/docs/{{version}}/collections#method-max)
-[median](/docs/{{version}}/collections#method-median)
-[merge](/docs/{{version}}/collections#method-merge)
-[min](/docs/{{version}}/collections#method-min)
-[mode](/docs/{{version}}/collections#method-mode)
-[nth](/docs/{{version}}/collections#method-nth)
-[only](/docs/{{version}}/collections#method-only)
-[partition](/docs/{{version}}/collections#method-partition)
-[pipe](/docs/{{version}}/collections#method-pipe)
-[pluck](/docs/{{version}}/collections#method-pluck)
-[pop](/docs/{{version}}/collections#method-pop)
-[prepend](/docs/{{version}}/collections#method-prepend)
-[pull](/docs/{{version}}/collections#method-pull)
-[push](/docs/{{version}}/collections#method-push)
-[put](/docs/{{version}}/collections#method-put)
-[random](/docs/{{version}}/collections#method-random)
-[reduce](/docs/{{version}}/collections#method-reduce)
-[reject](/docs/{{version}}/collections#method-reject)
-[reverse](/docs/{{version}}/collections#method-reverse)
-[search](/docs/{{version}}/collections#method-search)
-[shift](/docs/{{version}}/collections#method-shift)
-[shuffle](/docs/{{version}}/collections#method-shuffle)
-[slice](/docs/{{version}}/collections#method-slice)
-[sort](/docs/{{version}}/collections#method-sort)
-[sortBy](/docs/{{version}}/collections#method-sortby)
-[sortByDesc](/docs/{{version}}/collections#method-sortbydesc)
-[splice](/docs/{{version}}/collections#method-splice)
-[split](/docs/{{version}}/collections#method-split)
-[sum](/docs/{{version}}/collections#method-sum)
-[take](/docs/{{version}}/collections#method-take)
-[tap](/docs/{{version}}/collections#method-tap)
-[toArray](/docs/{{version}}/collections#method-toarray)
-[toJson](/docs/{{version}}/collections#method-tojson)
-[transform](/docs/{{version}}/collections#method-transform)
-[union](/docs/{{version}}/collections#method-union)
-[unique](/docs/{{version}}/collections#method-unique)
-[uniqueStrict](/docs/{{version}}/collections#method-uniquestrict)
-[values](/docs/{{version}}/collections#method-values)
-[when](/docs/{{version}}/collections#method-when)
-[where](/docs/{{version}}/collections#method-where)
-[whereStrict](/docs/{{version}}/collections#method-wherestrict)
-[whereIn](/docs/{{version}}/collections#method-wherein)
-[whereInStrict](/docs/{{version}}/collections#method-whereinstrict)
-[whereNotIn](/docs/{{version}}/collections#method-wherenotin)
-[whereNotInStrict](/docs/{{version}}/collections#method-wherenotinstrict)
-[zip](/docs/{{version}}/collections#method-zip)
+[all](/docs/collections#method-all)
+[average](/docs/collections#method-average)
+[avg](/docs/collections#method-avg)
+[chunk](/docs/collections#method-chunk)
+[collapse](/docs/collections#method-collapse)
+[combine](/docs/collections#method-combine)
+[contains](/docs/collections#method-contains)
+[containsStrict](/docs/collections#method-containsstrict)
+[count](/docs/collections#method-count)
+[diff](/docs/collections#method-diff)
+[diffKeys](/docs/collections#method-diffkeys)
+[each](/docs/collections#method-each)
+[every](/docs/collections#method-every)
+[except](/docs/collections#method-except)
+[filter](/docs/collections#method-filter)
+[first](/docs/collections#method-first)
+[flatMap](/docs/collections#method-flatmap)
+[flatten](/docs/collections#method-flatten)
+[flip](/docs/collections#method-flip)
+[forget](/docs/collections#method-forget)
+[forPage](/docs/collections#method-forpage)
+[get](/docs/collections#method-get)
+[groupBy](/docs/collections#method-groupby)
+[has](/docs/collections#method-has)
+[implode](/docs/collections#method-implode)
+[intersect](/docs/collections#method-intersect)
+[isEmpty](/docs/collections#method-isempty)
+[isNotEmpty](/docs/collections#method-isnotempty)
+[keyBy](/docs/collections#method-keyby)
+[keys](/docs/collections#method-keys)
+[last](/docs/collections#method-last)
+[map](/docs/collections#method-map)
+[mapWithKeys](/docs/collections#method-mapwithkeys)
+[max](/docs/collections#method-max)
+[median](/docs/collections#method-median)
+[merge](/docs/collections#method-merge)
+[min](/docs/collections#method-min)
+[mode](/docs/collections#method-mode)
+[nth](/docs/collections#method-nth)
+[only](/docs/collections#method-only)
+[partition](/docs/collections#method-partition)
+[pipe](/docs/collections#method-pipe)
+[pluck](/docs/collections#method-pluck)
+[pop](/docs/collections#method-pop)
+[prepend](/docs/collections#method-prepend)
+[pull](/docs/collections#method-pull)
+[push](/docs/collections#method-push)
+[put](/docs/collections#method-put)
+[random](/docs/collections#method-random)
+[reduce](/docs/collections#method-reduce)
+[reject](/docs/collections#method-reject)
+[reverse](/docs/collections#method-reverse)
+[search](/docs/collections#method-search)
+[shift](/docs/collections#method-shift)
+[shuffle](/docs/collections#method-shuffle)
+[slice](/docs/collections#method-slice)
+[sort](/docs/collections#method-sort)
+[sortBy](/docs/collections#method-sortby)
+[sortByDesc](/docs/collections#method-sortbydesc)
+[splice](/docs/collections#method-splice)
+[split](/docs/collections#method-split)
+[sum](/docs/collections#method-sum)
+[take](/docs/collections#method-take)
+[tap](/docs/collections#method-tap)
+[toArray](/docs/collections#method-toarray)
+[toJson](/docs/collections#method-tojson)
+[transform](/docs/collections#method-transform)
+[union](/docs/collections#method-union)
+[unique](/docs/collections#method-unique)
+[uniqueStrict](/docs/collections#method-uniquestrict)
+[values](/docs/collections#method-values)
+[when](/docs/collections#method-when)
+[where](/docs/collections#method-where)
+[whereStrict](/docs/collections#method-wherestrict)
+[whereIn](/docs/collections#method-wherein)
+[whereInStrict](/docs/collections#method-whereinstrict)
+[whereNotIn](/docs/collections#method-wherenotin)
+[whereNotInStrict](/docs/collections#method-wherenotinstrict)
+[zip](/docs/collections#method-zip)
 
 </div>
 
@@ -146,7 +146,7 @@ Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collect
     namespace App;
     
     use App\CustomCollection;
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -154,7 +154,7 @@ Eloquent 返回的所有多结果集都是 `Illuminate\Database\Eloquent\Collect
          * 创建一个新的 Eloquent 集合实例对象。
          *
          * @param  array  $models
-         * @return \Illuminate\Database\Eloquent\Collection
+         * @return \Royalcms\Database\Eloquent\Collection
          */
         public function newCollection(array $models = [])
         {

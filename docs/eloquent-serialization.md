@@ -18,13 +18,13 @@
 <a name="serializing-to-arrays"></a>
 ### 序列化成数组
 
-如果要将模型还有其加载的[关联](/docs/{{version}}/eloquent-relationships)转换成一个数组，则可以使用 toArray 方法。这个方法是递归的，因此，所有属性和关联（包含关联中的关联）都会被转换成数组：
+如果要将模型还有其加载的[关联](/docs/eloquent-relationships)转换成一个数组，则可以使用 toArray 方法。这个方法是递归的，因此，所有属性和关联（包含关联中的关联）都会被转换成数组：
 
     $user = App\User::with('roles')->first();
     
     return $user->toArray();
 
-你也可以将整个[集合](/docs/{{version}}/eloquent-collections)转换成数组：
+你也可以将整个[集合](/docs/eloquent-collections)转换成数组：
 
     $users = App\User::all();
     
@@ -60,7 +60,7 @@
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -80,7 +80,7 @@
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -105,13 +105,13 @@
 <a name="appending-values-to-json"></a>
 ## 添加参数到 JSON 中
 
-有时候，在转换模型到 数组 或 JSON 时，你希望添加一个在数据库中没有对应字段的属性。首先你需要为这个值定义一个  [访问器](/docs/{{version}}/eloquent-mutators)：
+有时候，在转换模型到 数组 或 JSON 时，你希望添加一个在数据库中没有对应字段的属性。首先你需要为这个值定义一个  [访问器](/docs/eloquent-mutators)：
 
     <?php
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -132,7 +132,7 @@
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {

@@ -156,7 +156,7 @@ Dusk 默认会尝试自动运行 ChromeDriver。如果在你特定的系统中�
     use App\User;
     use Tests\DuskTestCase;
     use Royalcms\Dusk\Chrome;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
     
     class ExampleTest extends DuskTestCase
     {

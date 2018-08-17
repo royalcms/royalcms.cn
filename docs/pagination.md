@@ -13,7 +13,7 @@
 <a name="introduction"></a>
 ## 简介
 
-在大多数的框架中，分页无不令人十分头疼。 Royalcms 的分页器与[查询构造器](/docs/{{version}}/queries)、[Eloquent ORM](/docs/{{version}}/eloquent) 集成在一起，并提供方便易用的数据结果集分页。分页器生成的 HTML 与 Bootstrap CSS 框架兼容。
+在大多数的框架中，分页无不令人十分头疼。 Royalcms 的分页器与[查询构造器](/docs/queries)、[Eloquent ORM](/docs/eloquent) 集成在一起，并提供方便易用的数据结果集分页。分页器生成的 HTML 与 Bootstrap CSS 框架兼容。
 
 <a name="basic-usage"></a>
 ## 基本用法
@@ -21,7 +21,7 @@
 <a name="paginating-query-builder-results"></a>
 ### 查询构造器分页
 
-有几种方法可以对数据进行分页。最简单的是在 [查询语句构造器](/docs/{{version}}/queries)  或 [Eloquent 查询](/docs/{{version}}/eloquent) 中使用 `paginate` 方法。 `paginate` 方法会自动根据用户正在查看的页面来设置限制和偏移量。默认情况下，当前页面通过 HTTP 请求所带的参数 `page` 的值来检测。这个值是被 Royalcms 自动检测到的，也会自动插入到由分页器生产的链接中。
+有几种方法可以对数据进行分页。最简单的是在 [查询语句构造器](/docs/queries)  或 [Eloquent 查询](/docs/eloquent) 中使用 `paginate` 方法。 `paginate` 方法会自动根据用户正在查看的页面来设置限制和偏移量。默认情况下，当前页面通过 HTTP 请求所带的参数 `page` 的值来检测。这个值是被 Royalcms 自动检测到的，也会自动插入到由分页器生产的链接中。
 
 在下面这个例子中，传递给 `paginate` 方法的唯一参数是「每页」显示的项目数量。下面是每页显示 `15` 条数据的例子：
 
@@ -29,7 +29,7 @@
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Support\Facades\DB;
+    use Royalcms\Support\Facades\DB;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -58,7 +58,7 @@
 <a name="paginating-eloquent-results"></a>
 ### Eloquent 模型分页
 
-你也可以对 [Eloquent](/docs/{{version}}/eloquent) 查询进行分页。下面的例子中对 `User` 模型进行了分页并且每页显示 `15` 条数据。正如你看到的，所使用的语法几乎与基于查询语句构造器分页时的完全相同：
+你也可以对 [Eloquent](/docs/eloquent) 查询进行分页。下面的例子中对 `User` 模型进行了分页并且每页显示 `15` 条数据。正如你看到的，所使用的语法几乎与基于查询语句构造器分页时的完全相同：
 
     $users = App\User::paginate(15);
 
@@ -73,7 +73,7 @@
 <a name="manually-creating-a-paginator"></a>
 ### 手动创建分页
 
-如果你想手动创建分页实例并且最终得到一个数组类型的结果，可以根据需求来创建 `Illuminate\Pagination\Paginator` 或者 `Illuminate\Pagination\LengthAwarePaginator` 实例来实现。
+如果你想手动创建分页实例并且最终得到一个数组类型的结果，可以根据需求来创建 `Royalcms\Pagination\Paginator` 或者 `Royalcms\Pagination\LengthAwarePaginator` 实例来实现。
 
 `Paginator` 类不需要知道结果集中的数据量，因此该类没有检索最后一页索引的方法。而 `LengthAwarePaginator` 接收的参数几乎和 `Paginator` 一样，但它却需要计算结果集中的数据量。
 
@@ -84,7 +84,7 @@
 <a name="displaying-pagination-results"></a>
 ## 显示分页结果
 
-在调用 `paginate` 方法时，你将会接收到一个 `Illuminate\Pagination\LengthAwarePaginator` 实例。当调用 `simplePaginate` 方法时，你将会接收到一个 `Illuminate\Pagination\Paginator` 实例。这些对象提供了一些用于渲染结果集的函数。除了这些辅助函数，分页器实例是一个迭代器，也可以作为数组循环。因此，一旦检测到结果集，你可以使用 [Blade](/docs/{{version}}/blade) 模板显示结果集并渲染页面链接：
+在调用 `paginate` 方法时，你将会接收到一个 `Royalcms\Pagination\LengthAwarePaginator` 实例。当调用 `simplePaginate` 方法时，你将会接收到一个 `Royalcms\Pagination\Paginator` 实例。这些对象提供了一些用于渲染结果集的函数。除了这些辅助函数，分页器实例是一个迭代器，也可以作为数组循环。因此，一旦检测到结果集，你可以使用Blade模板显示结果集并渲染页面链接：
 
     <div class="container">
         @foreach ($users as $user)
@@ -121,7 +121,7 @@
 <a name="converting-results-to-json"></a>
 ### 将结果转换为 JSON
 
-Royalcms 分页器结果类实现了 `Illuminate\Contracts\Support\Jsonable` 接口契约并且提供 `toJson` 方法，因此将分页结果转换为 JSON 非常简单。你也可以在路由或控制器操作中简单地将分页实例转换为 JSON 返回：
+Royalcms 分页器结果类实现了 `Royalcms\Contracts\Support\Jsonable` 接口契约并且提供 `toJson` 方法，因此将分页结果转换为 JSON 非常简单。你也可以在路由或控制器操作中简单地将分页实例转换为 JSON 返回：
 
     Route::get('users', function () {
         return App\User::paginate();

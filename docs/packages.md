@@ -31,7 +31,7 @@
 <a name="package-discovery"></a>
 ## 扩展包发现
 
-在 Royalcms 应用程序的 `config/app.php` 配置文件中，`providers` 选项定义了应该被 Royalcms 加载的服务提供者的列表。当有人安装你的扩展包时，你需要让你的服务提供者包含在这个列表里。而不是要求用户手动将你的服务提供者添加到这个列表里，你可能需要在你扩展包 `composer.json` 文件的 `extra` 部分的定义这些提供者。除了服务提供者，你也要列出可能想要注册的 [facades](/docs/{{version}}/facades)：
+在 Royalcms 应用程序的 `config/app.php` 配置文件中，`providers` 选项定义了应该被 Royalcms 加载的服务提供者的列表。当有人安装你的扩展包时，你需要让你的服务提供者包含在这个列表里。而不是要求用户手动将你的服务提供者添加到这个列表里，你可能需要在你扩展包 `composer.json` 文件的 `extra` 部分的定义这些提供者。除了服务提供者，你也要列出可能想要注册的facades：
 
     "extra": {
         "Royalcms": {
@@ -71,9 +71,9 @@
 <a name="service-providers"></a>
 ## 服务提供者
 
-[服务提供者](/docs/{{version}}/providers) 是你的扩展包与 Royalcms 连接的重点。服务提供者负责绑定一些东西至 Royalcms 的 [服务容器](/docs/{{version}}/container) 并告知 Royalcms 要从哪加载扩展包的资源，例如视图、配置文件、语言包。
+服务提供者 是你的扩展包与 Royalcms 连接的重点。服务提供者负责绑定一些东西至 Royalcms 的服务容器并告知 Royalcms 要从哪加载扩展包的资源，例如视图、配置文件、语言包。
 
-服务提供者继承了 `Illuminate\Support\ServiceProvider` 类并包含了两个方法： `register` 和 `boot`. 。基底的 `ServiceProvider` 类被放置在 Composer 的 `illuminate/support` 扩展包，你必须将它加入至你自己的扩展包依赖中。若要了解更多关于服务提供者的结构与用途，请查阅 [它的文档](/docs/{{version}}/providers)。
+服务提供者继承了 `Royalcms\Support\ServiceProvider` 类并包含了两个方法： `register` 和 `boot`. 。基底的 `ServiceProvider` 类被放置在 Composer 的 `Royalcms/support` 扩展包，你必须将它加入至你自己的扩展包依赖中。
 
 <a name="resources"></a>
 ## 资源文件
@@ -137,7 +137,7 @@
 <a name="migrations"></a>
 ### 数据库迁移
 
-如果你的扩展包包含 [数据库迁移](/docs/{{version}}/migrations) ，你需要使用 `loadMigrationsFrom` 方法告知 Royalcms 如何去加载他们。`loadMigrationsFrom` 方法只需要你的扩展包的迁移文件路径作为唯一参数：
+如果你的扩展包包含 [数据库迁移](/docs/migrations) ，你需要使用 `loadMigrationsFrom` 方法告知 Royalcms 如何去加载他们。`loadMigrationsFrom` 方法只需要你的扩展包的迁移文件路径作为唯一参数：
 
     /**
      * 在注册后进行服务的启动。
@@ -154,7 +154,7 @@
 <a name="translations"></a>
 ### 语言包
 
-如果你的扩展包里面包含了 [本地化](/docs/{{version}}/localization) ，则可以使用 `loadTranslationsFrom` 方法来告知 Royalcms 该如何加载它们。举个例子，如果你的扩展包名称为 `courier` ，你可以按照以下方式将其添加至服务提供者的 `boot` 方法：
+如果你的扩展包里面包含了 [本地化](/docs/localization) ，则可以使用 `loadTranslationsFrom` 方法来告知 Royalcms 该如何加载它们。举个例子，如果你的扩展包名称为 `courier` ，你可以按照以下方式将其添加至服务提供者的 `boot` 方法：
 
     /**
      * 在注册后进行服务的启动。
@@ -193,7 +193,7 @@
 <a name="views"></a>
 ### 视图
 
-若要在 Royalcms 中注册扩展包 [视图](/docs/{{version}}/views)，则必须告诉 Royalcms 你的视图位置。你可以使用服务提供者的 `loadViewsFrom` 方法来实现。`loadViewsFrom` 方法允许两个参数：视图模板路径与扩展包名称。例如，如果你的扩展包名称是 `courier` ，你可以按照以下方式将其添加至服务提供者的 `boot` 方法内：
+若要在 Royalcms 中注册扩展包 [视图](/docs/views)，则必须告诉 Royalcms 你的视图位置。你可以使用服务提供者的 `loadViewsFrom` 方法来实现。`loadViewsFrom` 方法允许两个参数：视图模板路径与扩展包名称。例如，如果你的扩展包名称是 `courier` ，你可以按照以下方式将其添加至服务提供者的 `boot` 方法内：
 
     /**
      * 在注册后进行服务的启动。
@@ -238,7 +238,7 @@
 <a name="commands"></a>
 ## 命令
 
-给你的扩展包注册 Artisan 命令，您可以使用 `commands` 方法。此方法需要一个命令类的数组。一旦命令被注册，您可以使用 [Artisan 命令行](/docs/{{version}}/artisan) 执行它们：
+给你的扩展包注册 Artisan 命令，您可以使用 `commands` 方法。此方法需要一个命令类的数组。一旦命令被注册，您可以使用 [Artisan 命令行](/docs/artisan) 执行它们：
 
     /**
      * 在注册后进行服务的启动。

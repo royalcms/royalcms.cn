@@ -28,18 +28,18 @@
 
 Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和数据库交互。每个数据库表都有一个对应的「模型」用来与该表交互。你可以通过模型查询数据表中的数据，并将新记录添加到数据表中。
 
-在开始之前，请确保在 `config/database.php` 中配置数据库连接。更多关于数据库的配置信息，请查看 [文档](/docs/{{version}}/database#configuration)。
+在开始之前，请确保在 `config/database.php` 中配置数据库连接。更多关于数据库的配置信息，请查看 [文档](/docs/database#configuration)。
 
 <a name="defining-models"></a>
 ## 定义模型
 
-首先，创建一个 Eloquent 模型，生成的模型通常放在 `app` 目录中，但你可以通过 `composer.json` 随意地将它们放在可被自动加载的地方。所有的 Eloquent 模型都继承了 `Illuminate\Database\Eloquent\Model` 类。
+首先，创建一个 Eloquent 模型，生成的模型通常放在 `app` 目录中，但你可以通过 `composer.json` 随意地将它们放在可被自动加载的地方。所有的 Eloquent 模型都继承了 `Royalcms\Database\Eloquent\Model` 类。
 
-创建模型实例的最简单方法是使用 [Artisan 命令](/docs/{{version}}/artisan) `make:model`：
+创建模型实例的最简单方法是使用 [Artisan 命令](/docs/artisan) `make:model`：
 
     php artisan make:model User
 
-如果要在生成模型时生成 [数据库迁移](/docs/{{version}}/migrations)，可以使用 `--migration` 或 `-m` 选项：
+如果要在生成模型时生成 [数据库迁移](/docs/migrations)，可以使用 `--migration` 或 `-m` 选项：
 
     php artisan make:model User --migration
     
@@ -54,7 +54,7 @@ Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -70,7 +70,7 @@ Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -97,7 +97,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -115,7 +115,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -146,7 +146,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -161,7 +161,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
 <a name="retrieving-models"></a>
 ## 检索多个模型
 
-创建完模型 [及其关联的数据表](/docs/{{version}}/schema) 之后，就可以开始从数据库中检索数据。可把每个 Eloquent 模型想像成强大的 [查询构造器](/docs/{{version}}/queries)，它让你可以流畅地查询与该模型相关联的数据库表。例如：
+创建完模型及其关联的数据表之后，就可以开始从数据库中检索数据。可把每个 Eloquent 模型想像成强大的 [查询构造器](/docs/queries)，它让你可以流畅地查询与该模型相关联的数据库表。例如：
 
 
     <?php
@@ -176,19 +176,19 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
 
 #### 添加其他约束
 
-Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Eloquent 模型都可以当作一个 [查询构造器](/docs/{{version}}/queries)，因此你还可以在查询中添加约束，然后使用 `get` 方法来获取结果：
+Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Eloquent 模型都可以当作一个 [查询构造器](/docs/queries)，因此你还可以在查询中添加约束，然后使用 `get` 方法来获取结果：
 
     $flights = App\Flight::where('active', 1)
                    ->orderBy('name', 'desc')
                    ->take(10)
                    ->get();
 
-> {tip} Eloquent 模型是查询构造器，因此你应当去阅读 [查询构造器](/docs/{{version}}/queries) 提供的所有方法，以便你可以在 Eloquent 查询中使用。
+> {tip} Eloquent 模型是查询构造器，因此你应当去阅读 [查询构造器](/docs/queries) 提供的所有方法，以便你可以在 Eloquent 查询中使用。
 
 <a name="collections"></a>
 ### 集合
 
-使用 Eloquent 中的方法比如 `all` 和 `get` 可以检索多个结果，并且会返回一个 `Illuminate\Database\Eloquent\Collection` 实例。`Collection` 类提供了 [很多辅助函数](/docs/{{version}}/eloquent-collections#available-methods) 来处理Eloquent 结果。
+使用 Eloquent 中的方法比如 `all` 和 `get` 可以检索多个结果，并且会返回一个 `Royalcms\Database\Eloquent\Collection` 实例。`Collection` 类提供了 [很多辅助函数](/docs/eloquent-collections#available-methods) 来处理Eloquent 结果。
 
 
     $flights = $flights->reject(function ($flight) {
@@ -242,7 +242,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
 
 #### 「找不到」异常
 
-如果你希望在找不到模型时抛出异常，可以使用 `findOrFail` 以及 `firstOrFail` 方法。这些方法会检索查询的第一个结果。如果没有找到相应结果，就会抛出一个 `Illuminate\Database\Eloquent\ModelNotFoundException`：
+如果你希望在找不到模型时抛出异常，可以使用 `findOrFail` 以及 `firstOrFail` 方法。这些方法会检索查询的第一个结果。如果没有找到相应结果，就会抛出一个 `Royalcms\Database\Eloquent\ModelNotFoundException`：
 
     $model = App\Flight::findOrFail(1);
     
@@ -257,7 +257,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
 <a name="retrieving-aggregates"></a>
 ### 检索集合
 
-你还可以使用 [查询构造器](/docs/{{version}}/queries) 提供的 `count`、`sum`、`max` 以及其它 [聚合函数](/docs/{{version}}/queries#aggregates)。这些方法只会返回适当的标量值而不是整个模型实例：
+你还可以使用 [查询构造器](/docs/queries) 提供的 `count`、`sum`、`max` 以及其它 [聚合函数](/docs/queries#aggregates)。这些方法只会返回适当的标量值而不是整个模型实例：
 
     $count = App\Flight::where('active', 1)->count();
     
@@ -276,7 +276,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
     namespace App\Http\Controllers;
     
     use App\Flight;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class FlightController extends Controller
@@ -337,7 +337,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -370,7 +370,7 @@ $flight->fill(['name' => 'Flight 22']);
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -455,14 +455,14 @@ $flight->fill(['name' => 'Flight 22']);
 <a name="soft-deleting"></a>
 ### 软删除
 
-除了真的从数据库中删除记录，Eloquent 也可以「软删除」模型。当模型被软删除时，它们并不是真的从数据库中被删除。模型上设置了一个 `deleted_at` 属性并将其添加到数据库，也就是说，如果模型具有非空的 `deleted_at` 值，那就代表模型已经被软删除了。要启动模型上的软删除，则必须在模型上使用 `Illuminate\Database\Eloquent\SoftDeletes` trait 并添加 `deleted_at` 字段到 `$dates` 属性上：
+除了真的从数据库中删除记录，Eloquent 也可以「软删除」模型。当模型被软删除时，它们并不是真的从数据库中被删除。模型上设置了一个 `deleted_at` 属性并将其添加到数据库，也就是说，如果模型具有非空的 `deleted_at` 值，那就代表模型已经被软删除了。要启动模型上的软删除，则必须在模型上使用 `Royalcms\Database\Eloquent\SoftDeletes` trait 并添加 `deleted_at` 字段到 `$dates` 属性上：
 
     <?php
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
-    use Illuminate\Database\Eloquent\SoftDeletes;
+    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\SoftDeletes;
     
     class Flight extends Model
     {
@@ -476,7 +476,7 @@ $flight->fill(['name' => 'Flight 22']);
         protected $dates = ['deleted_at'];
     }
 
-你也应该添加 `deleted_at` 字段到数据表中。Royalcms [结构生成器](/docs/{{version}}/migrations) 包含了一个辅助函数用来创建此字段：
+你也应该添加 `deleted_at` 字段到数据表中。Royalcms [结构生成器](/docs/migrations) 包含了一个辅助函数用来创建此字段：
 
     Schema::table('flights', function ($table) {
         $table->softDeletes();
@@ -502,7 +502,7 @@ $flight->fill(['name' => 'Flight 22']);
                     ->where('account_id', 1)
                     ->get();
 
-`withTrashed` 方法也可用于 [关联](/docs/{{version}}/eloquent-relationships) 查询：
+`withTrashed` 方法也可用于 [关联](/docs/eloquent-relationships) 查询：
 
     $flight->history()->withTrashed()->get();
 
@@ -526,7 +526,7 @@ $flight->fill(['name' => 'Flight 22']);
             ->where('airline_id', 1)
             ->restore();
 
-与 `withTrashed` 方法类似，`restore` 方法也可以被用在 [关联](/docs/{{version}}/eloquent-relationships) 查询上:
+与 `withTrashed` 方法类似，`restore` 方法也可以被用在 [关联](/docs/eloquent-relationships) 查询上:
 
     $flight->history()->restore();
 
@@ -551,23 +551,23 @@ $flight->fill(['name' => 'Flight 22']);
 
 #### 编写全局作用域
 
-编写全局作用域很简单。首先定义一个实现 `Illuminate\Database\Eloquent\Scope` 接口的类。这个接口要求你实现一个方法：`apply`。`apply` 方法可以根据需要添加 `where` 条件到查询：
+编写全局作用域很简单。首先定义一个实现 `Royalcms\Database\Eloquent\Scope` 接口的类。这个接口要求你实现一个方法：`apply`。`apply` 方法可以根据需要添加 `where` 条件到查询：
 
     <?php
     
     namespace App\Scopes;
     
-    use Illuminate\Database\Eloquent\Scope;
-    use Illuminate\Database\Eloquent\Model;
-    use Illuminate\Database\Eloquent\Builder;
+    use Royalcms\Database\Eloquent\Scope;
+    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Builder;
     
     class AgeScope implements Scope
     {
         /**
          * 将范围应用于给定的 Eloquent 查询生成器
          *
-         * @param  \Illuminate\Database\Eloquent\Builder  $builder
-         * @param  \Illuminate\Database\Eloquent\Model  $model
+         * @param  \Royalcms\Database\Eloquent\Builder  $builder
+         * @param  \Royalcms\Database\Eloquent\Model  $model
          * @return void
          */
         public function apply(Builder $builder, Model $model)
@@ -587,7 +587,7 @@ $flight->fill(['name' => 'Flight 22']);
     namespace App;
     
     use App\Scopes\AgeScope;
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -616,8 +616,8 @@ Eloquent 还能使用闭包定义全局作用域，如此一来，便就没必�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
-    use Illuminate\Database\Eloquent\Builder;
+    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Builder;
     
     class User extends Model
     {
@@ -666,14 +666,14 @@ User::withoutGlobalScopes([
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
         /**
          * 限制查询只包括受欢迎的用户。
          *
-         * @return \Illuminate\Database\Eloquent\Builder
+         * @return \Royalcms\Database\Eloquent\Builder
          */
         public function scopePopular($query)
         {
@@ -683,7 +683,7 @@ User::withoutGlobalScopes([
         /**
          * 限制查询只包括活跃的用户。
          *
-         * @return \Illuminate\Database\Eloquent\Builder
+         * @return \Royalcms\Database\Eloquent\Builder
          */
         public function scopeActive($query)
         {
@@ -705,14 +705,14 @@ User::withoutGlobalScopes([
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
         /**
          * 限制查询只包括指定类型的用户。
          *
-         * @return \Illuminate\Database\Eloquent\Builder
+         * @return \Royalcms\Database\Eloquent\Builder
          */
         public function scopeOfType($query, $type)
         {
@@ -731,7 +731,7 @@ Eloquent 的模型触发了几个事件，可以在模型的生命周期的以�
 
 从数据库中检索现有模型时会触发 `retrieved` 事件。当新模型第一次被保存时， `creating` 以及 `created` 事件会被触发。如果模型已经存在于数据库中并且调用了 `save` 方法，会触发 `updating` 和 `updated` 事件。在这两种情况下，`saving` / `saved` 事件都会触发。
 
-开始前，在 Eloquent 模型上定义一个 `$dispatchesEvents` 属性，将 Eloquent 模型的生命周期的各个点映射到你的 [事件类](/docs/{{version}}/events) 中。
+开始前，在 Eloquent 模型上定义一个 `$dispatchesEvents` 属性，将 Eloquent 模型的生命周期的各个点映射到你的 [事件类](/docs/events) 中。
 
 
     <?php
@@ -740,8 +740,8 @@ Eloquent 的模型触发了几个事件，可以在模型的生命周期的以�
     
     use App\Events\UserSaved;
     use App\Events\UserDeleted;
-    use Illuminate\Notifications\Notifiable;
-    use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Notifications\Notifiable;
+    use Royalcms\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -801,7 +801,7 @@ Eloquent 的模型触发了几个事件，可以在模型的生命周期的以�
     
     use App\User;
     use App\Observers\UserObserver;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {

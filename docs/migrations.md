@@ -23,12 +23,12 @@
 
 数据库迁移就像是数据库的版本控制，可以让你的团队轻松修改并共享应用程序的数据库结构。迁移通常与 Royalcms 的数据库结构生成器配合使用，让你轻松地构建数据库结构。如果你曾经试过让同事手动在数据库结构中添加字段，那么数据库迁移可以让你不再需要做这样的事情。
 
-Royalcms `Schema` [facade](/docs/{{version}}/facades) 对所有 Royalcms 支持的数据库系统提供了创建和操作数据表的相应支持。
+Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创建和操作数据表的相应支持。
 
 <a name="generating-migrations"></a>
 ## 生成迁移
 
-使用 [Artisan 命令](/docs/{{version}}/artisan)  `make:migration` 来创建迁移：
+使用 [Artisan 命令](/docs/artisan)  `make:migration` 来创建迁移：
 
     php artisan make:migration create_users_table
 
@@ -51,9 +51,9 @@ Royalcms `Schema` [facade](/docs/{{version}}/facades) 对所有 Royalcms 支持�
 
     <?php
     
-    use Illuminate\Support\Facades\Schema;
-    use Illuminate\Database\Schema\Blueprint;
-    use Illuminate\Database\Migrations\Migration;
+    use Royalcms\Support\Facades\Schema;
+    use Royalcms\Database\Schema\Blueprint;
+    use Royalcms\Database\Migrations\Migration;
     
     class CreateFlightsTable extends Migration
     {
@@ -90,8 +90,6 @@ Royalcms `Schema` [facade](/docs/{{version}}/facades) 对所有 Royalcms 支持�
 使用 Artisan 命令 `migrate` 来运行所有未完成的迁移：
 
     php artisan migrate
-
-> {note} 如果你使用的是 [Homestead 虚拟机](/docs/{{version}}/homestead)，则应该在虚拟机中执行命令。
 
 #### 在生产环境强制执行迁移
 
@@ -392,7 +390,7 @@ Royalcms 会自动生成一个合理的索引名称，但你也可以传递第�
 
 Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis」。如果你是在版本低于5.7.7 的 MySQL release 或者版本低于10.2.2 的 MariaDB release 上创建索引，那就需要你手动配置迁移生成的默认字符串长度。即在 `AppServiceProvider` 中调用 `Schema::defaultStringLength` 方法来配置它：
 
-    use Illuminate\Support\Facades\Schema;
+    use Royalcms\Support\Facades\Schema;
     
     /**
      * 引导任何应用程序服务

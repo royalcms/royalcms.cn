@@ -39,7 +39,7 @@
 <a name="defining-relationships"></a>
 ## 定义关联
 
-Eloquent 关联在 Eloquent 模型类中以方法的形式呈现。如同 Eloquent 模型本身，关联也可以作为强大的 [查询语句构造器](/docs/{{version}}/queries) 使用，提供了强大的链式调用和查询功能。例如，我们可以在 `posts` 关联的链式调用中附加一个约束条件：
+Eloquent 关联在 Eloquent 模型类中以方法的形式呈现。如同 Eloquent 模型本身，关联也可以作为强大的 [查询语句构造器](/docs/queries) 使用，提供了强大的链式调用和查询功能。例如，我们可以在 `posts` 关联的链式调用中附加一个约束条件：
 
     $user->posts()->where('active', 1)->get();
 
@@ -54,7 +54,7 @@ Eloquent 关联在 Eloquent 模型类中以方法的形式呈现。如同 Eloque
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -87,7 +87,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Phone extends Model
     {
@@ -164,7 +164,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Post extends Model
     {
@@ -206,7 +206,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Comment extends Model
     {
@@ -256,7 +256,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -297,7 +297,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Role extends Model
     {
@@ -342,14 +342,14 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
 
 #### 定义自定义中间表模型
 
-如果您想定义一个自定义模型来表示关联关系中的中间表，可以在定义关联时调用 `using` 方法。所有自定义中间表模型都必须扩展自 `Illuminate\Database\Eloquent\Relations\Pivot` 类。例如，
+如果您想定义一个自定义模型来表示关联关系中的中间表，可以在定义关联时调用 `using` 方法。所有自定义中间表模型都必须扩展自 `Royalcms\Database\Eloquent\Relations\Pivot` 类。例如，
 我们在写 `Role` 模型的关联时，使用自定义中间表模型 `UserRole`：
 
     <?php
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Role extends Model
     {
@@ -368,7 +368,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Relations\Pivot;
+    use Royalcms\Database\Eloquent\Relations\Pivot;
     
     class UserRole extends Pivot
     {
@@ -402,7 +402,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Country extends Model
     {
@@ -467,7 +467,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Comment extends Model
     {
@@ -524,7 +524,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
 
 默认，Royalcms 会使用完全限定类名作为关联模型保存在多态模型上的类型字段值。比如，在上面的例子中，`Comment` 属于 `Post` 或者 `Video`，那么 `commentable_type`的默认值对应地就是 `App\Post` 和 `App\Video`。但是，您可能希望将数据库与程序内部结构解耦。那样的话，你可以定义一个「多态映射表」来指示 Eloquent 使用每个模型自定义类型字段名而不是类名：
 
-    use Illuminate\Database\Eloquent\Relations\Relation;
+    use Royalcms\Database\Eloquent\Relations\Relation;
     
     Relation::morphMap([
         'posts' => 'App\Post',
@@ -565,7 +565,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Post extends Model
     {
@@ -586,7 +586,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Tag extends Model
     {
@@ -628,7 +628,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
 <a name="querying-relations"></a>
 ## 查询关联
 
-由于所有类型的关联都通过方法定义，您可以调用这些方法来获取关联实例，而不需要实际运行关联的查询。此外，所有类型的关联都可以作为 [查询语句构造器](/docs/{{version}}/queries) 使用，让你在向数据库执行 SQL 语句前，使用链式调用的方式添加约束条件。
+由于所有类型的关联都通过方法定义，您可以调用这些方法来获取关联实例，而不需要实际运行关联的查询。此外，所有类型的关联都可以作为 [查询语句构造器](/docs/queries) 使用，让你在向数据库执行 SQL 语句前，使用链式调用的方式添加约束条件。
 
 例如，假设一个博客系统，其中 `User` 模型有许多关联的 `Post` 模型：
 
@@ -636,7 +636,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -655,7 +655,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     $user->posts()->where('active', 1)->get();
 
-您可以在关联上使用任何 [查询语句构造器](/docs/{{version}}/queries) 的方法，所以，欢迎查阅查询语句构造器的相关文档以便了解您可以使用哪些方法。
+您可以在关联上使用任何 [查询语句构造器](/docs/queries) 的方法，所以，欢迎查阅查询语句构造器的相关文档以便了解您可以使用哪些方法。
 
 <a name="relationship-methods-vs-dynamic-properties"></a>
 ### 关联方法 Vs. 动态属性
@@ -750,7 +750,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Book extends Model
     {
@@ -808,7 +808,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
         $query->where('title', 'like', '%first%');
     }])->get();
 
-在这个例子中，Eloquent 只会预加载标题里包含 `first` 文本的文章。您也可以调用其它的 [查询语句构造器](/docs/{{version}}/queries) 进一步自定义预加载约束条件：
+在这个例子中，Eloquent 只会预加载标题里包含 `first` 文本的文章。您也可以调用其它的 [查询语句构造器](/docs/queries) 进一步自定义预加载约束条件：
 
     $users = App\User::with(['posts' => function ($query) {
         $query->orderBy('created_at', 'desc');
@@ -867,7 +867,7 @@ Eloquent 提供了便捷的方法来将新的模型增加至关联中。例如�
         'message' => '一条新的评论。',
     ]);
 
-> {tip} 在使用 `create` 方法前，请确认您已经浏览了本文档的 [批量赋值](/docs/{{version}}/eloquent#mass-assignment) 章节。
+> {tip} 在使用 `create` 方法前，请确认您已经浏览了本文档的 [批量赋值](/docs/eloquent#mass-assignment) 章节。
 
 您可以使用 `createMany` 方法保存多个关联模型：
 
@@ -976,7 +976,7 @@ Eloquent 也提供了几个额外的辅助方法，让操作关联模型更加�
     
     namespace App;
     
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Eloquent\Model;
     
     class Comment extends Model
     {

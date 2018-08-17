@@ -45,9 +45,9 @@ Royalcms 提供了多种有用的工具来让你更容易的测试使用数据�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -76,9 +76,9 @@ Royalcms 提供了多种有用的工具来让你更容易的测试使用数据�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -248,10 +248,3 @@ Royalcms 为你的 [PHPUnit](https://phpunit.de/) 测试提供了一些数据库
 `$this->assertDatabaseMissing($table, array $data);`  |  断言表里没有指定数据。
 `$this->assertSoftDeleted($table, array $data);`  |  断言指定记录已经被软删除。
 
----
-
-> {note} 欢迎任何形式的转载，但请务必注明出处，尊重他人劳动共创开源社区。
-> 
-> 转载请注明：本文档由 Royalcms China 社区 [Royalcms-china.org](https://Royalcms-china.org) 组织翻译，详见 [翻译召集帖](https://Royalcms-china.org/topics/5756/Royalcms-55-document-translation-call-come-and-join-the-translation)。
-> 
-> 文档永久地址： https://d.Royalcms-china.org

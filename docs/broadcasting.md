@@ -32,14 +32,14 @@
 
 在现代的 web 应用程序中，WebSockets 被用来实现需要实时、即时更新的接口。当服务器上的数据被更新后，更新信息将通过 WebSocket 连接发送到客户端等待处理。相比于不停地轮询应用程序，WebSocket 是一种更加可靠和高效的选择。
 
-为了帮助你建立这类应用, Royalcms 将通过 WebSocket 连接来使「广播」[事件](/docs/{{version}}/events) 变得更加轻松。广播事件允许你在服务端代码和客户端 JavaScript 应用之间共享相同的事件名。
+为了帮助你建立这类应用, Royalcms 将通过 WebSocket 连接来使「广播」[事件](/docs/events) 变得更加轻松。广播事件允许你在服务端代码和客户端 JavaScript 应用之间共享相同的事件名。
 
-> {tip} 在深入了解事件广播之前，请确认你已阅读所有关于 Royalcms [事件和侦听器](/docs/{{version}}/events) 的文档。
+> {tip} 在深入了解事件广播之前，请确认你已阅读所有关于 Royalcms [事件和侦听器](/docs/events) 的文档。
 
 <a name="configuration"></a>
 ### 配置
 
-所有关于事件广播的配置都被保存在 `config/broadcasting.php` 文件中。 Royalcms 自带了几个广播驱动器：[Pusher](https://pusher.com), [Redis](/docs/{{version}}/redis), 和一个用于本地开发与调试的 `log` 驱动器。另外，还有一个 `null` 驱动器可以让你完全关闭广播功能。每一个驱动的示例配置都可以在 `config/broadcasting.php` 文件中被找到。
+所有关于事件广播的配置都被保存在 `config/broadcasting.php` 文件中。 Royalcms 自带了几个广播驱动器：[Pusher](https://pusher.com), [Redis](/docs/redis), 和一个用于本地开发与调试的 `log` 驱动器。另外，还有一个 `null` 驱动器可以让你完全关闭广播功能。每一个驱动的示例配置都可以在 `config/broadcasting.php` 文件中被找到。
 
 #### 广播服务提供者
 
@@ -109,7 +109,7 @@ Redis 广播器会使用 Redis 的「生产者/消费者」特性来广播消息
 
 #### 对队列的要求
 
-在开始广播事件之前，你还需要配置和运行 [队列侦听器](/docs/{{version}}/queues) 。所有的事件广播都是通过队列任务来完成的，因此应用程序的响应时间不会受到明显影响。
+在开始广播事件之前，你还需要配置和运行 [队列侦听器](/docs/queues) 。所有的事件广播都是通过队列任务来完成的，因此应用程序的响应时间不会受到明显影响。
 
 <a name="concept-overview"></a>
 ## 概念综述
@@ -232,7 +232,7 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
         }
     }
 
-然后，你只需要像你平时那样 [触发事件](/docs/{{version}}/events) 。一旦事件被触发，一个 [队列任务](/docs/{{version}}/queues) 会自动广播事件到你指定的广播驱动器上。
+然后，你只需要像你平时那样 [触发事件](/docs/events) 。一旦事件被触发，一个 [队列任务](/docs/queues) 会自动广播事件到你指定的广播驱动器上。
 
 <a name="broadcast-name"></a>
 ### 广播名称
@@ -350,7 +350,7 @@ Royalcms 默认会使用事件的类名作为广播名称来广播事件。不�
 
 #### 授权回调模型绑定
 
-就像 HTTP 路由一样，频道路由也可以利用显式或隐式 [路由模型绑定](/docs/{{version}}/routing#route-model-binding)。例如，相比于接收一个字符串或数字类型的 order ID，你也可以请求一个真正的 `Order` 模型实例:
+就像 HTTP 路由一样，频道路由也可以利用显式或隐式 [路由模型绑定](/docs/routing#route-model-binding)。例如，相比于接收一个字符串或数字类型的 order ID，你也可以请求一个真正的 `Order` 模型实例:
 
 
     use App\Order;
@@ -554,7 +554,7 @@ Presence 频道可以像公开和私有频道一样接收事件。使用一个�
 <a name="notifications"></a>
 ## 消息通知
 
-将 [消息通知](/docs/{{version}}/notifications) 和事件广播一同使用，你的 JavaScript 应用程序可以在不刷新页面的情况下接收新的消息通知。首先，请先阅读关于如何使用 [the broadcast notification channel](/docs/{{version}}/notifications#broadcast-notifications) 的文档。
+将 [消息通知](/docs/notifications) 和事件广播一同使用，你的 JavaScript 应用程序可以在不刷新页面的情况下接收新的消息通知。首先，请先阅读关于如何使用 [the broadcast notification channel](/docs/notifications#broadcast-notifications) 的文档。
 
 一旦你将一个消息通知配置为使用广播频道，你需要使用 Echo 的 `notification` 方法来监听广播事件。谨记，频道名称应该和接收消息通知的实体类名相匹配：
 

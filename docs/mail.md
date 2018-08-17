@@ -143,9 +143,9 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
     namespace App\Mail;
     
     use App\Order;
-    use Illuminate\Bus\Queueable;
-    use Illuminate\Mail\Mailable;
-    use Illuminate\Queue\SerializesModels;
+    use Royalcms\Bus\Queueable;
+    use Royalcms\Mail\Mailable;
+    use Royalcms\Queue\SerializesModels;
     
     class OrderShipped extends Mailable
     {
@@ -194,9 +194,9 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
     namespace App\Mail;
     
     use App\Order;
-    use Illuminate\Bus\Queueable;
-    use Illuminate\Mail\Mailable;
-    use Illuminate\Queue\SerializesModels;
+    use Royalcms\Bus\Queueable;
+    use Royalcms\Mail\Mailable;
+    use Royalcms\Queue\SerializesModels;
     
     class OrderShipped extends Mailable
     {
@@ -429,7 +429,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 <a name="sending-mail"></a>
 ## 发送邮件
 
-要发送邮件，使用 `Mail` [facade](/docs/{{version}}/facades) 的 `to` 方法。 `to` 方法接受一个邮件地址，一个 user 实现或一个 users 集合。如果传递一个对象或集合，mailer 将自动使用 `email` 和 `name` 属性来设置邮件收件人，所以确保你的对象里有这些属性。一旦指定收件人，你可以传递一个实现到 Mailable 类的 `send` 方法：
+要发送邮件，使用 `Mail`facade的 `to` 方法。 `to` 方法接受一个邮件地址，一个 user 实现或一个 users 集合。如果传递一个对象或集合，mailer 将自动使用 `email` 和 `name` 属性来设置邮件收件人，所以确保你的对象里有这些属性。一旦指定收件人，你可以传递一个实现到 Mailable 类的 `send` 方法：
 
     <?php
     
@@ -437,8 +437,8 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
     
     use App\Order;
     use App\Mail\OrderShipped;
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Mail;
+    use Royalcms\Http\Request;
+    use Royalcms\Support\Facades\Mail;
     use App\Http\Controllers\Controller;
     
     class OrderController extends Controller
@@ -472,14 +472,14 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 #### 将邮件消息加入队列
 
-由于发送消息会大幅延迟应用响应时间，许多开发者选择将邮件消息加入队列在后台进行发送。Royalcms 使用内置的 [统一的队列 API](/docs/{{version}}/queues) 来轻松完成此工作。将邮件消息加入队列，使用 `Mail` facade 的 `queue` 方法：
+由于发送消息会大幅延迟应用响应时间，许多开发者选择将邮件消息加入队列在后台进行发送。Royalcms 使用内置的 [统一的队列 API](/docs/queues) 来轻松完成此工作。将邮件消息加入队列，使用 `Mail` facade 的 `queue` 方法：
 
     Mail::to($request->user())
         ->cc($moreUsers)
         ->bcc($evenMoreUsers)
         ->queue(new OrderShipped($order));
 
-这个方法会自动将工作加入队列，以便后台发送邮件。当然，在使用这个功能前，你需要 [设置你的队列](/docs/{{version}}/queues) 。
+这个方法会自动将工作加入队列，以便后台发送邮件。当然，在使用这个功能前，你需要 [设置你的队列](/docs/queues) 。
 
 #### 延迟邮件消息队列
 
@@ -494,7 +494,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 #### 推送到特定队列
 
-因为所有 Mailable 类是通过 `make:mail` 命令生成并使用 `Illuminate\Bus\Queueable` trait ，你可以在任何 Mailable 类实现中调用 `onQueue` 来指定队列名称，还有 `onConnection` 方法来指定队列链接名称：
+因为所有 Mailable 类是通过 `make:mail` 命令生成并使用 `Royalcms\Bus\Queueable` trait ，你可以在任何 Mailable 类实现中调用 `onQueue` 来指定队列名称，还有 `onConnection` 方法来指定队列链接名称：
 
     $message = (new OrderShipped($order))
                     ->onConnection('sqs')
@@ -509,7 +509,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 如果你的 Mailable 类想要默认使用队列，你可以在类中实现 `ShouldQueue` 接口契约。现在，即便你调用 `send` 方法来发送邮件， Mailable 类仍将邮件放入队列中发送。
 
-    use Illuminate\Contracts\Queue\ShouldQueue;
+    use Royalcms\Contracts\Queue\ShouldQueue;
     
     class OrderShipped extends Mailable implements ShouldQueue
     {
@@ -523,7 +523,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 #### 日志驱动
 
-代替真实发送，`log` 邮件驱动将所有邮件消息写入日志文件以供检查，需要更多根据环境来设置应用程序的信息，可参考 [配置文件](/docs/{{version}}/configuration#environment-configuration).
+代替真实发送，`log` 邮件驱动将所有邮件消息写入日志文件以供检查，需要更多根据环境来设置应用程序的信息，可参考 [配置文件](/docs/configuration#environment-configuration).
 
 #### 通用收件者
 
@@ -549,7 +549,7 @@ Royalcms 会在发送邮件消息之前触发一个事件。切记，这个事�
      * @var array
      */
     protected $listen = [
-        'Illuminate\Mail\Events\MessageSending' => [
+        'Royalcms\Mail\Events\MessageSending' => [
             'App\Listeners\LogSentMessage',
         ],
     ];

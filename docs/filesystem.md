@@ -99,7 +99,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 `Storage` facade 用于和所有已配置的磁盘进行交互。例如，你可以使用 facade 的 `put` 方法将头像保存到默认磁盘上。调 `Storage` facade 的方法前若未先调用 `disk` 方法，此方法会被自动传递给默认磁盘。如果没有先调用 `disk` 方法就调用了 `Storage` facade 上的方法，那调用的方法会自动被传递到默认磁盘：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     Storage::put('avatars/1', $fileContents);
 
@@ -123,7 +123,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 当使用 `local` 或者 `s3` 驱动时，你可以使用 `url` 方法来获取给定文件的 URL。如果你使用的是 `local` 驱动，一般只是在给定的路径前面加上 `/storage` 并返回一个相对的 URL 到那个文件。如果使用的是 `s3` 驱动，会返回完整的远程 URL：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     $url = Storage::url('file1.jpg');
 
@@ -153,7 +153,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 除了读写文件，Royalcms 还可以提供有关文件本身的信息。例如，`size` 方法可用来获取文件的大小（以字节为单位）：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     $size = Storage::size('file1.jpg');
 
@@ -166,7 +166,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 `put` 方法可用于将原始文件内容保存到磁盘上。你也可以传递 PHP 的 `resource` 给 put 方法，它将使用文件系统下的底层流支持。强烈建议在处理大文件时使用流：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     Storage::put('file.jpg', $contents);
     
@@ -174,9 +174,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 #### 自动流式传输
 
-如果你想 Royalcms 自动管理将给定文件流式传输到你想要的存储位置，你可以使用 `putFile` 或 `putFileAs` 方法。这个方法接受 `Illuminate\HTTP\File` 或 `Illuminate\HTTP\UploadedFile` 实例，并自动将文件流式传输到你想要的位置：
+如果你想 Royalcms 自动管理将给定文件流式传输到你想要的存储位置，你可以使用 `putFile` 或 `putFileAs` 方法。这个方法接受 `Royalcms\HTTP\File` 或 `Royalcms\HTTP\UploadedFile` 实例，并自动将文件流式传输到你想要的位置：
 
-    use Illuminate\Http\File;
+    use Royalcms\Http\File;
     
     // 自动为文件名生成唯一的 ID...
     Storage::putFile('photos', new File('/path/to/photo'));
@@ -215,7 +215,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class UserAvatarController extends Controller
@@ -269,7 +269,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 你可通过 `put` 方法在设置文件时指定它的可见性：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     Storage::put('file.jpg', $contents, 'public');
 
@@ -284,7 +284,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 `delete` 方法接受文件名或文件名数组参数来删除磁盘中相应的文件：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     Storage::delete('file.jpg');
     
@@ -297,7 +297,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 `files` 方法返回给定目录下的所有文件的数组。如果你想检索包含所有子目录在内的给定目录中的所有文件的列表，可以使用 `allFiles` 方法：
 
-    use Illuminate\Support\Facades\Storage;
+    use Royalcms\Support\Facades\Storage;
     
     $files = Storage::files($directory);
     
@@ -333,7 +333,7 @@ Royalcms 的文件系统集成提供一系列开箱即用的驱动支持；然�
 
     composer require spatie/flysystem-dropbox
 
-接下来，你需要创建一个[服务提供器](/docs/{{version}}/providers)，如 DropboxServiceProvider。并在该提供器的 `boot` 方法使用 `Storage` facade 的 `extend` 方法自定义你的驱动程序。
+接下来，你需要创建一个服务提供器，如 DropboxServiceProvider。并在该提供器的 `boot` 方法使用 `Storage` facade 的 `extend` 方法自定义你的驱动程序。
 
     <?php
     
@@ -342,7 +342,7 @@ Royalcms 的文件系统集成提供一系列开箱即用的驱动支持；然�
     use Storage;
     use League\Flysystem\Filesystem;
     use Spatie\Dropbox\Client as DropboxClient;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\ServiceProvider;
     use Spatie\FlysystemDropbox\DropboxAdapter;
     
     class DropboxServiceProvider extends ServiceProvider

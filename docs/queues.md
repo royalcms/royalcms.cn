@@ -93,7 +93,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 
     php artisan make:job SendReminderEmail
 
-生成的类实现了 `Illuminate\Contracts\Queue\ShouldQueue` 接口，这意味着这个任务将会被推送到队列中，而不是同步执行。
+生成的类实现了 `Royalcms\Contracts\Queue\ShouldQueue` 接口，这意味着这个任务将会被推送到队列中，而不是同步执行。
 
 <a name="class-structure"></a>
 ### 任务类结构
@@ -106,11 +106,11 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     
     use App\Podcast;
     use App\AudioProcessor;
-    use Illuminate\Bus\Queueable;
-    use Illuminate\Queue\SerializesModels;
-    use Illuminate\Queue\InteractsWithQueue;
-    use Illuminate\Contracts\Queue\ShouldQueue;
-    use Illuminate\Foundation\Bus\Dispatchable;
+    use Royalcms\Bus\Queueable;
+    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Queue\InteractsWithQueue;
+    use Royalcms\Contracts\Queue\ShouldQueue;
+    use Royalcms\Foundation\Bus\Dispatchable;
     
     class ProcessPodcast implements ShouldQueue
     {
@@ -141,9 +141,9 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
         }
     }
 
-注意，在这个例子中，我们在任务类的构造器中直接传递了一个 [Eloquent 模型](/docs/{{version}}/eloquent)。因为我们在任务类里引用了 `SerializesModels` 这个 trait，使得 Eloquent 模型在处理任务时可以被优雅地序列化和反序列化。如果你的队列任务类在构造器中接收了一个 Eloquent 模型，那么只有可识别出该模型的属性会被序列化到队列里。当任务被实际运行时，队列系统便会自动从数据库中重新取回完整的模型。这整个过程对你的应用程序来说是完全透明的，这样可以避免在序列化完整的 Eloquent 模式实例时所带来的一些问题。
+注意，在这个例子中，我们在任务类的构造器中直接传递了一个 [Eloquent 模型](/docs/eloquent)。因为我们在任务类里引用了 `SerializesModels` 这个 trait，使得 Eloquent 模型在处理任务时可以被优雅地序列化和反序列化。如果你的队列任务类在构造器中接收了一个 Eloquent 模型，那么只有可识别出该模型的属性会被序列化到队列里。当任务被实际运行时，队列系统便会自动从数据库中重新取回完整的模型。这整个过程对你的应用程序来说是完全透明的，这样可以避免在序列化完整的 Eloquent 模式实例时所带来的一些问题。
 
-在队列处理任务时，会调用 `handle` 方法，而这里我们也可以通过 `handle` 方法的参数类型提示，让 Royalcms 的 [服务容器](/docs/{{version}}/container) 自动注入依赖对象。
+在队列处理任务时，会调用 `handle` 方法，而这里我们也可以通过 `handle` 方法的参数类型提示，让 Royalcms 的服务容器自动注入依赖对象。
 
 > {note} 像图片内容这种二进制数据，在放入队列任务之前必须使用 `base64_encode` 方法转换一下。否则，当这项任务放置到队列中时，可能无法正确序列化为 JSON。
 
@@ -157,7 +157,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -187,7 +187,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     
     use Carbon\Carbon;
     use App\Jobs\ProcessPodcast;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -231,7 +231,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -259,7 +259,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -480,10 +480,10 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
     use Exception;
     use App\Podcast;
     use App\AudioProcessor;
-    use Illuminate\Bus\Queueable;
-    use Illuminate\Queue\SerializesModels;
-    use Illuminate\Queue\InteractsWithQueue;
-    use Illuminate\Contracts\Queue\ShouldQueue;
+    use Royalcms\Bus\Queueable;
+    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Queue\InteractsWithQueue;
+    use Royalcms\Contracts\Queue\ShouldQueue;
     
     class ProcessPodcast implements ShouldQueue
     {
@@ -534,9 +534,9 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\Queue;
-    use Illuminate\Queue\Events\JobFailed;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\Facades\Queue;
+    use Royalcms\Queue\Events\JobFailed;
+    use Royalcms\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -591,16 +591,16 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 <a name="job-events"></a>
 ## 任务事件
 
-使用队列的 `before` 和 `after` 方法，你能指定任务处理前和处理后的回调处理。在这些回调里正是实现额外的日志记录或者增加统计数据的好时机。通常情况下，你应该在 [服务容器](/docs/{{version}}/providers) 中调用这些方法。例如，我们使用 Royalcms 中的 `AppServiceProvider`：
+使用队列的 `before` 和 `after` 方法，你能指定任务处理前和处理后的回调处理。在这些回调里正是实现额外的日志记录或者增加统计数据的好时机。通常情况下，你应该在服务容器中调用这些方法。例如，我们使用 Royalcms 中的 `AppServiceProvider`：
 
     <?php
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\Queue;
-    use Illuminate\Support\ServiceProvider;
-    use Illuminate\Queue\Events\JobProcessed;
-    use Illuminate\Queue\Events\JobProcessing;
+    use Royalcms\Support\Facades\Queue;
+    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Queue\Events\JobProcessed;
+    use Royalcms\Queue\Events\JobProcessing;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -635,7 +635,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
         }
     }
 
-在 `队列` [facade](/docs/{{version}}/facades) 中使用 `looping` 方法，你可以尝试在队列获取任务之前执行指定的回调方法。举个例子，你可以用闭包来回滚之前已失败任务的事务。
+在 `队列`facade中使用 `looping` 方法，你可以尝试在队列获取任务之前执行指定的回调方法。举个例子，你可以用闭包来回滚之前已失败任务的事务。
 
     Queue::looping(function () {
         while (DB::transactionLevel() > 0) {

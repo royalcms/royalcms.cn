@@ -118,13 +118,13 @@
 <a name="interacting-with-redis"></a>
 ## 与 Redis 交互
 
-你可以调用 `Redis` [facade](/docs/{{version}}/facades) 上的各种方法来与 `Redis` 进行交互。`Redis` facade 支持动态方法，这意味着你可以在 facade 上调用任何  [Redis 命令](http://redis.io/commands)，还能将该命令直接传递给 Redis。在本例中，通过调用 `Redis` facade 上的 `get` 方法来调用 Redis 的 `GET` 命令：
+你可以调用 `Redis` facade 上的各种方法来与 `Redis` 进行交互。`Redis` facade 支持动态方法，这意味着你可以在 facade 上调用任何  [Redis 命令](http://redis.io/commands)，还能将该命令直接传递给 Redis。在本例中，通过调用 `Redis` facade 上的 `get` 方法来调用 Redis 的 `GET` 命令：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Support\Facades\Redis;
+    use Royalcms\Support\Facades\Redis;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -177,14 +177,14 @@
 
 Royalcms 为 Redis 的 `publish` 及 `subscribe` 提供了方便的接口。这些 Redis 命令让你可以监听指定「频道」上的消息。你可以从另一个应用程序发布消息给另一个应用程序，甚至使用其它编程语言，让应用程序和进程之间能够轻松进行通信。
 
-首先，我们使用 `subscribe` 方法设置频道监听器。我们将这个方法调用放在 [Artisan 命令](/docs/{{version}}/artisan) 中，因为调用 `subscribe` 方法会启动一个长时间运行的进程：
+首先，我们使用 `subscribe` 方法设置频道监听器。我们将这个方法调用放在 [Artisan 命令](/docs/artisan) 中，因为调用 `subscribe` 方法会启动一个长时间运行的进程：
 
     <?php
     
     namespace App\Console\Commands;
     
-    use Illuminate\Console\Command;
-    use Illuminate\Support\Facades\Redis;
+    use Royalcms\Console\Command;
+    use Royalcms\Support\Facades\Redis;
     
     class RedisSubscribe extends Command
     {

@@ -71,7 +71,7 @@ Schema::create('cache', function ($table) {
 
 在使用 Royalcms 的 Redis 缓存之前，你需要通过 Composer 安装 `predis/predis` 扩展包 (~1.0) 或者使用 PECL 安装 PhpRedis PHP 拓展。
 
-如需了解更多配置 Redis 的信息，请参考 [Royalcms Redis 文档](/docs/{{version}}/redis#configuration).
+如需了解更多配置 Redis 的信息，请参考 [Royalcms Redis 文档](/docs/redis#configuration).
 
 <a name="cache-usage"></a>
 ## 缓存的使用
@@ -79,7 +79,7 @@ Schema::create('cache', function ($table) {
 <a name="obtaining-a-cache-instance"></a>
 ### 获取缓存实例
 
-`Illuminate\Contracts\Cache\Factory` 和 `Illuminate\Contracts\Cache\Repository` [contracts](/docs/{{version}}/contracts) 提供了 Royalcms 缓存服务的访问机制。 `Factory`  contract  为你的应用程序定义了访问所有缓存驱动的机制。 `Repository` contract 通常是由 `cache` 配置文件指定的默认缓存驱动实现的。
+`Royalcms\Contracts\Cache\Factory` 和 `Royalcms\Contracts\Cache\Repository` [contracts](/docs/contracts) 提供了 Royalcms 缓存服务的访问机制。 `Factory`  contract  为你的应用程序定义了访问所有缓存驱动的机制。 `Repository` contract 通常是由 `cache` 配置文件指定的默认缓存驱动实现的。
 
 不过，你也可以使用 `Cache` facade，我们将在后续的文档中介绍。`Cache` facade 为 Royalcms 缓存 contract 底层的实现提供了方便又简洁的方法：
 
@@ -88,7 +88,7 @@ Schema::create('cache', function ($table) {
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Cache;
+use Royalcms\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -239,7 +239,7 @@ Cache::flush();
 <a name="the-cache-helper"></a>
 ### 辅助函数 Cache
 
-除了可以使用 `Cache` facade 或者 [cache contract](/docs/{{version}}/contracts)之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
+除了可以使用 `Cache` facade 或者 [cache contract](/docs/contracts)之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
 
 ````
 $value = cache('key');
@@ -253,7 +253,7 @@ cache(['key' => 'value'], $minutes);
 cache(['key' => 'value'], Carbon::now()->addSeconds(10));
 ````
 
-> {tip} 如果在测试中使用全局函数 `cache`，可以使用 `Cache::shouldReceive`  方法，就像正在 [测试 facade](/docs/{{version}}/mocking#mocking-facades) 一样。
+> {tip} 如果在测试中使用全局函数 `cache`，可以使用 `Cache::shouldReceive`  方法，就像正在测试 facade一样。
 
 <a name="cache-tags"></a>
 ## 缓存标记
@@ -303,14 +303,14 @@ Cache::tags('authors')->flush();
 <a name="writing-the-driver"></a>
 ### 写驱动
 
-要创建自定义的缓存驱动程序，首先需要实现 `Illuminate\Contracts\Cache\Store` [contract](/docs/{{version}}/contracts) 。因此，MongoDB 的缓存实现看起来会像这样：
+要创建自定义的缓存驱动程序，首先需要实现 `Royalcms\Contracts\Cache\Store` contract。因此，MongoDB 的缓存实现看起来会像这样：
 
 ````
 <?php
 
 namespace App\Extensions;
 
-use Illuminate\Contracts\Cache\Store;
+use Royalcms\Contracts\Cache\Store;
 
 class MongoStore implements Store
 {
@@ -327,7 +327,7 @@ class MongoStore implements Store
 }
 ````
 
-我们只需要使用 MongoDB 的连接来实现这些方法。关于如何实现这些方法的示例，可以参阅框架源代码中的 `Illuminate\Cache\MemcachedStore`。一旦我们完成方法的实现，可以像下面这样完成自定义驱动的注册了。
+我们只需要使用 MongoDB 的连接来实现这些方法。关于如何实现这些方法的示例，可以参阅框架源代码中的 `Royalcms\Cache\MemcachedStore`。一旦我们完成方法的实现，可以像下面这样完成自定义驱动的注册了。
 
 ````
 Cache::extend('mongo', function ($app) {
@@ -348,8 +348,8 @@ Cache::extend('mongo', function ($app) {
 namespace App\Providers;
 
 use App\Extensions\MongoStore;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\ServiceProvider;
+use Royalcms\Support\Facades\Cache;
+use Royalcms\Support\ServiceProvider;
 
 class CacheServiceProvider extends ServiceProvider
 {
@@ -377,14 +377,14 @@ class CacheServiceProvider extends ServiceProvider
 }
 ````
 
-传递给 `extend` 方法的第一个参数是驱动程序的名称。这将与 `config/cache.php` 配置文件的 `driver` 选项相对应。第二个参数是应该返回 `Illuminate\Cache\Repository` 实例的闭包。这个闭包将传递一个 [服务容器](/docs/{{version}}/container) 的 `$app` 实例。
+传递给 `extend` 方法的第一个参数是驱动程序的名称。这将与 `config/cache.php` 配置文件的 `driver` 选项相对应。第二个参数是应该返回 `Royalcms\Cache\Repository` 实例的闭包。这个闭包将传递一个服务容器的 `$app` 实例。
 
 你的自定义的扩展注册后，需要将 `config/cache.php` 配置文件中的 `driver` 选项更新为你的扩展名。
 
 <a name="events"></a>
 ## 事件
 
-你可以监听缓存触发的 [事件](/docs/{{version}}/events) 来对每个缓存的操作执行代码。为此，你应该要将这些事件监听器放在 `EventServiceProvider` 中:
+你可以监听缓存触发的 [事件](/docs/events) 来对每个缓存的操作执行代码。为此，你应该要将这些事件监听器放在 `EventServiceProvider` 中:
 
 ````
 /**
@@ -393,19 +393,19 @@ class CacheServiceProvider extends ServiceProvider
  * @var array
  */
 protected $listen = [
-    'Illuminate\Cache\Events\CacheHit' => [
+    'Royalcms\Cache\Events\CacheHit' => [
         'App\Listeners\LogCacheHit',
     ],
 
-    'Illuminate\Cache\Events\CacheMissed' => [
+    'Royalcms\Cache\Events\CacheMissed' => [
         'App\Listeners\LogCacheMissed',
     ],
 
-    'Illuminate\Cache\Events\KeyForgotten' => [
+    'Royalcms\Cache\Events\KeyForgotten' => [
         'App\Listeners\LogKeyForgotten',
     ],
 
-    'Illuminate\Cache\Events\KeyWritten' => [
+    'Royalcms\Cache\Events\KeyWritten' => [
         'App\Listeners\LogKeyWritten',
     ],
 ];

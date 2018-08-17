@@ -19,7 +19,7 @@
 <a name="generating-resources"></a>
 ## 生成资源
 
-你可以使用 `make:resource` Artisan 命令来生成资源类。默认情况下生成的资源都会被放置在框架 `app/Http/Resources` 文件夹下。资源继承 `Illuminate\Http\Resources\Json\Resource` 类：
+你可以使用 `make:resource` Artisan 命令来生成资源类。默认情况下生成的资源都会被放置在框架 `app/Http/Resources` 文件夹下。资源继承 `Royalcms\Http\Resources\Json\Resource` 类：
 
     php artisan make:resource User
 
@@ -27,7 +27,7 @@
 
 除了生成资源转换单个模型外，你还可以生成资源集合用来转换模型的集合。这允许你在响应中包含与给定资源相关的链接与其他元信息。
 
-你需要在生成资源时添加 `--collection` 标志以生成一个资源集合。你也可以直接在资源的名称中包含 `Collection` 向 Royalcms 表示应该生成一个资源集合。资源集合继承 `Illuminate\Http\Resources\Json\ResourceCollection` 类：
+你需要在生成资源时添加 `--collection` 标志以生成一个资源集合。你也可以直接在资源的名称中包含 `Collection` 向 Royalcms 表示应该生成一个资源集合。资源集合继承 `Royalcms\Http\Resources\Json\ResourceCollection` 类：
 
     php artisan make:resource Users --collection
     
@@ -44,14 +44,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\Resource;
+    use Royalcms\Http\Resources\Json\Resource;
     
     class User extends Resource
     {
         /**
          * 将资源转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -96,14 +96,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\ResourceCollection;
+    use Royalcms\Http\Resources\Json\ResourceCollection;
     
     class UserCollection extends ResourceCollection
     {
         /**
          * 将资源集合转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -137,14 +137,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\Resource;
+    use Royalcms\Http\Resources\Json\Resource;
     
     class User extends Resource
     {
         /**
          * 将资源转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -175,7 +175,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -209,14 +209,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\ResourceCollection;
+    use Royalcms\Http\Resources\Json\ResourceCollection;
     
     class UserCollection extends ResourceCollection
     {
         /**
          * 将资源集合转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -259,14 +259,14 @@
         ]
     }
 
-你可以使用资源基类的 `withoutWrapping` 方法来禁用顶层资源的包裹。你应该在 `AppServiceProvider` 或其他在程序每一个请求中都会被加载的 [服务提供者](/docs/{{version}}/providers) 中调用此方法：
+你可以使用资源基类的 `withoutWrapping` 方法来禁用顶层资源的包裹。你应该在 `AppServiceProvider` 或其他在程序每一个请求中都会被加载的服务提供者中调用此方法：
 
     <?php
     
     namespace App\Providers;
     
-    use Illuminate\Support\ServiceProvider;
-    use Illuminate\Http\Resources\Json\Resource;
+    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Http\Resources\Json\Resource;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -303,14 +303,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\ResourceCollection;
+    use Royalcms\Http\Resources\Json\ResourceCollection;
     
     class CommentsCollection extends ResourceCollection
     {
         /**
          * 将资源集合转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -405,7 +405,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -437,7 +437,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -469,7 +469,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -493,7 +493,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -515,7 +515,7 @@
     /**
      * 将资源转换成数组。
      *
-     * @param  \Illuminate\Http\Request
+     * @param  \Royalcms\Http\Request
      * @return array
      */
     public function toArray($request)
@@ -538,14 +538,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\ResourceCollection;
+    use Royalcms\Http\Resources\Json\ResourceCollection;
     
     class UserCollection extends ResourceCollection
     {
         /**
          * 将资源集合转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -556,7 +556,7 @@
         /**
          * 返回应该和资源一起返回的其他数据数组。
          *
-         * @param \Illuminate\Http\Request  $request
+         * @param \Royalcms\Http\Request  $request
          * @return array
          */
         public function with($request)
@@ -590,7 +590,7 @@
         return new UserResource(User::find(1));
     });
 
-但是有些时候你可能需要自定义发送给客户端的 HTTP 响应。你有两种选择。第一，你可以在资源上链式调用 `response` 方法。此方法将返回 `Illuminate\Http\Response` 实例，允许你自定义响应头信息：
+但是有些时候你可能需要自定义发送给客户端的 HTTP 响应。你有两种选择。第一，你可以在资源上链式调用 `response` 方法。此方法将返回 `Royalcms\Http\Response` 实例，允许你自定义响应头信息：
 
     use App\User;
     use App\Http\Resources\User as UserResource;
@@ -607,14 +607,14 @@
     
     namespace App\Http\Resources;
     
-    use Illuminate\Http\Resources\Json\Resource;
+    use Royalcms\Http\Resources\Json\Resource;
     
     class User extends Resource
     {
         /**
          * 将资源转换成数组。
          *
-         * @param  \Illuminate\Http\Request
+         * @param  \Royalcms\Http\Request
          * @return array
          */
         public function toArray($request)
@@ -627,8 +627,8 @@
         /**
          * 自定义资源响应。
          *
-         * @param  \Illuminate\Http\Request
-         * @param  \Illuminate\Http\Response
+         * @param  \Royalcms\Http\Request
+         * @param  \Royalcms\Http\Response
          * @return void
          */
         public function withResponse($request, $response)

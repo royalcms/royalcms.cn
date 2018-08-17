@@ -12,7 +12,7 @@
 
 ## 简介
 
-Royalcms 能使用原生 SQL、[查询构造器](/docs/{{version}}/queries) 和 [Eloquent ORM](/docs/{{version}}/eloquent) 在各种数据库后台与数据库进行非常简单的交互。当前 Royalcms 支持四种数据库:
+Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent ORM](/docs/eloquent) 在各种数据库后台与数据库进行非常简单的交互。当前 Royalcms 支持四种数据库:
 
 <div class="content-list" markdown="1">
 
@@ -28,7 +28,7 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/{{version}}/queries) 和 
 
 数据库的配置文件放置在 `config/database.php` 文件中，你可以在此定义所有的数据库连接，并指定默认使用的连接。此文件内提供了大部分 Royalcms 能支持的数据库配置示例。
 
-默认情况下，Royalcms  的示例 [环境配置](/docs/{{version}}/configuration#environment-configuration) 使用了 [Royalcms Homestead](/docs/{{version}}/homestead)（这是一种小型虚拟机，能让你很方便地在本地进行 Royalcms 的开发）。你可以根据本地数据库的需要修改这个配置。
+默认情况下，Royalcms  的示例环境配置使用了Royalcms Homestead（这是一种小型虚拟机，能让你很方便地在本地进行 Royalcms 的开发）。你可以根据本地数据库的需要修改这个配置。
 
 #### SQLite 配置
 
@@ -97,7 +97,7 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/{{version}}/queries) 和 
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Support\Facades\DB;
+    use Royalcms\Support\Facades\DB;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -157,14 +157,14 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/{{version}}/queries) 和 
 
 ### 查询事件监听
 
-如果你想监控程序执行的每个 SQL 查询，你可以使用 `listen` 方法。这个方法对于记录查询或调试非常有用。你可以在 [服务提供器](/docs/{{version}}/providers) 中为你的查询注册监听器:
+如果你想监控程序执行的每个 SQL 查询，你可以使用 `listen` 方法。这个方法对于记录查询或调试非常有用。你可以在服务提供器中为你的查询注册监听器:
 
     <?php
     
     namespace App\Providers;
     
-    use Illuminate\Support\Facades\DB;
-    use Illuminate\Support\ServiceProvider;
+    use Royalcms\Support\Facades\DB;
+    use Royalcms\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -229,4 +229,4 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/{{version}}/queries) 和 
 
     DB::commit();
 
-> {tip}  `DB` facade 的事务方法也适用于 [查询语句构造器](/docs/{{version}}/queries) 和 [Eloquent ORM](/docs/{{version}}/eloquent) 的事务。
+> {tip}  `DB` facade 的事务方法也适用于 [查询语句构造器](/docs/queries) 和 [Eloquent ORM](/docs/eloquent) 的事务。

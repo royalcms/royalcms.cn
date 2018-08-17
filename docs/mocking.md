@@ -27,10 +27,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Jobs\ShipOrder;
-    use Illuminate\Support\Facades\Bus;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Bus;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -61,10 +61,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     use Tests\TestCase;
     use App\Events\OrderShipped;
     use App\Events\OrderFailedToShip;
-    use Illuminate\Support\Facades\Event;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Event;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -88,7 +88,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
 <a name="mail-fake"></a>
 ## 邮件模拟
 
-你可以使用 `Mail` facade 的 `fake` 方法来模拟邮件发送，测试时不会真的发送邮件。然后你可以断言 [mailables](/docs/{{version}}/mail) 发送给了用户，甚至可以检查他们收到的数据. 使用 fakes 时，断言一般在测试代码的后面：
+你可以使用 `Mail` facade 的 `fake` 方法来模拟邮件发送，测试时不会真的发送邮件。然后你可以断言 [mailables](/docs/mail) 发送给了用户，甚至可以检查他们收到的数据. 使用 fakes 时，断言一般在测试代码的后面：
 
     <?php
     
@@ -96,10 +96,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Mail\OrderShipped;
-    use Illuminate\Support\Facades\Mail;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Mail;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -136,7 +136,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
 <a name="notification-fake"></a>
 ## 通知模拟
 
-你可以使用 `Notification` facade 的 `fake` 方法来模拟通知发送，测试的时候并不会真的发送通知。然后你可以断言 [通知](/docs/{{version}}/notifications) 已经发送给你的用户，甚至可以检查他们收到的数据。使用 fakes 时, 断言一般出现在测试代码的后面.
+你可以使用 `Notification` facade 的 `fake` 方法来模拟通知发送，测试的时候并不会真的发送通知。然后你可以断言 [通知](/docs/notifications) 已经发送给你的用户，甚至可以检查他们收到的数据。使用 fakes 时, 断言一般出现在测试代码的后面.
 
     <?php
     
@@ -144,10 +144,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Notifications\OrderShipped;
-    use Illuminate\Support\Facades\Notification;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Notification;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -188,10 +188,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Jobs\ShipOrder;
-    use Illuminate\Support\Facades\Queue;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Queue;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -226,11 +226,11 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Http\UploadedFile;
-    use Illuminate\Support\Facades\Storage;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Http\UploadedFile;
+    use Royalcms\Support\Facades\Storage;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -253,13 +253,13 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
 <a name="mocking-facades"></a>
 ## Facades 模拟
 
-不同于传统的静态函数的调用， [facades](/docs/{{version}}/facades) 也是可以被模拟的，相对静态函数来说这是个巨大的优势，即使你在使用依赖注入，测试时依然会非常方便。在很多测试中，你可能经常想在控制器中模拟对 Royalcms facade 的调用。比如下面控制器中的行为：
+不同于传统的静态函数的调用，facades也是可以被模拟的，相对静态函数来说这是个巨大的优势，即使你在使用依赖注入，测试时依然会非常方便。在很多测试中，你可能经常想在控制器中模拟对 Royalcms facade 的调用。比如下面控制器中的行为：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Illuminate\Support\Facades\Cache;
+    use Royalcms\Support\Facades\Cache;
     
     class UserController extends Controller
     {
@@ -276,17 +276,17 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
         }
     }
 
-我们可以通过 `shouldReceive` 方法来模拟 `Cache` facade ，此函数会返回一个 [Mockery](https://github.com/padraic/mockery) 实例，由于对 facade 的调用实际上都是由 Royalcms 的 [服务容器](/docs/{{version}}/container) 管理的，所以 facade 能比传统的静态类表现出更好的测试便利性。接下来，让我们来模拟一下 `Cache` facade 的 `get` 方法的调用：
+我们可以通过 `shouldReceive` 方法来模拟 `Cache` facade ，此函数会返回一个 [Mockery](https://github.com/padraic/mockery) 实例，由于对 facade 的调用实际上都是由 Royalcms 的服务容器 管理的，所以 facade 能比传统的静态类表现出更好的测试便利性。接下来，让我们来模拟一下 `Cache` facade 的 `get` 方法的调用：
 
     <?php
     
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Support\Facades\Cache;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Support\Facades\Cache;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class UserControllerTest extends TestCase
     {

@@ -14,10 +14,10 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
 <a name="writing-seeders"></a>
 ## 编写 Seeders
 
-通过运行 [Artisan 命令](/docs/{{version}}/artisan)  `make:seeder` 来生成 Seeder。由框架生成的 seeders 都将被放置在 `database/seeds` 目录下：
+通过运行 [Artisan 命令](/docs/artisan)  `make:seeder` 来生成 Seeder。由框架生成的 seeders 都将被放置在 `database/seeds` 目录下：
 
     php artisan make:seeder UsersTableSeeder
-一个 seeder 类只包含一个默认方法：`run`。这个方法会在 [Artisan 命令](/docs/{{version}}/artisan)  `db:seed` 被执行时调用。在 `run` 方法里你可以根据需要在数据库中插入数据。你也可以用 [查询构造器](/docs/{{version}}/queries) 或 [Eloquent 模型工厂](/docs/{{version}}/database-testing#writing-factories) 来手动插入数据。
+一个 seeder 类只包含一个默认方法：`run`。这个方法会在 [Artisan 命令](/docs/artisan)  `db:seed` 被执行时调用。在 `run` 方法里你可以根据需要在数据库中插入数据。你也可以用 [查询构造器](/docs/queries) 或 [Eloquent 模型工厂](/docs/database-testing#writing-factories) 来手动插入数据。
 
 > {tip} 在数据填充期间，[批量赋值保护](https://Royalcms.com/docs/5.5/eloquent#mass-assignment) 会自动禁用。
 
@@ -25,8 +25,8 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
 
     <?php
     
-    use Illuminate\Database\Seeder;
-    use Illuminate\Database\Eloquent\Model;
+    use Royalcms\Database\Seeder;
+    use Royalcms\Database\Eloquent\Model;
     
     class DatabaseSeeder extends Seeder
     {
@@ -48,7 +48,7 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
 <a name="using-model-factories"></a>
 ### 使用模型工厂
 
-手动为每个模型填充指定属性很麻烦。作为替代方案，你可以使用 [模型工厂](/docs/{{version}}/database-testing#writing-factories) 来轻松地生成大量数据库数据。首先，阅读 [模型工厂文档](/docs/{{version}}/database-testing#writing-factories) 来学习如何使用工厂，然后就可以使用 `factory` 这个辅助函数来向数据库中插入数据。
+手动为每个模型填充指定属性很麻烦。作为替代方案，你可以使用 [模型工厂](/docs/database-testing#writing-factories) 来轻松地生成大量数据库数据。首先，阅读 [模型工厂文档](/docs/database-testing#writing-factories) 来学习如何使用工厂，然后就可以使用 `factory` 这个辅助函数来向数据库中插入数据。
 
 例如，创建 50 个用户并为每个用户创建关联：
 

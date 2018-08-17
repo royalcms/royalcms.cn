@@ -16,9 +16,9 @@ Royalcms 为 HTTP 请求的生成和输出的检查都提供了非常流畅的 A
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -53,7 +53,7 @@ Royalcms 提供了几个可在测试时使用 Session 的辅助函数。首先�
         }
     }
 
-当然，一般使用 Session 时都是用于维持用户的状态，如认证用户。`actingAs` 辅助函数提供了简单的方式来让指定的用户认证为当前的用户。例如，我们可以使用 [模型工厂](/docs/{{version}}/database-testing#writing-factories) 来生成并认证用户：
+当然，一般使用 Session 时都是用于维持用户的状态，如认证用户。`actingAs` 辅助函数提供了简单的方式来让指定的用户认证为当前的用户。例如，我们可以使用 [模型工厂](/docs/database-testing#writing-factories) 来生成并认证用户：
 
     <?php
     
@@ -132,18 +132,18 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
 <a name="testing-file-uploads"></a>
 ## 测试文件上传
 
-`Illuminate\Http\UploadedFile` 类提供了一个 `fake` 方法，可用其生成用于测试的模拟文件或图像。将其与 `Storage` facade 的 `fake` 方法结合使用，可极大地简化文件上传的测试。例如，你可以结合这两个功能轻松测试头像上传表单：
+`Royalcms\Http\UploadedFile` 类提供了一个 `fake` 方法，可用其生成用于测试的模拟文件或图像。将其与 `Storage` facade 的 `fake` 方法结合使用，可极大地简化文件上传的测试。例如，你可以结合这两个功能轻松测试头像上传表单：
 
     <?php
     
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Illuminate\Http\UploadedFile;
-    use Illuminate\Support\Facades\Storage;
-    use Illuminate\Foundation\Testing\WithoutMiddleware;
-    use Illuminate\Foundation\Testing\DatabaseMigrations;
-    use Illuminate\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Http\UploadedFile;
+    use Royalcms\Support\Facades\Storage;
+    use Royalcms\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
