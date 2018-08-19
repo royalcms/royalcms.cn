@@ -8,7 +8,7 @@
 <a name="introduction"></a>
 ## 简介
 
-`Illuminate\Support\Collection` 类提供了一个更具可读性的、更便于处理数组数据的封装。具体例子看下面的代码。我们使用了 `collect` 函数从数组中创建新的集合实例，对其中的每个元素运行 `strtoupper` 函数之后再移除所有的空元素：
+`Royalcms\Support\Collection` 类提供了一个更具可读性的、更便于处理数组数据的封装。具体例子看下面的代码。我们使用了 `collect` 函数从数组中创建新的集合实例，对其中的每个元素运行 `strtoupper` 函数之后再移除所有的空元素：
 
     $collection = collect(['taylor', 'abigail', null])->map(function ($name) {
         return strtoupper($name);
@@ -22,7 +22,7 @@
 <a name="creating-collections"></a>
 ### 创建集合
 
-如上所述，辅助函数 `collect` 会为给定的数组返回一个新的 `Illuminate\Support\Collection` 实例。也就是说，创建一个集合就这么简单：
+如上所述，辅助函数 `collect` 会为给定的数组返回一个新的 `Royalcms\Support\Collection` 实例。也就是说，创建一个集合就这么简单：
 
     $collection = collect([1, 2, 3]);
 

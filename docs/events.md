@@ -90,7 +90,7 @@ Event::listen('event.*', function ($eventName, array $data) {
 namespace App\Events;
 
 use App\Order;
-use Illuminate\Queue\SerializesModels;
+use Royalcms\Queue\SerializesModels;
 
 class OrderShipped
 {
@@ -169,7 +169,7 @@ class SendShipmentNotification
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Royalcms\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -189,7 +189,7 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Royalcms\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -212,7 +212,7 @@ class SendShipmentNotification implements ShouldQueue
 <a name="manually-accessing-the-queue"></a>
 ### 手动访问队列
 
-如果你需要手动访问监听器下面队列任务的 `delete` 和 `release` 方法，你可以添加 `Illuminate\Queue\InteractsWithQueue` trait 来实现。这个 trait 会默认加载到生成的监听器中，并提供对这些方法的访问：
+如果你需要手动访问监听器下面队列任务的 `delete` 和 `release` 方法，你可以添加 `Royalcms\Queue\InteractsWithQueue` trait 来实现。这个 trait 会默认加载到生成的监听器中，并提供对这些方法的访问：
 
 ````
 <?php
@@ -220,8 +220,8 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Royalcms\Queue\InteractsWithQueue;
+use Royalcms\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -252,8 +252,8 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Royalcms\Queue\InteractsWithQueue;
+use Royalcms\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -347,17 +347,17 @@ class UserEventSubscriber
     /**
      * 为订阅者注册监听器。
      *
-     * @param  Illuminate\Events\Dispatcher  $events
+     * @param  Royalcms\Events\Dispatcher  $events
      */
     public function subscribe($events)
     {
         $events->listen(
-            'Illuminate\Auth\Events\Login',
+            'Royalcms\Auth\Events\Login',
             'App\Listeners\UserEventSubscriber@onUserLogin'
         );
 
         $events->listen(
-            'Illuminate\Auth\Events\Logout',
+            'Royalcms\Auth\Events\Logout',
             'App\Listeners\UserEventSubscriber@onUserLogout'
         );
     }
@@ -375,7 +375,7 @@ class UserEventSubscriber
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Royalcms\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {

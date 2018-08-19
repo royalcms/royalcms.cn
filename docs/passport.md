@@ -65,8 +65,8 @@ Passport 服务提供器使用框架注册自己的数据库迁移目录，因�
     namespace App;
     
     use Royalcms\Passport\HasApiTokens;
-    use Illuminate\Notifications\Notifiable;
-    use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Notifications\Notifiable;
+    use Royalcms\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -80,8 +80,8 @@ Passport 服务提供器使用框架注册自己的数据库迁移目录，因�
     namespace App\Providers;
     
     use Royalcms\Passport\Passport;
-    use Illuminate\Support\Facades\Gate;
-    use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Support\Facades\Gate;
+    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -633,7 +633,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
 就算访问令牌验证的请求已经通过应用程序的验证，你仍然可以使用当前授权 `User` 实例上的 `tokenCan` 方法来验证令牌是否拥有指定的作用域：
 
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     
     Route::get('/orders', function (Request $request) {
         if ($request->user()->tokenCan('place-orders')) {

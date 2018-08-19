@@ -26,7 +26,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
     namespace App\Http\Controllers;
     
     use App\User;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -52,7 +52,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 
 加密值在加密期间通过 `serialize` 传递，这允许对象和数组的加密。因此，接收加密值的非PHP客户端将需要 `unserialize` 数据。如果想在不序列化的情况下加密和解密值，可以使用 `Crypt` Facade 的 `encryptString` 和 `decryptString` 方法：
 
-    use Illuminate\Support\Facades\Crypt;
+    use Royalcms\Support\Facades\Crypt;
     
     $encrypted = Crypt::encryptString('Hello world.');
     
@@ -60,9 +60,9 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 
 #### 解密一个值
 
-你可以使用辅助函数 `decrypt` 来解密一个值。如果该值不能被正确解密，例如当 MAC 无效时，会抛出异常 `Illuminate\Contracts\Encryption\DecryptException`：
+你可以使用辅助函数 `decrypt` 来解密一个值。如果该值不能被正确解密，例如当 MAC 无效时，会抛出异常 `Royalcms\Contracts\Encryption\DecryptException`：
 
-    use Illuminate\Contracts\Encryption\DecryptException;
+    use Royalcms\Contracts\Encryption\DecryptException;
     
     try {
         $decrypted = decrypt($encryptedValue);

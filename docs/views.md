@@ -91,7 +91,7 @@
 
 视图合成器是在渲染视图时调用的回调或者类方法。如果你每次渲染视图时都要绑定视图的数据，视图合成器可以帮你将这些逻辑整理到特定的位置。
 
-在下面这个例子中，我们会在一个服务提供器中注册视图合成器，使用 `View` Facade 来访问底层的 `Illuminate\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
+在下面这个例子中，我们会在一个服务提供器中注册视图合成器，使用 `View` Facade 来访问底层的 `Royalcms\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
 
     <?php
     

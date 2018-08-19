@@ -645,7 +645,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
     'avatar' => 'dimensions:ratio=3/2'
 由于此规则需要多个参数，因此你可以 `Rule::dimensions` 方法来构造可读性高的规则：
 
-    use Illuminate\Validation\Rule;
+    use Royalcms\Validation\Rule;
     
     Validator::make($data, [
         'avatar' => [
@@ -798,7 +798,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 验证的字段不能包含在给定的值列表中。`Rule::notIn` 方法可以用来构建规则：
 
-    use Illuminate\Validation\Rule;
+    use Royalcms\Validation\Rule;
     
     Validator::make($data, [
         'toppings' => [
@@ -971,7 +971,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
         return $input->games >= 100;
     });
 
-> {tip} 传入 `闭包` 的 `$input` 参数是 `Illuminate\Support\Fluent` 的一个实例，可用来访问你的输入或文件对象。
+> {tip} 传入 `闭包` 的 `$input` 参数是 `Royalcms\Support\Fluent` 的一个实例，可用来访问你的输入或文件对象。
 
 <a name="validating-arrays"></a>
 ## 验证数组

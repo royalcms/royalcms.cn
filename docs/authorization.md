@@ -137,8 +137,8 @@ Gates 也可以使用 `Class@method` 风格的回调字符串来定义，比如�
     
     use App\Post;
     use App\Policies\PostPolicy;
-    use Illuminate\Support\Facades\Gate;
-    use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use IlluRoyalcmsminate\Support\Facades\Gate;
+    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -259,7 +259,7 @@ Royalcms 应用内置的 `User` 模型包含 2 个有用的方法来授权动作
 <a name="via-middleware"></a>
 ### 通过中间件
 
-Royalcms 包含一个可以在请求到达路由或控制器之前就进行动作授权的中间件。默认，`Illuminate\Auth\Middleware\Authorize` 中间件被指定到 `App\Http\Kernel` 类中 `can` 键上。我们用一个授权用户更新博客的例子来讲解 `can` 中间件的使用：
+Royalcms 包含一个可以在请求到达路由或控制器之前就进行动作授权的中间件。默认，`Royalcms\Auth\Middleware\Authorize` 中间件被指定到 `App\Http\Kernel` 类中 `can` 键上。我们用一个授权用户更新博客的例子来讲解 `can` 中间件的使用：
 
     use App\Post;
     
@@ -280,14 +280,14 @@ Royalcms 包含一个可以在请求到达路由或控制器之前就进行动�
 <a name="via-controller-helpers"></a>
 ### 通过控制器辅助函数
 
-除了在 `User` 模型中提供辅助方法外，Royalcms 也为所有继承了 `App\Http\Controllers\Controller` 基类的控制器提供了一个有用的 `authorize` 方法。和 `can` 方法类似，这个方法接收需要授权的动作和相关的模型作为参数。如果动作不被授权，`authorize` 方法会抛出 `Illuminate\Auth\Access\AuthorizationException` 异常，然后被 Royalcms 默认的异常处理器转化为带有 `403` 状态码的 HTTP 响应：
+除了在 `User` 模型中提供辅助方法外，Royalcms 也为所有继承了 `App\Http\Controllers\Controller` 基类的控制器提供了一个有用的 `authorize` 方法。和 `can` 方法类似，这个方法接收需要授权的动作和相关的模型作为参数。如果动作不被授权，`authorize` 方法会抛出 `Royalcms\Auth\Access\AuthorizationException` 异常，然后被 Royalcms 默认的异常处理器转化为带有 `403` 状态码的 HTTP 响应：
 
     <?php
     
     namespace App\Http\Controllers;
     
     use App\Post;
-    use Illuminate\Http\Request;
+    use Royalcms\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PostController extends Controller
