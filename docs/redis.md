@@ -217,7 +217,7 @@ Royalcms 为 Redis 的 `publish` 及 `subscribe` 提供了方便的接口。这�
 
 现在，我们可以使用 `publish` 方法发布消息到频道：
 
-    Route::get('publish', function () {
+    RC_Route::get('publish', function () {
         // Route logic...
     
         Redis::publish('test-channel', json_encode(['foo' => 'bar']));

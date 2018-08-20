@@ -15,13 +15,13 @@
 <a name="accessing-the-request"></a>
 ## 获取请求
 
-要通过依赖注入的方式来获取当前 HTTP 请求的实例，你应该在控制器方法中类型提示 `Royalcms\Http\Request`。传入的请求的实例将通过服务容器自动注入：
+要通过依赖注入的方式来获取当前 HTTP 请求的实例，你应该在控制器方法中类型提示 `Royalcms\Component\Http\Request`。传入的请求的实例将通过服务容器自动注入：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Component\Http\Request;
     
     class UserController extends Controller
     {
@@ -43,15 +43,15 @@
 
 如果控制器方法要从路由参数中获取数据，则应在其他依赖项之后列出路由参数。例如，如果你的路由是这样定义的：
 
-    Route::put('user/{id}', 'UserController@update');
+    RC_Route::put('user/{id}', 'UserController@update');
 
-如下所示使用类型提示 `Royalcms\Http\Request`，就可以通过定义控制器方法获取路由参数 `id`：
+如下所示使用类型提示 `Royalcms\Component\Http\Request`，就可以通过定义控制器方法获取路由参数 `id`：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
     class UserController extends Controller
     {
@@ -70,18 +70,18 @@
 
 #### 通过路由闭包获取请求
 
-你也可以在路由闭包中类型提示 Royalcms\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
+你也可以在路由闭包中类型提示 Royalcms\Component\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
 
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
-    Route::get('/', function (Request $request) {
+    RC_Route::get('/', function (Request $request) {
         //
     });
 
 <a name="request-path-and-method"></a>
 ### 请求路径 & 方法
 
-`Royalcms\Http\Request` 实例提供了多种方法来检查应用程序的 HTTP 请求，并继承了 `Symfony\Component\HttpFoundation\Request` 类。下面是该类几个有用的方法：
+`Royalcms\Component\Http\Request` 实例提供了多种方法来检查应用程序的 HTTP 请求，并继承了 `Symfony\Component\HttpFoundation\Request` 类。下面是该类几个有用的方法：
 
 ####  获取请求路径
 
@@ -127,7 +127,7 @@
 
     use Psr\Http\Message\ServerRequestInterface;
     
-    Route::get('/', function (ServerRequestInterface $request) {
+    RC_Route::get('/', function (ServerRequestInterface $request) {
         //
     });
 
@@ -151,7 +151,7 @@
 
 #### 获取指定输入值
 
-使用几种简单的方法（不需要特别指定哪个 HTTP 动作），就可以访问 `Royalcms\Http\Request` 实例中所有的用户输入。也就是说无论是什么样的 HTTP 动作，`input` 方法都可以被用来获取用户输入数据：
+使用几种简单的方法（不需要特别指定哪个 HTTP 动作），就可以访问 `Royalcms\Component\Http\Request` 实例中所有的用户输入。也就是说无论是什么样的 HTTP 动作，`input` 方法都可以被用来获取用户输入数据：
 
     $name = $request->input('name');
 
@@ -181,7 +181,7 @@
 
 #### 通过动态属性获取输入
 
-你也可以通过 `Royalcms\Http\Request` 实例的动态属性来获取用户输入。例如，如果你应用的表单中包含 `name` 字段，那么可以像这样访问该字段的值：
+你也可以通过 `Royalcms\Component\Http\Request` 实例的动态属性来获取用户输入。例如，如果你应用的表单中包含 `name` 字段，那么可以像这样访问该字段的值：
 
     $name = $request->name;
 
@@ -234,7 +234,7 @@ Royalcms 允许你将本次请求的数据保留到下一次请求发送前。�
 
 #### 将输入闪存至 Session
 
-`Royalcms\Http\Request` 的 `flash` 方法会将当前输入的数据存进 [session](/docs/session) 中，以便在用户下次发送请求到应用程序之前可以使用它们：
+`Royalcms\Component\Http\Request` 的 `flash` 方法会将当前输入的数据存进 [session](/docs/session) 中，以便在用户下次发送请求到应用程序之前可以使用它们：
 
     $request->flash();
 
@@ -269,13 +269,13 @@ Royalcms 也提供了全局辅助函数 `old`。如果你要在 [Blade 模板](/
 
 #### 从请求中获取 Cookie
 
-Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签名，这意味着如果客户端更改了它们，便视为无效。若要从请求中获取 cookie 值，你可以在 `Royalcms\Http\Request` 实例上使用 `cookie` 方法：
+Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签名，这意味着如果客户端更改了它们，便视为无效。若要从请求中获取 cookie 值，你可以在 `Royalcms\Component\Http\Request` 实例上使用 `cookie` 方法：
 
     $value = $request->cookie('name');
 
 #### 将 Cookies 附加到响应
 
-你可以使用 `cookie` 方法将 cookie 附加到传出的 `Royalcms\Http\Response` 实例。你需要传递 Cookie 名称、值、以及有效期（分钟）到这个方法：
+你可以使用 `cookie` 方法将 cookie 附加到传出的 `Royalcms\Component\Http\Response` 实例。你需要传递 Cookie 名称、值、以及有效期（分钟）到这个方法：
 
     return response('Hello World')->cookie(
         'name', 'value', $minutes
@@ -300,7 +300,7 @@ Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签
 <a name="retrieving-uploaded-files"></a>
 ### 获取上传文件
 
-你可以使用 `file` 方法或使用动态属性从 `Royalcms\Http\Request` 实例中访问上传的文件。该 `file` 方法返回一个 `Royalcms\Http\UploadedFile` 类的实例，该类继承了PHP 的 `SplFileInfo` 类的同时也提供了各种与文件交互的方法：
+你可以使用 `file` 方法或使用动态属性从 `Royalcms\Component\Http\Request` 实例中访问上传的文件。该 `file` 方法返回一个 `Royalcms\Component\Http\UploadedFile` 类的实例，该类继承了PHP 的 `SplFileInfo` 类的同时也提供了各种与文件交互的方法：
 
     $file = $request->file('photo');
     
@@ -363,7 +363,7 @@ Royalcms 框架创建的每个 cookie 都会被加密并使用验证码进行签
     
     namespace App\Http\Middleware;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use Fideloper\Proxy\TrustProxies as Middleware;
     
     class TrustProxies extends Middleware

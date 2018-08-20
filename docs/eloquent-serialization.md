@@ -47,7 +47,7 @@
 
 当模型或集合被转型成字符串时，模型或集合便会被转换成 JSON 格式，因此你可以直接从应用程序的路由或者控制器中返回 Eloquent 对象：
 
-    Route::get('users', function () {
+    RC_Route::get('users', function () {
         return App\User::all();
     });
 

@@ -207,7 +207,7 @@
 
 扩展包视图参照使用了双分号 `package::view` 语法。所以，你可以通过如下方式从 `courier` 扩展包中加载 `admin` 视图：
 
-    Route::get('admin', function () {
+    RC_Route::get('admin', function () {
         return view('courier::admin');
     });
 

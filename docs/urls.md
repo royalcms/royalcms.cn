@@ -52,7 +52,7 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
 
 辅助函数 `route` 可以用于为指定路由生成 URL。命名路由生成的 URL 不与路由上定义的 URL 相耦合。因此，就算路由的 URL 有任何更改，都不需要对 `route` 函数调用进行任何更改。例如，假设你的应用程序包含以下路由：
 
-    Route::get('/post/{post}', function () {
+    RC_Route::get('/post/{post}', function () {
         //
     })->name('post.show');
 
@@ -82,7 +82,7 @@ For some applications, you may wish to specify request-wide default values for c
 
 对于某些应用程序，你可能希望为某些 URL 参数的请求范围指定默认值。例如，假设有些路由定义了 `{locale}` 参数：
 
-    Route::get('/{locale}/posts', function () {
+    RC_Route::get('/{locale}/posts', function () {
         //
     })->name('post.index');
 

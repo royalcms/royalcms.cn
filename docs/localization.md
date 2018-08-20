@@ -33,7 +33,7 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 
 应用的默认语言保存在 `config/app.php` 配置文件中。你可以根据需要修改当前设置。还可以使用 `App` Facade 的 `setLocale` 方法动态地更改当前语言：
 
-    Route::get('welcome/{locale}', function ($locale) {
+    RC_Route::get('welcome/{locale}', function ($locale) {
         App::setLocale($locale);
     
         //

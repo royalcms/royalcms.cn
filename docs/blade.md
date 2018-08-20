@@ -84,7 +84,7 @@ Blade 的两个主要优点是 _模板继承_ 和 _区块_ 。为方便开始，
 
 你也可以通过在路由中使用全局辅助函数 `view` 来返回 Blade 视图：
 
-    Route::get('blade', function () {
+    RC_Route::get('blade', function () {
         return view('child');
     });
 
@@ -139,7 +139,7 @@ Components 和 slots 类似于布局中的 `@section`，但其使用方式更容
 
 你可以使用 「中括号」 包住变量将数据传递给 Blade 视图。如下面的路由设置：
 
-    Route::get('greeting', function () {
+    RC_Route::get('greeting', function () {
         return view('welcome', ['name' => 'Samantha']);
     });
 

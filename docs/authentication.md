@@ -163,7 +163,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 [路由中间件](/docs/middleware) 用于只允许通过认证的用户访问指定的路由。Royalcms 自带了在 `Royalcms\Auth\Middleware\Authenticate` 中定义的 `auth` 中间件。由于这个中间件已经在 HTTP 内核中注册，所以只需要将中间件附加到路由定义中：
 
-    Route::get('profile', function () {
+    RC_Route::get('profile', function () {
         // 只有认证过的用户可以...
     })->middleware('auth');
 
@@ -304,7 +304,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 
 [HTTP 基础认证](https://en.wikipedia.org/wiki/Basic_access_authentication) 提供一种快速方式来认证应用的用户，而且不需要设置专用的「登录」页面。开始之前，先把 `auth.basic` [中间件](/docs/middleware) 添加到你的路由。`auth.basic` 中间件已经被包含在 Royalcms 框架中，所以你不需要定义它：
 
-    Route::get('profile', function () {
+    RC_Route::get('profile', function () {
         // 只有认证过的用户可进入...
     })->middleware('auth.basic');
 
@@ -346,7 +346,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 
 接着，[注册路由中间件](/docs/middleware#registering-middleware) ，然后将它附加到路由：
 
-    Route::get('api/user', function () {
+    RC_Route::get('api/user', function () {
         // 只有认证过的用户可以进入...
     })->middleware('auth.basic.once');
 

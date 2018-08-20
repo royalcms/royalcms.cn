@@ -22,13 +22,13 @@
 
 所有路由和控制器都会返回一个响应并发送给用户的浏览器。Royalcms 提供了几种不同的方式来返回响应。最基本的响应就是从路由或控制器返回一个字符串。框架会自动将字符串转换为一个完整的 HTTP 响应：
 
-    Route::get('/', function () {
+    RC_RC_RC_Route::get('/', function () {
         return 'Hello World';
     });
 
 除了从路由和控制器返回字符串之外，还可以返回数组。框架也会自动地将数组转为 JSON 响应：
 
-    Route::get('/', function () {
+    RC_RC_RC_Route::get('/', function () {
         return [1, 2, 3];
     });
 
@@ -40,7 +40,7 @@
 
 返回完整的 `Response` 实例允许你自定义响应的 HTTP 状态码和响应头信息。`Response` 实例继承自 `Symfony\Component\HttpFoundation\Response` 类，该类提供了各种构建 HTTP 响应的方法：
 
-    Route::get('home', function () {
+    RC_RC_RC_Route::get('home', function () {
         return response('Hello World', 200)
                       ->header('Content-Type', 'text/plain');
     });
@@ -96,13 +96,13 @@
 
 重定向响应是 `Royalcms\Http\RedirectResponse` 类的实例，并且包含用户需要重定向至另一个 URL 所需的头信息。Royalcms 提供了几种方法用于生成 `RedirectResponse` 实例。其中最简单的方法是使用全局辅助函数 `redirect`：
 
-    Route::get('dashboard', function () {
+    RC_RC_RC_Route::get('dashboard', function () {
         return redirect('home/dashboard');
     });
 
 有时候你可能希望将用户重定向到之前的位置，比如提交的表单无效时。这时你可以使用全局辅助函数 `back` 来执行此操作。由于这个功能利用了 [Session](/docs/session)，请确保调用 `back` 函数的路由使用 `web` 中间件组或所有 Session 中间件：
 
-    Route::post('user/profile', function () {
+    RC_RC_RC_Route::post('user/profile', function () {
         // 验证请求...
     
         return back()->withInput();
@@ -159,7 +159,7 @@
 
 通常，重定向到新的 URL 的同时会将 [数据闪存到 Session](/docs/session#flash-data)。并且成功执行将信息闪存到 Seesion 后才算完成此操作。方便起见，你可以创建一个 `RedirectResponse` 的实例并链式调用 `with` 方法将数据闪存在 Session 中：
 
-    Route::post('user/profile', function () {
+    RC_RC_RC_Route::post('user/profile', function () {
         // 更新用户的信息...
     
         return redirect('dashboard')->with('status', 'Profile updated!');

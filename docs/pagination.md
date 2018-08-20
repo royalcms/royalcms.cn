@@ -100,7 +100,7 @@
 
 `withPath` 方法允许你在生成链接时自定义分页器所使用的 URI。例如，如果你想要分页器生成像 `http://example.com/custom/url?page=N` 这样的链接，那就传递 `custom/url` 到 `withPath` 方法：
 
-    Route::get('users', function () {
+    RC_Route::get('users', function () {
         $users = App\User::paginate(15);
     
         $users->withPath('custom/url');
@@ -123,7 +123,7 @@
 
 Royalcms 分页器结果类实现了 `Royalcms\Contracts\Support\Jsonable` 接口契约并且提供 `toJson` 方法，因此将分页结果转换为 JSON 非常简单。你也可以在路由或控制器操作中简单地将分页实例转换为 JSON 返回：
 
-    Route::get('users', function () {
+    RC_Route::get('users', function () {
         return App\User::paginate();
     });
 

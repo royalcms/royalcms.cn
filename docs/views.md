@@ -22,7 +22,7 @@
 
 该视图文件位于 `resources/views/greeting.blade.php`，使用全局辅助函数 `view` 来返回：
 
-    Route::get('/', function () {
+    RC_Route::get('/', function () {
         return view('greeting', ['name' => 'James']);
     });
 

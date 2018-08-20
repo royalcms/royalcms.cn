@@ -273,7 +273,7 @@ Passport 配备了一些可以让你的用户自行创建客户端和个人访�
 
 客户端创建之后，开发者会使用此客户端的 ID 和密钥来请求授权代码，并从应用程序访问令牌。首先，接入应用的用户向你应用程序的 `/oauth/authorize` 路由发出重定向请求，示例如下：
 
-    Route::get('/redirect', function () {
+    RC_Route::get('/redirect', function () {
         $query = http_build_query([
             'client_id' => 'client-id',
             'redirect_uri' => 'http://example.com/callback',
@@ -298,7 +298,7 @@ Passport 配备了一些可以让你的用户自行创建客户端和个人访�
 
 用户批准授权请求后，会被重定向回接入的应用程序。然后接入应用应该将通过 `POST` 请求向你的应用程序申请访问令牌。请求应该包括当用户批准授权请求时由应用程序发出的授权码。在下面的例子中，我们使用 Guzzle HTTP 库来实现这次 `POST` 请求：
 
-    Route::get('/callback', function (Request $request) {
+    RC_Route::get('/callback', function (Request $request) {
         $http = new GuzzleHttp\Client;
     
         $response = $http->post('http://your-app.com/oauth/token', [
@@ -412,7 +412,7 @@ OAuth2 密码授权机制可以让你自己的客户端（如移动应用程序�
 调用上面方法开启授权后，开发者可以使用他们的客户端 ID 从应用程序请求访问令牌。接入的应用程序应该向你的应用程序的 `/oauth/authorize` 路由发出重定向请求，如下所示：
 
 
-    Route::get('/redirect', function () {
+    RC_Route::get('/redirect', function () {
         $query = http_build_query([
             'client_id' => 'client-id',
             'redirect_uri' => 'http://example.com/callback',
@@ -443,7 +443,7 @@ OAuth2 密码授权机制可以让你自己的客户端（如移动应用程序�
 然后在路由上追加这个中间件：
 
 
-    Route::get('/user', function(Request $request) {
+    RC_Route::get('/user', function(Request $request) {
         ...
     })->middleware('client');
 
@@ -548,7 +548,7 @@ Passport 中也有用来管理个人访问令牌的 JSON API，你可以将其�
 
 Passport 包含一个 [验证保护机制](/docs/{{version}}/authentication#adding-custom-guards) 可以验证请求中传入的访问令牌。配置 `api` 的看守器使用 `passport` 驱动程序后，只需要在需要有效访问令牌的任何路由上指定 `auth:api` 中间件：
 
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         //
     })->middleware('auth:api');
 
@@ -588,7 +588,7 @@ Passport 包含一个 [验证保护机制](/docs/{{version}}/authentication#addi
 
 使用授权码授权请求访问令牌时，接入的应用应该将其所需的作用域指定为 `scope` 查询字符串参数。`scope` 包含多个作用域名称时，名称之间使用空格分隔：
 
-    Route::get('/redirect', function () {
+    RC_Route::get('/redirect', function () {
         $query = http_build_query([
             'client_id' => 'client-id',
             'redirect_uri' => 'http://example.com/callback',
@@ -617,7 +617,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
 路由可以使用 `scopes` 中间件来检查当前请求是否拥有指定的 *所有* 作用域：
 
-    Route::get('/orders', function () {
+    RC_Route::get('/orders', function () {
         // 访问令牌具有 "check-status" and "place-orders" 的作用域...
     })->middleware('scopes:check-status,place-orders');
 
@@ -625,7 +625,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
 路由可以使用 `scope` 中间件来检查当前请求是否拥有指定的 *任意* 作用域：
 
-    Route::get('/orders', function () {
+    RC_Route::get('/orders', function () {
         // Access token has either "check-status" or "place-orders" scope...
     })->middleware('scope:check-status,place-orders');
 
@@ -635,7 +635,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
     use Royalcms\Http\Request;
     
-    Route::get('/orders', function (Request $request) {
+    RC_Route::get('/orders', function (Request $request) {
         if ($request->user()->tokenCan('place-orders')) {
             //
         }

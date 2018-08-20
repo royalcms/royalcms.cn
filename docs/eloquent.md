@@ -250,7 +250,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
 
 如果没有对异常进行捕获，则会自动返回 HTTP `404` 响应给用户。也就是说，在使用这些方法时，不需要另外写个检查来返回 `404` 响应：
 
-    Route::get('/api/flights/{id}', function ($id) {
+    RC_Route::get('/api/flights/{id}', function ($id) {
         return App\Flight::findOrFail($id);
     });
 

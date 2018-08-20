@@ -110,7 +110,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
 
 你也可以使用全局的 PHP 函数 `session` 来获取和存储 Session 数据。 使用单个字符串类型的值作为参数调用辅助函数 `session` 时，它会返回字该符串对应的 Session 键的值。当使用一个键值对数组作为参数调用辅助函数 `session` 时，传入的键值将会存储在 Session 中：
 
-    Route::get('home', function () {
+    RC_Route::get('home', function () {
         // 获取 Session 中的一条数据...
         $value = session('key');
     

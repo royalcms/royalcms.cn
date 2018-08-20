@@ -39,9 +39,9 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 首先，假设我们在 `routes/web.php` 文件中定义了以下路由：
 
-    Route::get('post/create', 'PostController@create');
+    RC_Route::get('post/create', 'PostController@create');
     
-    Route::post('post', 'PostController@store');
+    RC_Route::post('post', 'PostController@store');
 
 `GET` 路由用来显示一个供用户创建新的博客文章的表单，`POST` 路由则是会将新的博客文章保存到数据库。
 
@@ -250,7 +250,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 由于所有的表单请求都是继承了 Royalcms 中的请求基类，所以我们可以使用 `user` 方法去获取当前认证登录的用户。同时请注意上述例子中对 `route` 方法的调用。这个方法允许你在被调用的路由上获取其定义的 URI 参数，譬如下面例子中的 `{comment}` 参数：
 
-    Route::post('comment/{comment}');
+    RC_Route::post('comment/{comment}');
 
 如果 `authorize` 方法返回 `false`，则会自动返回一个包含 403 状态码的 HTTP 响应，也不会运行控制器的方法。
 

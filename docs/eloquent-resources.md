@@ -71,7 +71,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return new UserResource(User::find(1));
     });
 
@@ -82,7 +82,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return UserResource::collection(User::all());
     });
 
@@ -122,7 +122,7 @@
     use App\User;
     use App\Http\Resources\UserCollection;
     
-    Route::get('/users', function () {
+    RC_Route::get('/users', function () {
         return new UserCollection(User::all());
     });
 
@@ -164,7 +164,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return new UserResource(User::find(1));
     });
 
@@ -199,7 +199,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return UserResource::collection(User::all());
     });
 
@@ -235,7 +235,7 @@
     use App\User;
     use App\Http\Resources\UserCollection;
     
-    Route::get('/users', function () {
+    RC_Route::get('/users', function () {
         return new UserCollection(User::all());
     });
 
@@ -361,7 +361,7 @@
     use App\User;
     use App\Http\Resources\UserCollection;
     
-    Route::get('/users', function () {
+    RC_Route::get('/users', function () {
         return new UserCollection(User::paginate());
     });
 
@@ -586,7 +586,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return new UserResource(User::find(1));
     });
 
@@ -595,7 +595,7 @@
     use App\User;
     use App\Http\Resources\User as UserResource;
     
-    Route::get('/user', function () {
+    RC_Route::get('/user', function () {
         return (new UserResource(User::find(1)))
                     ->response()
                     ->header('X-Value', 'True');

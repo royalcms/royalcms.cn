@@ -420,7 +420,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 当你设计一个邮件模板时，可以很方便地在浏览器中快速预览渲染出来的邮件，就像典型的 Blade 模板一样。为此， Royalcms 允许你直接从路由闭包或者控制器中返回任何的邮件。当邮件被返回时，他会被渲染并显示在浏览器中，允许你快速预览其设计，而不必发送到实际的电子邮件地址。
 
-    Route::get('/mailable', function () {
+    RC_Route::get('/mailable', function () {
         $invoice = App\Invoice::find(1);
     
         return new App\Mail\InvoicePaid($invoice);
