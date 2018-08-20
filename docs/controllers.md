@@ -51,7 +51,7 @@
 
 你可以这样定义一个指向该控制器行为的路由：
 
-    Route::get('user/{id}', 'UserController@show');
+    RC_Route::get('user/{id}', 'UserController@show');
 
 现在，当一个请求与此指定路由的 URI 匹配时， `UserController` 类的 `show` 方法就会被执行。当然，路由参数也会被传递至该方法。
 
@@ -64,7 +64,7 @@
 
 如果你选择将控制器存放在 `App\Http\Controllers` 目录下的某一目录，只需要简单地使用相对于 `App\Http\Controllers` 根命名空间的特定类名。也就是说，如果完整的控制器类是 `App\Http\Controllers\Photos\AdminController` ，那你应该用以下这种方式向控制器注册路由：
 
-    Route::get('foo', 'Photos\AdminController@method');
+    RC_Route::get('foo', 'Photos\AdminController@method');
 
 <a name="single-action-controllers"></a>
 ### 单个行为控制器
@@ -94,14 +94,14 @@
 
 注册单个行为控制器的路由时，不需要指定方法：
 
-    Route::get('user/{id}', 'ShowProfile');
+    RC_Route::get('user/{id}', 'ShowProfile');
 
 <a name="controller-middleware"></a>
 ## 控制器中间件
 
 [中间件](/docs/middleware) 可以在路由文件中被分配给控制器路由：
 
-    Route::get('profile', 'UserController@show')->middleware('auth');
+    RC_Route::get('profile', 'UserController@show')->middleware('auth');
 
 但是，在控制器的构造方法中指定中间件会更方便。使用控制器构造函数中的 `middleware` 方法，你可以很容易地将中间件分配给控制器的行为。你甚至可以约束中间件只对控制器类中的某些特定方法生效：
 
@@ -143,7 +143,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 接下来，你可以给控制器注册一个资源路由：
 
-    Route::resource('photos', 'PhotoController');
+    RC_Route::resource('photos', 'PhotoController');
 
 这个路由声明创建多个路由来处理资源上的各种行为。生成的控制器为每个行为保留了方法，同时还包括了 处理 HTTP 动作和 URI 的声明注释。
 
@@ -176,11 +176,11 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 声明资源路由时，你可以指定控制器处理的部分行为，而不是所有默认的行为：
 
-    Route::resource('photo', 'PhotoController', ['only' => [
+    RC_Route::resource('photo', 'PhotoController', ['only' => [
         'index', 'show'
     ]]);
     
-    Route::resource('photo', 'PhotoController', ['except' => [
+    RC_Route::resource('photo', 'PhotoController', ['except' => [
         'create', 'store', 'update', 'destroy'
     ]]);
 
@@ -188,11 +188,11 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 当声明用于 APIs 的资源路由时，通常需要排除显示 HTML 模板的路由（如 `create` 和 `edit` ）。为了方便起见，你可以使用 `apiResource` 方法自动排除这两个路由：
 
-    Route::apiResource('photo', 'PhotoController');
+    RC_Route::apiResource('photo', 'PhotoController');
 
 你可以传递一个数组给 `apiResources` 方法来注册多个API资源控制器：
 
-    Route::apiResources([
+    RC_Route::apiResources([
         'photos' => 'PhotoController',
         'posts' => 'PostController'
     ]);
@@ -202,16 +202,16 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 默认情况下，所有的资源控制器行为都有一个路由名称。你可以传入 `names` 数组来覆盖这些名称：
 
-    Route::resource('photo', 'PhotoController', ['names' => [
+    RC_Route::resource('photo', 'PhotoController', ['names' => [
         'create' => 'photo.build'
     ]]);
 
 <a name="restful-naming-resource-route-parameters"></a>
 ### 命名资源路由参数
 
-默认情况下，`Route::resource` 会根据资源名称的「单数」形式创建资源路由的路由参数。你可以在选项数组中传入 `parameters` 参数来轻松地覆盖每个资源。`parameters` 数组应该是资源名称和参数名称的关联数组：
+默认情况下，`RC_Route::resource` 会根据资源名称的「单数」形式创建资源路由的路由参数。你可以在选项数组中传入 `parameters` 参数来轻松地覆盖每个资源。`parameters` 数组应该是资源名称和参数名称的关联数组：
 
-    Route::resource('user', 'AdminUserController', ['parameters' => [
+    RC_Route::resource('user', 'AdminUserController', ['parameters' => [
         'user' => 'admin_user'
     ]]);
 
@@ -222,9 +222,9 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 <a name="restful-localizing-resource-uris"></a>
 ### 本地化资源 URI
 
-默认情况下，`Route::resource` 将会用英文动词创建资源 URI。如果需要本地化 `create` 和 `edit` 行为动作名，可以在 `AppServiceProvider` 的 `boot` 中使用 `Route::resourceVerbs` 方法实现：
+默认情况下，`RC_Route::resource` 将会用英文动词创建资源 URI。如果需要本地化 `create` 和 `edit` 行为动作名，可以在 `AppServiceProvider` 的 `boot` 中使用 `RC_Route::resourceVerbs` 方法实现：
 
-    use Royalcms\Support\Facades\Route;
+    use Royalcms\Component\Support\Facades\Route;
     
     /**
      * 引导任何应用服务。
@@ -233,13 +233,13 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
      */
     public function boot()
     {
-        Route::resourceVerbs([
+        RC_Route::resourceVerbs([
             'create' => 'crear',
             'edit' => 'editar',
         ]);
     }
 
-动作被自定义后，像 `Route::resource('fotos', 'PhotoController')` 这样注册的资源路由将会产生如下的 URI：
+动作被自定义后，像 `RC_Route::resource('fotos', 'PhotoController')` 这样注册的资源路由将会产生如下的 URI：
 
     /fotos/crear
     
@@ -248,11 +248,11 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 <a name="restful-supplementing-resource-controllers"></a>
 ### 补充资源控制器
 
-如果你想在默认的资源路由中增加额外的路由，你应该在 `Route::resource` 之前定义这些路由。否则由 `resource` 方法定义的路由可能会无意中优先于你补充的路由：
+如果你想在默认的资源路由中增加额外的路由，你应该在 `RC_Route::resource` 之前定义这些路由。否则由 `resource` 方法定义的路由可能会无意中优先于你补充的路由：
 
-    Route::get('photos/popular', 'PhotoController@method');
+    RC_Route::get('photos/popular', 'PhotoController@method');
     
-    Route::resource('photos', 'PhotoController');
+    RC_Route::resource('photos', 'PhotoController');
 
 > {tip} 记住保持控制器的专一性。如果你需要典型的资源操作之外的方法，可以考虑将你的控制器分成两个更小的控制器。
 
@@ -298,7 +298,7 @@ Royalcms 使用服务容器来解析所有的控制器。因此，你可以在�
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
     class UserController extends Controller
     {
@@ -318,14 +318,14 @@ Royalcms 使用服务容器来解析所有的控制器。因此，你可以在�
 
 如果控制器方法需要从路由参数中获取输入内容，只需要在其他依赖项后列出路由参数即可。比如，如果你的路由是这样定义的：
 
-    Route::put('user/{id}', 'UserController@update');
-你仍然可以类型提示 `Royalcms\Http\Request` 并通过定义控制器方法获取 `id` 参数，如下所示：
+    RC_Route::put('user/{id}', 'UserController@update');
+你仍然可以类型提示 `Royalcms\Component\Http\Request` 并通过定义控制器方法获取 `id` 参数，如下所示：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
     class UserController extends Controller
     {

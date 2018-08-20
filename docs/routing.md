@@ -195,7 +195,7 @@
     /**
      * 处理一次请求。
      *
-     * @param  \Royalcms\Http\Request  $request
+     * @param  \Royalcms\Component\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed
      */

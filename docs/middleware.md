@@ -38,7 +38,7 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
         /**
          * 处理传入的请求
          *
-         * @param  \Royalcms\Http\Request  $request
+         * @param  \Royalcms\Component\Http\Request  $request
          * @param  \Closure  $next
          * @return mixed
          */
@@ -115,23 +115,23 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
     // 在 App\Http\Kernel 类中
     
     protected $routeMiddleware = [
-        'auth' => \Royalcms\Auth\Middleware\Authenticate::class,
-        'auth.basic' => \Royalcms\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'bindings' => \Royalcms\Routing\Middleware\SubstituteBindings::class,
-        'can' => \Royalcms\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Royalcms\Routing\Middleware\ThrottleRequests::class,
+        'auth' => \Royalcms\Component\Auth\Middleware\Authenticate::class,
+        'auth.basic' => \Royalcms\Component\Auth\Middleware\AuthenticateWithBasicAuth::class,
+        'bindings' => \Royalcms\Component\Routing\Middleware\SubstituteBindings::class,
+        'can' => \Royalcms\Component\Auth\Middleware\Authorize::class,
+        'guest' => \App\Component\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle' => \Royalcms\Component\Routing\Middleware\ThrottleRequests::class,
     ];
 
 一旦在 Kernel 中定义了中间件，就可使用 `middleware` 方法将中间件分配给路由：
 
-    Route::get('admin/profile', function () {
+    RC_Route::get('admin/profile', function () {
         //
     })->middleware('auth');
 
 你还可以为路由分配多个中间件：
 
-    Route::get('/', function () {
+    RC_RC_Route::get('/', function () {
         //
     })->middleware('first', 'second');
 
@@ -139,7 +139,7 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
 
     use App\Http\Middleware\CheckAge;
     
-    Route::get('admin/profile', function () {
+    RC_Route::get('admin/profile', function () {
         //
     })->middleware(CheckAge::class);
 
@@ -158,11 +158,11 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
-            \Royalcms\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-            \Royalcms\Session\Middleware\StartSession::class,
-            \Royalcms\View\Middleware\ShareErrorsFromSession::class,
+            \Royalcms\Component\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Royalcms\Component\Session\Middleware\StartSession::class,
+            \Royalcms\Component\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Royalcms\Routing\Middleware\SubstituteBindings::class,
+            \Royalcms\Component\Routing\Middleware\SubstituteBindings::class,
         ],
     
         'api' => [
@@ -173,11 +173,11 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
 可以使用与单个中间件相同的语法将中间件组分配给路由和控制器操作。重申一遍，中间件组只是更方便地实现了一次为路由分配多个中间件。
 
-    Route::get('/', function () {
+    RC_Route::get('/', function () {
         //
     })->middleware('web');
     
-    Route::group(['middleware' => ['web']], function () {
+    RC_Route::group(['middleware' => ['web']], function () {
         //
     });
 
@@ -201,7 +201,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
         /**
          * 处理传入的请求
          *
-         * @param  \Royalcms\Http\Request  $request
+         * @param  \Royalcms\Component\Http\Request  $request
          * @param  \Closure  $next
          * @param  string  $role
          * @return mixed
@@ -219,7 +219,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
 定义路由时通过一个 `:` 来隔开中间件名称和参数来指定中间件参数。多个参数就使用逗号分隔：
 
-    Route::put('post/{id}', function ($id) {
+    RC_Route::put('post/{id}', function ($id) {
         //
     })->middleware('role:editor');
 
@@ -230,7 +230,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
     <?php
     
-    namespace Royalcms\Session\Middleware;
+    namespace Royalcms\Component\Session\Middleware;
     
     use Closure;
     
