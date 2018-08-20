@@ -39,7 +39,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 ### Royalcms 目录结构：
 
 	content 	功能模块目录
-	verdons  	框架目录
+	vendor  	框架目录
 	index.php	入口文件
 
 
