@@ -30,7 +30,7 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
 <a name="accessing-the-current-url"></a>
 ### 访问当前 URL
 
-如果没有给辅助函数 `url` 提供路径，则会返回一个 `Royalcms\Routing\UrlGenerator` 实例，来允许你访问有关当前 URL 的信息：
+如果没有给辅助函数 `url` 提供路径，则会返回一个 `Royalcms\Component\Routing\UrlGenerator` 实例，来允许你访问有关当前 URL 的信息：
 
     // 获取没有查询字符串的当前的 URL ...
     echo url()->current();
@@ -43,7 +43,7 @@ Royalcms 提供了几个辅助函数来为应用程序生成 URL。主要用于�
 
 上面的这些方法都可以通过 `URL` facade访问:
 
-    use Royalcms\Support\Facades\URL;
+    use Royalcms\Component\Support\Facades\URL;
     
     echo URL::current();
 
@@ -93,7 +93,7 @@ For some applications, you may wish to specify request-wide default values for c
     namespace App\Http\Middleware;
     
     use Closure;
-    use Royalcms\Support\Facades\URL;
+    use Royalcms\Component\Support\Facades\URL;
     
     class SetDefaultLocaleForUrls
     {

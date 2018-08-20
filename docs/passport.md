@@ -46,7 +46,7 @@
 
 接下来，将 Passport 的服务提供者注册到配置文件 `config/app.php` 的 `providers` 数组中：
 
-    Royalcms\Passport\PassportServiceProvider::class,
+    Royalcms\Component\Passport\PassportServiceProvider::class,
 
 Passport 服务提供器使用框架注册自己的数据库迁移目录，因此在注册提供器后，就应该运行 Passport 的迁移命令来自动创建存储客户端和令牌的数据表：
 
@@ -58,15 +58,15 @@ Passport 服务提供器使用框架注册自己的数据库迁移目录，因�
 
     php artisan passport:install
 
-上面命令执行后，请将 `Royalcms\Passport\HasApiTokens` Trait 添加到 `App\User` 模型中，这个 Trait 会给你的模型提供一些辅助函数，用于检查已认证用户的令牌和使用范围：
+上面命令执行后，请将 `Royalcms\Component\Passport\HasApiTokens` Trait 添加到 `App\User` 模型中，这个 Trait 会给你的模型提供一些辅助函数，用于检查已认证用户的令牌和使用范围：
 
     <?php
     
     namespace App;
     
-    use Royalcms\Passport\HasApiTokens;
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Passport\HasApiTokens;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -79,9 +79,9 @@ Passport 服务提供器使用框架注册自己的数据库迁移目录，因�
     
     namespace App\Providers;
     
-    use Royalcms\Passport\Passport;
-    use Royalcms\Support\Facades\Gate;
-    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Component\Passport\Passport;
+    use Royalcms\Component\Support\Facades\Gate;
+    use Royalcms\Component\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -434,7 +434,7 @@ OAuth2 密码授权机制可以让你自己的客户端（如移动应用程序�
 客户端凭据授权适用于机器到机器的认证。例如，你可以在通过 API 执行维护任务中使用此授权。要使用这种授权，你首先需要在 `app/Http/Kernel.php` 的 `$routeMiddleware` 变量中添加新的中间件：
 
 
-    use Royalcms\Passport\Http\Middleware\CheckClientCredentials::class;
+    use Royalcms\Component\Passport\Http\Middleware\CheckClientCredentials::class;
     
     protected $routeMiddleware = [
         'client' => CheckClientCredentials::class,
@@ -574,7 +574,7 @@ Passport 包含一个 [验证保护机制](/docs/{{version}}/authentication#addi
 
 你可以在 `AuthServiceProvider` 的 `boot` 方法中使用 `Passport::tokensCan` 方法来定义 API 的作用域。`tokensCan` 方法接受一个作用域名称、描述的数组作为参数。作用域描述将会在授权确认页中直接展示给用户，你可以将其定义为任何你需要的内容：
 
-    use Royalcms\Passport\Passport;
+    use Royalcms\Component\Passport\Passport;
     
     Passport::tokensCan([
         'place-orders' => 'Place orders',
@@ -610,8 +610,8 @@ Passport 包含一个 [验证保护机制](/docs/{{version}}/authentication#addi
 
 Passport 包含两个中间件，可用于验证传入的请求是否已被授予给定作用域的令牌进行身份验证。使用之前，需要将下面的中间件添加到 `app/Http/Kernel.php` 文件的 `$routeMiddleware` 属性中：
 
-    'scopes' => \Royalcms\Passport\Http\Middleware\CheckScopes::class,
-    'scope' => \Royalcms\Passport\Http\Middleware\CheckForAnyScope::class,
+    'scopes' => \Royalcms\Component\Passport\Http\Middleware\CheckScopes::class,
+    'scope' => \Royalcms\Component\Passport\Http\Middleware\CheckForAnyScope::class,
 
 #### 检查所有作用域
 
@@ -633,7 +633,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
 就算访问令牌验证的请求已经通过应用程序的验证，你仍然可以使用当前授权 `User` 实例上的 `tokenCan` 方法来验证令牌是否拥有指定的作用域：
 
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
     RC_Route::get('/orders', function (Request $request) {
         if ($request->user()->tokenCan('place-orders')) {
@@ -650,7 +650,7 @@ Passport 包含两个中间件，可用于验证传入的请求是否已被授�
 
     'web' => [
         // Other middleware...
-        \Royalcms\Passport\Http\Middleware\CreateFreshApiToken::class,
+        \Royalcms\Component\Passport\Http\Middleware\CreateFreshApiToken::class,
     ],
 
 
@@ -682,11 +682,11 @@ Passport 在发出访问令牌和刷新令牌时触发事件。 在应用程序�
  * @var array
  */
 protected $listen = [
-    'Royalcms\Passport\Events\AccessTokenCreated' => [
+    'Royalcms\Component\Passport\Events\AccessTokenCreated' => [
         'App\Listeners\RevokeOldTokens',
     ],
 
-    'Royalcms\Passport\Events\RefreshTokenCreated' => [
+    'Royalcms\Component\Passport\Events\RefreshTokenCreated' => [
         'App\Listeners\PruneOldTokens',
     ],
 ];

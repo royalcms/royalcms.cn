@@ -67,8 +67,8 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
     
     namespace App;
     
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {

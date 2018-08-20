@@ -7,9 +7,9 @@
 <a name="introduction"></a>
 ## 简介
 
-Eloquent 返回的所有多结果集都是 `Royalcms\Database\Eloquent\Collection` 对象的实例，
+Eloquent 返回的所有多结果集都是 `Royalcms\Component\Database\Eloquent\Collection` 对象的实例，
 
-默认情况下 Eloquent 返回的都是一个 `Royalcms\Database\Eloquent\Collection` 对象的实例，包括通过 `get` 方法检索或通过访问关联关系获取到的结果。Eloquent 的集合对象继承了 Royalcms 的 [集合基类](/docs/collections)，因此它自然也继承了数十种能优雅地处理 Eloquent 模型底层数组的方法。
+默认情况下 Eloquent 返回的都是一个 `Royalcms\Component\Database\Eloquent\Collection` 对象的实例，包括通过 `get` 方法检索或通过访问关联关系获取到的结果。Eloquent 的集合对象继承了 Royalcms 的 [集合基类](/docs/collections)，因此它自然也继承了数十种能优雅地处理 Eloquent 模型底层数组的方法。
 
 当然，所有的集合都可以作为迭代器，可以就像简单的 PHP 数组一样来遍历它们：
 
@@ -146,7 +146,7 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Database\Eloquent\Collectio
     namespace App;
     
     use App\CustomCollection;
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -154,7 +154,7 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Database\Eloquent\Collectio
          * 创建一个新的 Eloquent 集合实例对象。
          *
          * @param  array  $models
-         * @return \Royalcms\Database\Eloquent\Collection
+         * @return \Royalcms\Component\Database\Eloquent\Collection
          */
         public function newCollection(array $models = [])
         {

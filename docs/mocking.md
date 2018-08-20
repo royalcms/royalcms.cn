@@ -27,10 +27,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Jobs\ShipOrder;
-    use Royalcms\Support\Facades\Bus;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Bus;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -61,10 +61,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     use Tests\TestCase;
     use App\Events\OrderShipped;
     use App\Events\OrderFailedToShip;
-    use Royalcms\Support\Facades\Event;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Event;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -96,10 +96,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Mail\OrderShipped;
-    use Royalcms\Support\Facades\Mail;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Mail;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -144,10 +144,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Notifications\OrderShipped;
-    use Royalcms\Support\Facades\Notification;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Notification;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -188,10 +188,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     use Tests\TestCase;
     use App\Jobs\ShipOrder;
-    use Royalcms\Support\Facades\Queue;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Queue;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -226,11 +226,11 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Http\UploadedFile;
-    use Royalcms\Support\Facades\Storage;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Http\UploadedFile;
+    use Royalcms\Component\Support\Facades\Storage;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -259,7 +259,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\Cache;
+    use Royalcms\Component\Support\Facades\Cache;
     
     class UserController extends Controller
     {
@@ -283,10 +283,10 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Support\Facades\Cache;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Support\Facades\Cache;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class UserControllerTest extends TestCase
     {

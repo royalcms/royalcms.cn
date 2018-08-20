@@ -36,7 +36,7 @@
 
 如果需要判断视图文件是否存在，可以使用 `View` Facade 上的 `exists` 方法。如果视图文件存在，该方法会返回 `true` ：
 
-    use Royalcms\Support\Facades\View;
+    use Royalcms\Component\Support\Facades\View;
     
     if (RC_View::exists('emails.customer')) {
         //
@@ -61,7 +61,7 @@
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\View;
+    use Royalcms\Component\Support\Facades\View;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -91,14 +91,14 @@
 
 视图合成器是在渲染视图时调用的回调或者类方法。如果你每次渲染视图时都要绑定视图的数据，视图合成器可以帮你将这些逻辑整理到特定的位置。
 
-在下面这个例子中，我们会在一个服务提供器中注册视图合成器，使用 `View` Facade 来访问底层的 `Royalcms\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
+在下面这个例子中，我们会在一个服务提供器中注册视图合成器，使用 `View` Facade 来访问底层的 `Royalcms\Component\Contracts\View\Factory` 契约实现。默认情况下，Royalcms 没有存放视图合成器的目录，你需要根据喜好来重新建立目录，例如：`App\Http\ViewComposers`。
 
     <?php
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\View;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\View;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class ComposerServiceProvider extends ServiceProvider
     {
@@ -139,7 +139,7 @@
     
     namespace App\Http\ViewComposers;
     
-    use Royalcms\View\View;
+    use Royalcms\Component\View\View;
     use App\Repositories\UserRepository;
     
     class ProfileComposer
@@ -175,7 +175,7 @@
         }
     }
 
-视图合成器的 `compose` 方法会在视图渲染之前被调用，并传入一个 `Royalcms\View\View` 实例。你可以使用 `with` 方法将数据绑定到视图。
+视图合成器的 `compose` 方法会在视图渲染之前被调用，并传入一个 `Royalcms\Component\View\View` 实例。你可以使用 `with` 方法将数据绑定到视图。
 
 > {tip} 所有的视图合成器都会通过服务容器进行解析，所以你可以在视图合成器的构造函数中类型提示需要注入的依赖项。
 

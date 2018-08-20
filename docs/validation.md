@@ -54,7 +54,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PostController extends Controller
@@ -84,7 +84,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 <a name="quick-writing-the-validation-logic"></a>
 ### 编写验证逻辑
 
-现在我们准备开始在 `store` 方法中编写逻辑来验证新的博客文章。为此，我们将使用 `Royalcms\Http\Request` 对象提供的 `validate` 方法 。如果验证通过，你的代码就可以正常的运行。但是如果验证失败，就会抛出异常，并自动将对应的错误响应返回给用户。在典型的 HTTP 请求的情况下，会生成一个重定向响应，而对于 AJAX 请求则会发送 JSON 响应。
+现在我们准备开始在 `store` 方法中编写逻辑来验证新的博客文章。为此，我们将使用 `Royalcms\Component\Http\Request` 对象提供的 `validate` 方法 。如果验证通过，你的代码就可以正常的运行。但是如果验证失败，就会抛出异常，并自动将对应的错误响应返回给用户。在典型的 HTTP 请求的情况下，会生成一个重定向响应，而对于 AJAX 请求则会发送 JSON 响应。
 
 让我们接着回到 `store` 方法来深入理解 `validate` 方法：
 
@@ -132,9 +132,9 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 如果传入的请求参数未通过给定的验证规则呢？正如前面所提到的，Royalcms 会自动把用户重定向到先前的位置。另外，所有的验证错误信息会被自动 [闪存至 session](/docs/session#flash-data)。
 
-重申一次，我们不必在 `GET` 路由中将错误消息显式绑定到视图。因为 Lavarel 会检查在 Session 数据中的错误信息，并自动将其绑定到视图（如果存在）。而其中的变量 `$errors` 是 `Royalcms\Support\MessageBag` 的一个实例。要获取关于这个对象的更多信息，请 [查阅这个文档](#working-with-error-messages)。
+重申一次，我们不必在 `GET` 路由中将错误消息显式绑定到视图。因为 Royalcms 会检查在 Session 数据中的错误信息，并自动将其绑定到视图（如果存在）。而其中的变量 `$errors` 是 `Royalcms\Component\Support\MessageBag` 的一个实例。要获取关于这个对象的更多信息，请 [查阅这个文档](#working-with-error-messages)。
 
-> {tip} `$errors` 变量被由Web中间件组提供的 `Royalcms\View\Middleware\ShareErrorsFromSession` 中间件绑定到视图。**当这个中间件被应用后，在你的视图中就可以获取到 `$error` 变量**，可以使一直假定 `$errors` 变量存在并且可以安全地使用。
+> {tip} `$errors` 变量被由Web中间件组提供的 `Royalcms\Component\View\Middleware\ShareErrorsFromSession` 中间件绑定到视图。**当这个中间件被应用后，在你的视图中就可以获取到 `$error` 变量**，可以使一直假定 `$errors` 变量存在并且可以安全地使用。
 
 所以，在我们的例子中，当验证失败的时候，用户将会被重定向到控制器的 `create` 方法，让我们在视图中显示错误信息：
 
@@ -219,7 +219,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
     /**
      * 配置验证器实例。
      *
-     * @param  \Royalcms\Validation\Validator  $validator
+     * @param  \Royalcms\Component\Validation\Validator  $validator
      * @return void
      */
     public function withValidator($validator)
@@ -295,7 +295,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
     namespace App\Http\Controllers;
     
     use Validator;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PostController extends Controller
@@ -369,7 +369,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 <a name="working-with-error-messages"></a>
 ## 处理错误消息
 
-在 `Validator` 实例上调用 `errors` 方法后，会得到一个 `Royalcms\Support\MessageBag` 实例，该实例具有各种方便的处理错误消息的方法。`$errors` 变量是自动提供给所有视图的 `MessageBag` 类的一个实例。
+在 `Validator` 实例上调用 `errors` 方法后，会得到一个 `Royalcms\Component\Support\MessageBag` 实例，该实例具有各种方便的处理错误消息的方法。`$errors` 变量是自动提供给所有视图的 `MessageBag` 类的一个实例。
 
 #### 查看特定字段的第一个错误消息
 
@@ -645,7 +645,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
     'avatar' => 'dimensions:ratio=3/2'
 由于此规则需要多个参数，因此你可以 `Rule::dimensions` 方法来构造可读性高的规则：
 
-    use Royalcms\Validation\Rule;
+    use Royalcms\Component\Validation\Rule;
     
     Validator::make($data, [
         'avatar' => [
@@ -685,7 +685,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 如果要自定义验证规则执行的查询，可以使用 `Rule` 类来定义规则。在这个例子中，我们使用数组指定验证规则，而不是使用 `|` 字符来分隔它们：
 
-    use Royalcms\Validation\Rule;
+    use Royalcms\Component\Validation\Rule;
     
     Validator::make($data, [
         'email' => [
@@ -716,7 +716,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 验证的字段必须包含在给定的值列表中。因为这个规则通常需要你 `implode` 一个数组，`Rule::in` 方法可以用来构造规则：
 
-    use Royalcms\Validation\Rule;
+    use Royalcms\Component\Validation\Rule;
     
     Validator::make($data, [
         'zones' => [
@@ -798,7 +798,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 验证的字段不能包含在给定的值列表中。`Rule::notIn` 方法可以用来构建规则：
 
-    use Royalcms\Validation\Rule;
+    use Royalcms\Component\Validation\Rule;
     
     Validator::make($data, [
         'toppings' => [
@@ -909,7 +909,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 使用 `Rule` 类定义规则来指示验证器忽略用户的 ID。 这个例子中通过数组来指定验证规则，而不是使用 `|` 字符来分隔：
 
-    use Royalcms\Validation\Rule;
+    use Royalcms\Component\Validation\Rule;
     
     Validator::make($data, [
         'email' => [
@@ -971,7 +971,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
         return $input->games >= 100;
     });
 
-> {tip} 传入 `闭包` 的 `$input` 参数是 `Royalcms\Support\Fluent` 的一个实例，可用来访问你的输入或文件对象。
+> {tip} 传入 `闭包` 的 `$input` 参数是 `Royalcms\Component\Support\Fluent` 的一个实例，可用来访问你的输入或文件对象。
 
 <a name="validating-arrays"></a>
 ## 验证数组
@@ -1014,7 +1014,7 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
     
     namespace App\Rules;
     
-    use Royalcms\Contracts\Validation\Rule;
+    use Royalcms\Component\Contracts\Validation\Rule;
     
     class Uppercase implements Rule
     {
@@ -1070,8 +1070,8 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
     
     namespace App\Providers;
     
-    use Royalcms\Support\ServiceProvider;
-    use Royalcms\Support\Facades\Validator;
+    use Royalcms\Component\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\Validator;
     
     class AppServiceProvider extends ServiceProvider
     {

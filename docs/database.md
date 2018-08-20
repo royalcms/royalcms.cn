@@ -97,7 +97,7 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent OR
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\DB;
+    use Royalcms\Component\Support\Facades\DB;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -163,8 +163,8 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent OR
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\DB;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\DB;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {

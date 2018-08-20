@@ -42,8 +42,8 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 namespace App\Console;
 
 use DB;
-use Royalcms\Console\Scheduling\Schedule;
-use Royalcms\Foundation\Console\Kernel as ConsoleKernel;
+use Royalcms\Component\Console\Scheduling\Schedule;
+use Royalcms\Component\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
     /**
      * 定义应用的命令调度
      *
-     * @param  \Royalcms\Console\Scheduling\Schedule  $schedule
+     * @param  \Royalcms\Component\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
