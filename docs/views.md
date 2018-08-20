@@ -38,7 +38,7 @@
 
     use Royalcms\Support\Facades\View;
     
-    if (View::exists('emails.customer')) {
+    if (RC_View::exists('emails.customer')) {
         //
     }
 
@@ -72,7 +72,7 @@
          */
         public function boot()
         {
-            View::share('key', 'value');
+            RC_View::share('key', 'value');
         }
     
         /**
@@ -110,12 +110,12 @@
         public function boot()
         {
             // 使用基于类的 composer...
-            View::composer(
+            RC_View::composer(
                 'profile', 'App\Http\ViewComposers\ProfileComposer'
             );
     
             // 使用基于闭包的 composers...
-            View::composer('dashboard', function ($view) {
+            RC_View::composer('dashboard', function ($view) {
                 //
             });
         }
@@ -183,14 +183,14 @@
 
 通过将一组视图作为第一个参数传入 `composer` 方法，将一个视图合成器添加到多个视图：
 
-    View::composer(
+    RC_View::composer(
         ['profile', 'dashboard'],
         'App\Http\ViewComposers\MyViewComposer'
     );
 
 `composer` 方法同时也接受通配符 `*`，表示将一个视图合成器添加到所有视图：
 
-    View::composer('*', function ($view) {
+    RC_View::composer('*', function ($view) {
         //
     });
 
@@ -198,4 +198,4 @@
 
 视图**构造器**和视图合成器非常相似。唯一不同之处在于：视图构造器在视图实例化之后立即执行，而视图合成器在视图即将渲染时执行。使用 `creator` 方法注册视图构造器：
 
-    View::creator('profile', 'App\Http\ViewCreators\ProfileCreator');
+    RC_View::creator('profile', 'App\Http\ViewCreators\ProfileCreator');
