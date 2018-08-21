@@ -124,7 +124,7 @@
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\Redis;
+    use Royalcms\Component\Support\Facades\Redis;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -177,14 +177,14 @@
 
 Royalcms 为 Redis 的 `publish` 及 `subscribe` 提供了方便的接口。这些 Redis 命令让你可以监听指定「频道」上的消息。你可以从另一个应用程序发布消息给另一个应用程序，甚至使用其它编程语言，让应用程序和进程之间能够轻松进行通信。
 
-首先，我们使用 `subscribe` 方法设置频道监听器。我们将这个方法调用放在 [Artisan 命令](/docs/artisan) 中，因为调用 `subscribe` 方法会启动一个长时间运行的进程：
+首先，我们使用 `subscribe` 方法设置频道监听器。我们将这个方法调用放在 [royalcms 命令](/docs/royalcms) 中，因为调用 `subscribe` 方法会启动一个长时间运行的进程：
 
     <?php
     
     namespace App\Console\Commands;
     
-    use Royalcms\Console\Command;
-    use Royalcms\Support\Facades\Redis;
+    use Royalcms\Component\Console\Command;
+    use Royalcms\Component\Support\Facades\Redis;
     
     class RedisSubscribe extends Command
     {
