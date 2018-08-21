@@ -45,9 +45,9 @@ Royalcms 提供了多种有用的工具来让你更容易的测试使用数据�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -76,9 +76,9 @@ Royalcms 提供了多种有用的工具来让你更容易的测试使用数据�
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
