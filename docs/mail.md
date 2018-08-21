@@ -68,7 +68,7 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
 
 在 Royalcms 中，每种类型的邮件都代表一个「Mailable」对象。这些对象存储在 `app/Mail` 目录中。如果在你的应用中没有看见这个目录，别担心，在首次使用 `make:mail` 命令创建 Mailable 类时这个目录会被创建，例如：
 
-    php artisan make:mail OrderShipped
+    php royalcms make:mail OrderShipped
 
 <a name="writing-mailables"></a>
 ## 编写 Mailable
@@ -338,9 +338,9 @@ Markdown 格式的 Mailable 消息允许你从预编译的模板和你的 Mailab
 <a name="generating-markdown-mailables"></a>
 ### 生成 Markdown 格式的 Mailable
 
-要生成一个包含友好的 Markdown 模板的 Mailable 类，你在使用  `make:mail` 这个 Artisan 命令时，要加上 `--markdown` 选项：
+要生成一个包含友好的 Markdown 模板的 Mailable 类，你在使用  `make:mail` 这个 royalcms 命令时，要加上 `--markdown` 选项：
 
-    php artisan make:mail OrderShipped --markdown=emails.orders.shipped
+    php royalcms make:mail OrderShipped --markdown=emails.orders.shipped
 
 然后，在使用 `build` 方法配置 Mailable 时，用 `markdown` 方法来换掉 `view` 方法， `markdown` 方法接受一个 Markdown 模板的名称和一个将在模板中可用的选项数组：
 
@@ -403,9 +403,9 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 <a name="customizing-the-components"></a>
 ### 自定义组件
 
-你或许会为了自定义而导出你应用中所有的 Markdown 邮件组件。要导出这些组件，使用 `vendor:publish` 这个 Artisan 命令来发布资源文件标签。
+你或许会为了自定义而导出你应用中所有的 Markdown 邮件组件。要导出这些组件，使用 `vendor:publish` 这个 royalcms 命令来发布资源文件标签。
 
-    php artisan vendor:publish --tag=Royalcms-mail
+    php royalcms vendor:publish --tag=Royalcms-mail
 
 这个命令会发布 Markdown 邮件组件到 `resources/views/vendor/mail` 文件夹。而 `mail` 文件夹会包含一个 `html` 文件夹和一个 `markdown` 文件夹，每个文件夹都包含他们的可用组件的描述。你可以按照你的意愿自定义这些组件。
 
@@ -494,7 +494,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 #### 推送到特定队列
 
-因为所有 Mailable 类是通过 `make:mail` 命令生成并使用 `Royalcms\Bus\Queueable` trait ，你可以在任何 Mailable 类实现中调用 `onQueue` 来指定队列名称，还有 `onConnection` 方法来指定队列链接名称：
+因为所有 Mailable 类是通过 `make:mail` 命令生成并使用 `Royalcms\Component\Bus\Queueable` trait ，你可以在任何 Mailable 类实现中调用 `onQueue` 来指定队列名称，还有 `onConnection` 方法来指定队列链接名称：
 
     $message = (new OrderShipped($order))
                     ->onConnection('sqs')
@@ -509,7 +509,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 如果你的 Mailable 类想要默认使用队列，你可以在类中实现 `ShouldQueue` 接口契约。现在，即便你调用 `send` 方法来发送邮件， Mailable 类仍将邮件放入队列中发送。
 
-    use Royalcms\Contracts\Queue\ShouldQueue;
+    use Royalcms\Component\Contracts\Queue\ShouldQueue;
     
     class OrderShipped extends Mailable implements ShouldQueue
     {
@@ -549,7 +549,7 @@ Royalcms 会在发送邮件消息之前触发一个事件。切记，这个事�
      * @var array
      */
     protected $listen = [
-        'Royalcms\Mail\Events\MessageSending' => [
+        'Royalcms\Component\Mail\Events\MessageSending' => [
             'App\Listeners\LogSentMessage',
         ],
     ];
