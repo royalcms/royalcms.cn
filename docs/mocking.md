@@ -73,15 +73,15 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
          */
         public function testOrderShipping()
         {
-            Event::fake();
+            RC_Event::fake();
     
             // 处理订单发货...
     
-            Event::assertDispatched(OrderShipped::class, function ($e) use ($order) {
+            RC_Event::assertDispatched(OrderShipped::class, function ($e) use ($order) {
                 return $e->order->id === $order->id;
             });
     
-            Event::assertNotDispatched(OrderFailedToShip::class);
+            RC_Event::assertNotDispatched(OrderFailedToShip::class);
         }
     }
 
@@ -105,33 +105,33 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testOrderShipping()
         {
-            Mail::fake();
+            RC_Mail::fake();
     
             // 处理订单发货...
     
-            Mail::assertSent(OrderShipped::class, function ($mail) use ($order) {
+            RC_Mail::assertSent(OrderShipped::class, function ($mail) use ($order) {
                 return $mail->order->id === $order->id;
             });
     
             // 断言一封邮件已经发送给了指定用户...
-            Mail::assertSent(OrderShipped::class, function ($mail) use ($user) {
+            RC_Mail::assertSent(OrderShipped::class, function ($mail) use ($user) {
                 return $mail->hasTo($user->email) &&
                        $mail->hasCc('...') &&
                        $mail->hasBcc('...');
             });
     			
             // 断言 mailable 发送了2次...
-            Mail::assertSent(OrderShipped::class, 2);
+            RC_Mail::assertSent(OrderShipped::class, 2);
     
             // 断言 mailable 没有发送...
-            Mail::assertNotSent(AnotherMailable::class);
+            RC_Mail::assertNotSent(AnotherMailable::class);
         }
     }
 
 如果你是用后台任务队执行 mailables 的发送，你应该用 `assertQueued` 方法来代替 `assertSent`：
 
-    Mail::assertQueued(...);
-    Mail::assertNotQueued(...);
+    RC_Mail::assertQueued(...);
+    RC_Mail::assertNotQueued(...);
 
 <a name="notification-fake"></a>
 ## 通知模拟
@@ -153,11 +153,11 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testOrderShipping()
         {
-            Notification::fake();
+            RC_Notification::fake();
     
             // 处理订单发货...
     
-            Notification::assertSentTo(
+            RC_Notification::assertSentTo(
                 $user,
                 OrderShipped::class,
                 function ($notification, $channels) use ($order) {
@@ -166,13 +166,13 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
             );
     
             // 断言通知已经发送给了指定用户...
-            Notification::assertSentTo(
+            RC_Notification::assertSentTo(
                 [$user], OrderShipped::class
             );
     
             // 断言通知没有发送...
-            Notification::assertNotSentTo(
-                [$user], AnotherNotification::class
+            RC_Notification::assertNotSentTo(
+                [$user], AnotherRC_Notification::class
             );
         }
     }
@@ -197,22 +197,22 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testOrderShipping()
         {
-            Queue::fake();
+            RC_Queue::fake();
     
             // 处理订单发货...
     
-            Queue::assertPushed(ShipOrder::class, function ($job) use ($order) {
+            RC_Queue::assertPushed(ShipOrder::class, function ($job) use ($order) {
                 return $job->order->id === $order->id;
             });
     
             // 断言任务进入了指定队列...
-            Queue::assertPushedOn('queue-name', ShipOrder::class);
+            RC_Queue::assertPushedOn('queue-name', ShipOrder::class);
     			
             // 断言任务进入了2次...
-            Queue::assertPushed(ShipOrder::class, 2);
+            RC_Queue::assertPushed(ShipOrder::class, 2);
             
             // 断言任务没有进入队列...
-            Queue::assertNotPushed(AnotherJob::class);
+            RC_Queue::assertNotPushed(AnotherJob::class);
         }
     }
 
@@ -236,17 +236,17 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testAvatarUpload()
         {
-            Storage::fake('avatars');
+            RC_Storage::fake('avatars');
     
             $response = $this->json('POST', '/avatar', [
                 'avatar' => UploadedFile::fake()->image('avatar.jpg')
             ]);
     
             // 断言文件已存储
-            Storage::disk('avatars')->assertExists('avatar.jpg');
+            RC_Storage::disk('avatars')->assertExists('avatar.jpg');
     
             // 断言文件不存在
-            Storage::disk('avatars')->assertMissing('missing.jpg');
+            RC_Storage::disk('avatars')->assertMissing('missing.jpg');
         }
     }
 
@@ -270,7 +270,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
          */
         public function index()
         {
-            $value = Cache::get('key');
+            $value = RC_Cache::get('key');
     
             //
         }
@@ -292,7 +292,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testGetIndex()
         {
-            Cache::shouldReceive('get')
+            RC_Cache::shouldReceive('get')
                         ->once()
                         ->with('key')
                         ->andReturn('value');

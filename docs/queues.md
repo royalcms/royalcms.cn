@@ -528,7 +528,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 <a name="failed-job-events"></a>
 ### 任务失败事件
 
-如果你想注册一个当队列任务失败时会被调用的事件，则可以用 `Queue::failing` 方法。这样你就有机会通过这个事件来用 e-mail 或 [HipChat](https://www.hipchat.com) 通知你的团队。例如我们可以在 Royalcms 内置的 `AppServiceProvider` 中对这个事件附加一个回调函数：
+如果你想注册一个当队列任务失败时会被调用的事件，则可以用 `RC_Queue::failing` 方法。这样你就有机会通过这个事件来用 e-mail 或 [HipChat](https://www.hipchat.com) 通知你的团队。例如我们可以在 Royalcms 内置的 `AppServiceProvider` 中对这个事件附加一个回调函数：
 
     <?php
     
@@ -547,7 +547,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
          */
         public function boot()
         {
-            Queue::failing(function (JobFailed $event) {
+            RC_Queue::failing(function (JobFailed $event) {
                 // $event->connectionName
                 // $event->job
                 // $event->exception
@@ -611,13 +611,13 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
          */
         public function boot()
         {
-            Queue::before(function (JobProcessing $event) {
+            RC_Queue::before(function (JobProcessing $event) {
                 // $event->connectionName
                 // $event->job
                 // $event->job->payload()
             });
     
-            Queue::after(function (JobProcessed $event) {
+            RC_Queue::after(function (JobProcessed $event) {
                 // $event->connectionName
                 // $event->job
                 // $event->job->payload()
@@ -637,7 +637,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 
 在 `队列`facade中使用 `looping` 方法，你可以尝试在队列获取任务之前执行指定的回调方法。举个例子，你可以用闭包来回滚之前已失败任务的事务。
 
-    Queue::looping(function () {
+    RC_Queue::looping(function () {
         while (DB::transactionLevel() > 0) {
             DB::rollBack();
         }

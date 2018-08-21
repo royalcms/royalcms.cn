@@ -88,7 +88,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 
 另外，你可以通过 `Notification`facade来发送通知。它主要用在当你给多个可接收通知的实体发送通知的时候，比如给用户集合发通知。要用 facade 发送通知的话，要把可接收通知的实体和通知的实例传递给 `send` 方法：
 
-    Notification::send($users, new InvoicePaid($invoice));
+    RC_Notification::send($users, new InvoicePaid($invoice));
 
 <a name="specifying-delivery-channels"></a>
 ### 指定发送频道
@@ -145,9 +145,9 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 <a name="on-demand-notifications"></a>
 ### 按需通知
 
-有时候你可能需要将通知发送给某个不是以”用户”身份存储在你的应用中的人。使用`Notification::route` 方法，你可以在发送通知之前指定 ad-hoc 通知路由信息：
+有时候你可能需要将通知发送给某个不是以”用户”身份存储在你的应用中的人。使用`RC_Notification::route` 方法，你可以在发送通知之前指定 ad-hoc 通知路由信息：
 
-    Notification::route('mail', 'taylor@Royalcms.com')
+    RC_Notification::route('mail', 'taylor@Royalcms.com')
                 ->route('nexmo', '5555555555')
                 ->notify(new InvoicePaid($invoice));
 

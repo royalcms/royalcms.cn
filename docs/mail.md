@@ -360,12 +360,12 @@ Markdown 格式的 Mailable 消息允许你从预编译的模板和你的 Mailab
 
 Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻松地构建邮件消息，同时利用 Royalcms 的预制组件。
 
-    @component('mail::message')
+    @component('RC_Mail::message')
     # Order Shipped
     
     Your order has been shipped!
     
-    @component('mail::button', ['url' => $url])
+    @component('RC_Mail::button', ['url' => $url])
     View Order
     @endcomponent
     
@@ -377,7 +377,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 按钮组件渲染一个居中的连接按钮，组件接受两个参数，一个 `url` 和一个可选的 `color` 。支持的颜色有 `blue` 、 `green` 、 和 `red` 。你可以在邮件消息体中加入随便多个你想要的按钮。
 
-    @component('mail::button', ['url' => $url, 'color' => 'green'])
+    @component('RC_Mail::button', ['url' => $url, 'color' => 'green'])
     View Order
     @endcomponent
 
@@ -385,7 +385,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 面板组件将面板中给定的一块文字的背景渲染成跟其他的消息体背景稍微不同。这样可以让这块文字引起人们的注意。
 
-    @component('mail::panel')
+    @component('RC_Mail::panel')
     This is the panel content.
     @endcomponent
 
@@ -393,7 +393,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 表格组件允许你将一个 Markdown 格式的表格转换成一个 HTML 格式的表格。组件接受 Markdown 格式的表格作为它的内容。表格列对齐方式按照默认的 Markdown 对齐风格而定。
 
-    @component('mail::table')
+    @component('RC_Mail::table')
     | Royalcms       | Table         | Example  |
     | ------------- |:-------------:| --------:|
     | Col 2 is      | Centered      | $10      |
@@ -456,13 +456,13 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
     
             // Ship order...
     
-            Mail::to($request->user())->send(new OrderShipped($order));
+            RC_Mail::to($request->user())->send(new OrderShipped($order));
         }
     }
 
 当然，不局限于只使用「to」给收件人发送邮件，你可以通过一个单一的链式调用来自由的设置 「to」，「cc」和 「bcc」接收者：
 
-    Mail::to($request->user())
+    RC_Mail::to($request->user())
         ->cc($moreUsers)
         ->bcc($evenMoreUsers)
         ->send(new OrderShipped($order));
@@ -474,7 +474,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 由于发送消息会大幅延迟应用响应时间，许多开发者选择将邮件消息加入队列在后台进行发送。Royalcms 使用内置的 [统一的队列 API](/docs/queues) 来轻松完成此工作。将邮件消息加入队列，使用 `Mail` facade 的 `queue` 方法：
 
-    Mail::to($request->user())
+    RC_Mail::to($request->user())
         ->cc($moreUsers)
         ->bcc($evenMoreUsers)
         ->queue(new OrderShipped($order));
@@ -487,7 +487,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
     $when = Carbon\Carbon::now()->addMinutes(10);
     
-    Mail::to($request->user())
+    RC_Mail::to($request->user())
         ->cc($moreUsers)
         ->bcc($evenMoreUsers)
         ->later($when, new OrderShipped($order));
@@ -500,7 +500,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
                     ->onConnection('sqs')
                     ->onQueue('emails');
     
-    Mail::to($request->user())
+    RC_Mail::to($request->user())
         ->cc($moreUsers)
         ->bcc($evenMoreUsers)
         ->queue($message);

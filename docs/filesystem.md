@@ -46,7 +46,7 @@ Royalcms 提供了一个强大的文件系统抽象，这得益于 Frank de Jong
 
 使用 `local` 驱动时，所有文件操作都你在配置文件中定义的 `root` 目录相关。该目录的默认值是 `storage/app`。因此，以下方法会把文件存储在 `storage/app/file.txt` 中：
 
-    Storage::disk('local')->put('file.txt', 'Contents');
+    RC_Storage::disk('local')->put('file.txt', 'Contents');
 
 <a name="driver-prerequisites"></a>
 ### 驱动之前
@@ -101,22 +101,22 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    Storage::put('avatars/1', $fileContents);
+    RC_Storage::put('avatars/1', $fileContents);
 
 如果应用程序和多个磁盘交互，则可以使用 `Storage` facade 上的 `disk` 方法来处理特定磁盘上的文件：
 
-    Storage::disk('s3')->put('avatars/1', $fileContents);
+    RC_Storage::disk('s3')->put('avatars/1', $fileContents);
 
 <a name="retrieving-files"></a>
 ## 检索文件
 
 `get` 方法可以用于检索文件的内容，此方法返回该文件的原始字符串内容。 切记，所有文件路径的指定都应该相对于为磁盘配置的 `root` 目录：
 
-    $contents = Storage::get('file.jpg');
+    $contents = RC_Storage::get('file.jpg');
 
 `exists` 方法可以用来判断磁盘上是否存在指定的文件：
 
-    $exists = Storage::disk('s3')->exists('file.jpg');
+    $exists = RC_Storage::disk('s3')->exists('file.jpg');
 
 <a name="file-urls"></a>
 ### 文件 URLs
@@ -125,7 +125,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    $url = Storage::url('file1.jpg');
+    $url = RC_Storage::url('file1.jpg');
 
 > {note} 切记，如果使用的是 `local` 驱动，则所有想被公开访问的文件都应该放在 `storage/app/public` 目录下。此外，你应该在 `public/storage` [创建一个符号链接 ](#the-public-disk) 来指向 `storage/app/public` 目录。
 
@@ -133,7 +133,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 对于使用 `s3` 驱动来存储的文件，可以使用 `temporaryUrl` 方法创建给定文件的临时 URL 。这个方法接收路径和 `DateTime` 实例来指定 URL 何时过期：
 
-    $url = Storage::temporaryUrl(
+    $url = RC_Storage::temporaryUrl(
         'file1.jpg', Carbon::now()->addMinutes(5)
     );
 
@@ -155,11 +155,11 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    $size = Storage::size('file1.jpg');
+    $size = RC_Storage::size('file1.jpg');
 
 `lastModified` 方法返回最后一次文件被修改的 UNIX 时间戳：
 
-    $time = Storage::lastModified('file1.jpg');
+    $time = RC_Storage::lastModified('file1.jpg');
 
 <a name="storing-files"></a>
 ## 保存文件
@@ -168,9 +168,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    Storage::put('file.jpg', $contents);
+    RC_Storage::put('file.jpg', $contents);
     
-    Storage::put('file.jpg', $resource);
+    RC_Storage::put('file.jpg', $resource);
 
 #### 自动流式传输
 
@@ -179,32 +179,32 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
     use Royalcms\Http\File;
     
     // 自动为文件名生成唯一的 ID...
-    Storage::putFile('photos', new File('/path/to/photo'));
+    RC_Storage::putFile('photos', new File('/path/to/photo'));
     
     // 手动指定文件名...
-    Storage::putFileAs('photos', new File('/path/to/photo'), 'photo.jpg');
+    RC_Storage::putFileAs('photos', new File('/path/to/photo'), 'photo.jpg');
 
 关于 `putFile` 方法有些重要的事情要注意。请注意，我们只指定一个目录名，而不是文件名。默认情况下，`putFile` 方法将生成唯一的 ID 作为文件名。该文件的路径将被 `putFile` 方法返回，因此可以将路径（包括生成的文件名）存储在数据库中。
 
 `putFile` 和 `putFileAs` 方法也接受一个参数来指定存储文件的「可见性」。如果你将文件存储在诸如 S3 的云盘上，并且该文件可以公开访问，这是特别有用的：
 
-    Storage::putFile('photos', new File('/path/to/photo'), 'public');
+    RC_Storage::putFile('photos', new File('/path/to/photo'), 'public');
 
 #### 前置&追加
 
 `prepend` 及 `append` 方法允许你写入内容到文件的开头或结尾：
 
-    Storage::prepend('file.log', 'Prepended Text');
+    RC_Storage::prepend('file.log', 'Prepended Text');
     
-    Storage::append('file.log', 'Appended Text');
+    RC_Storage::append('file.log', 'Appended Text');
 
 #### 复制 & 移动
 
 `copy` 方法可用于将现有文件复制到磁盘的新位置，而 `move` 方法可用于重命名或将现有文件移动到新位置：
 
-    Storage::copy('old/file1.jpg', 'new/file1.jpg');
+    RC_Storage::copy('old/file1.jpg', 'new/file1.jpg');
     
-    Storage::move('old/file1.jpg', 'new/file1.jpg');
+    RC_Storage::move('old/file1.jpg', 'new/file1.jpg');
 
 <a name="file-uploads"></a>
 ### 文件上传
@@ -238,7 +238,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 你也可以调用 `Storage` facade 的 `putFile` 方法来执行和上面例子相同的文件操作：
 
-    $path = Storage::putFile('avatars', $request->file('avatar'));
+    $path = RC_Storage::putFile('avatars', $request->file('avatar'));
 
 #### 指定文件名
 
@@ -250,7 +250,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
 当然，你也可以使用 `Storage` facade 的 `putFileAs` 方法，和上面例子的文件操作有相同效果：
 
-    $path = Storage::putFileAs(
+    $path = RC_Storage::putFileAs(
         'avatars', $request->file('avatar'), $request->user()->id
     );
 
@@ -271,13 +271,13 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    Storage::put('file.jpg', $contents, 'public');
+    RC_Storage::put('file.jpg', $contents, 'public');
 
 如果文件已经被保存，可以通过 `getVisibility` 和 `setVisibility` 方法检索和设置其可见性。
 
-    $visibility = Storage::getVisibility('file.jpg');
+    $visibility = RC_Storage::getVisibility('file.jpg');
     
-    Storage::setVisibility('file.jpg', 'public')
+    RC_Storage::setVisibility('file.jpg', 'public')
 
 <a name="deleting-files"></a>
 ## 删除文件
@@ -286,9 +286,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    Storage::delete('file.jpg');
+    RC_Storage::delete('file.jpg');
     
-    Storage::delete(['file1.jpg', 'file2.jpg']);
+    RC_Storage::delete(['file1.jpg', 'file2.jpg']);
 
 <a name="directories"></a>
 ## 目录
@@ -299,30 +299,30 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Support\Facades\Storage;
     
-    $files = Storage::files($directory);
+    $files = RC_Storage::files($directory);
     
-    $files = Storage::allFiles($directory);
+    $files = RC_Storage::allFiles($directory);
 
 #### 获取目录内所有目录
 
 `directories` 方法返回给定目录下的所有目录的数组。另外，你可以使用 `allDirectories` 方法获取给定目录及其所有子目录中的所有目录的列表：
 
-    $directories = Storage::directories($directory);
+    $directories = RC_Storage::directories($directory);
     
     // 递归...
-    $directories = Storage::allDirectories($directory);
+    $directories = RC_Storage::allDirectories($directory);
 
 #### 创建目录
 
 `makeDirectory` 方法将创建给定的目录，包括任何所需的子目录：
 
-    Storage::makeDirectory($directory);
+    RC_Storage::makeDirectory($directory);
 
 #### 删除目录
 
 最后，`deleteDirectory` 方法可用于删除目录及其所有文件：
 
-    Storage::deleteDirectory($directory);
+    RC_Storage::deleteDirectory($directory);
 
 <a name="custom-filesystems"></a>
 ## 自定义文件系统
@@ -354,7 +354,7 @@ Royalcms 的文件系统集成提供一系列开箱即用的驱动支持；然�
          */
         public function boot()
         {
-            Storage::extend('dropbox', function ($app, $config) {
+            RC_Storage::extend('dropbox', function ($app, $config) {
                 $client = new DropboxClient(
                     $config['authorizationToken']
                 );

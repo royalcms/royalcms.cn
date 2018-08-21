@@ -308,7 +308,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
          */
         public function store(Request $request)
         {
-            $validator = Validator::make($request->all(), [
+            $validator = RC_Validator::make($request->all(), [
                 'title' => 'required|unique:posts|max:255',
                 'body' => 'required',
             ]);
@@ -332,7 +332,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 如果想手动创建验证器实例，又想利用请求中 `validates` 方法提供的自动重定向，那么你可以在现有的验证器实例上调用 `validate` 方法。如果验证失败，用户会自动重定向，如果是 AJAX 请求，将会返回 JSON 格式的响应：
 
-    Validator::make($request->all(), [
+    RC_Validator::make($request->all(), [
         'title' => 'required|unique:posts|max:255',
         'body' => 'required',
     ])->validate();
@@ -354,7 +354,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 验证器还允许你添加在验证完成之后运行的回调函数。以便你进行进一步的验证，甚至是在消息集合中添加更多的错误消息。使用它只需在验证实例上使用 `after` 方法：
 
-    $validator = Validator::make(...);
+    $validator = RC_Validator::make(...);
     
     $validator->after(function ($validator) {
         if ($this->somethingElseIsInvalid()) {
@@ -412,13 +412,13 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 <a name="custom-error-messages"></a>
 ### 自定义错误消息
 
-如果有需要的话，你也可以自定义错误消息取代默认值进行验证。有几种方法可以指定自定义消息。首先，你可以将自定义消息作为第三个参数传递给 `Validator::make` 方法：
+如果有需要的话，你也可以自定义错误消息取代默认值进行验证。有几种方法可以指定自定义消息。首先，你可以将自定义消息作为第三个参数传递给 `RC_Validator::make` 方法：
 
     $messages = [
         'required' => 'The :attribute field is required.',
     ];
     
-    $validator = Validator::make($input, $rules, $messages);
+    $validator = RC_Validator::make($input, $rules, $messages);
 
 在这个例子中，`:attribute` 占位符会被验证字段的实际名称取代。除此之外，你还可以在验证消息中使用其他占位符。例如：
 
@@ -647,7 +647,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
     use Royalcms\Component\Validation\Rule;
     
-    Validator::make($data, [
+    RC_Validator::make($data, [
         'avatar' => [
             'required',
             Rule::dimensions()->maxWidth(1000)->maxHeight(500)->ratio(3 / 2),
@@ -687,7 +687,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
     use Royalcms\Component\Validation\Rule;
     
-    Validator::make($data, [
+    RC_Validator::make($data, [
         'email' => [
             'required',
             Rule::exists('staff')->where(function ($query) {
@@ -718,7 +718,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
     use Royalcms\Component\Validation\Rule;
     
-    Validator::make($data, [
+    RC_Validator::make($data, [
         'zones' => [
             'required',
             Rule::in(['first-zone', 'second-zone']),
@@ -800,7 +800,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
     use Royalcms\Component\Validation\Rule;
     
-    Validator::make($data, [
+    RC_Validator::make($data, [
         'toppings' => [
             'required',
             Rule::notIn(['sprinkles', 'cherries']),
@@ -911,7 +911,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
     use Royalcms\Component\Validation\Rule;
     
-    Validator::make($data, [
+    RC_Validator::make($data, [
         'email' => [
             'required',
             Rule::unique('users')->ignore($user->id),
@@ -942,7 +942,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 在某些情况下，只有在该字段存在于输入数组中时，才可以对字段执行验证检查。可通过增加 `sometimes` 到规则列表来实现：
 
-    $v = Validator::make($data, [
+    $v = RC_Validator::make($data, [
         'email' => 'sometimes|required|email',
     ]);
 
@@ -954,7 +954,7 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 有时候你可能需要增加基于更复杂的条件逻辑的验证规则。例如，你可以希望某个指定字段在另一个字段的值超过 100 时才为必填。或者当某个指定字段存在时，另外两个字段才能具有给定的值。增加这样的验证条件并不难。首先，使用静态规则创建一个 `Validator` 实例：
 
-    $v = Validator::make($data, [
+    $v = RC_Validator::make($data, [
         'email' => 'required|email',
         'games' => 'required|numeric',
     ]);
@@ -978,14 +978,14 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 
 验证表单的输入为数组的字段也不难。你可以使用「点」语法来验证数组中的属性。例如，如果传入的 HTTP 请求中包含 `photos[profile]` 字段，可以如下验证：
 
-    $validator = Validator::make($request->all(), [
+    $validator = RC_Validator::make($request->all(), [
         'photos.profile' => 'required|image',
     ]);
 
 
 你还可以验证数组中的每个元素。例如，要验证指定数组输入字段中的每一个 email 是唯一的，可以这么做：
 
-    $validator = Validator::make($request->all(), [
+    $validator = RC_Validator::make($request->all(), [
         'person.*.email' => 'email|unique:users',
         'person.*.first_name' => 'required_with:person.*.last_name',
     ]);
@@ -1082,7 +1082,7 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
          */
         public function boot()
         {
-            Validator::extend('foo', function ($attribute, $value, $parameters, $validator) {
+            RC_Validator::extend('foo', function ($attribute, $value, $parameters, $validator) {
                 return $value == 'foo';
             });
         }
@@ -1102,7 +1102,7 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
 
 除了使用闭包，你也可以传入类和方法到 `extend` 方法中：
 
-    Validator::extend('foo', 'FooValidator@validate');
+    RC_Validator::extend('foo', 'FooValidator@validate');
 
 #### 自定义错误消息
 
@@ -1123,9 +1123,9 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
      */
     public function boot()
     {
-        Validator::extend(...);
+        RC_Validator::extend(...);
     
-        Validator::replacer('foo', function ($message, $attribute, $rule, $parameters) {
+        RC_Validator::replacer('foo', function ($message, $attribute, $rule, $parameters) {
             return str_replace(...);
         });
     }
@@ -1138,10 +1138,10 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
     
     $input = ['name' => null];
     
-    Validator::make($input, $rules)->passes(); // true
-即使属性为空的规则也可以运行，该规则必须意味着该属性是必需的。要创建这样一个「隐式」扩展，可以使用 `Validator::extendImplicit()` 方法：
+    RC_Validator::make($input, $rules)->passes(); // true
+即使属性为空的规则也可以运行，该规则必须意味着该属性是必需的。要创建这样一个「隐式」扩展，可以使用 `RC_Validator::extendImplicit()` 方法：
 
-    Validator::extendImplicit('foo', function ($attribute, $value, $parameters, $validator) {
+    RC_Validator::extendImplicit('foo', function ($attribute, $value, $parameters, $validator) {
         return $value == 'foo';
     });
 

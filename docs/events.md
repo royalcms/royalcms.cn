@@ -63,7 +63,7 @@ public function boot()
 {
     parent::boot();
 
-    Event::listen('event.name', function ($foo, $bar) {
+    RC_Event::listen('event.name', function ($foo, $bar) {
         //
     });
 }
@@ -74,7 +74,7 @@ public function boot()
 你可以在注册监听器时使用 `*` 通配符参数，这样能够在同一个监听器上捕获多个事件。通配符监听器接受事件名称作为其第一个参数，并将整个事件数据数组作为其第二个参数：
 
 ````
-Event::listen('event.*', function ($eventName, array $data) {
+RC_Event::listen('event.*', function ($eventName, array $data) {
     //
 });
 ````

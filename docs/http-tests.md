@@ -149,17 +149,17 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
     {
         public function testAvatarUpload()
         {
-            Storage::fake('avatars');
+            RC_Storage::fake('avatars');
     
             $response = $this->json('POST', '/avatar', [
                 'avatar' => UploadedFile::fake()->image('avatar.jpg')
             ]);
     
             // 断言文件已存储...
-            Storage::disk('avatars')->assertExists('avatar.jpg');
+            RC_Storage::disk('avatars')->assertExists('avatar.jpg');
     
             // 断言文件不存在...
-            Storage::disk('avatars')->assertMissing('missing.jpg');
+            RC_Storage::disk('avatars')->assertMissing('missing.jpg');
         }
     }
 

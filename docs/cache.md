@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $value = Cache::get('key');
+        $value = RC_Cache::get('key');
 
         //
     }
@@ -111,9 +111,9 @@ class UserController extends Controller
 使用 `Cache` facade，你可以通过 `store` 方法来访问各种缓存存储。 传入 `store` 方法的键应该对应 `cache` 配置信息文件中的 `stores` 配置数组中所列的存储之一：
 
 ````
-$value = Cache::store('file')->get('foo');
+$value = RC_Cache::store('file')->get('foo');
 
-Cache::store('redis')->put('bar', 'baz', 10);
+RC_Cache::store('redis')->put('bar', 'baz', 10);
 ````
 
 <a name="retrieving-items-from-the-cache"></a>
@@ -122,15 +122,15 @@ Cache::store('redis')->put('bar', 'baz', 10);
 `Cache`  facade 中的 `get`  方法是用来从缓存中获取数据的方法。如果该数据不存在于缓存中，则该方法返回 `null`。你也可以向 `get` 方法传递第二个参数，用来指定如果查找的数据不存在时，你希望返回的默认值：
 
 ````
-$value = Cache::get('key');
+$value = RC_Cache::get('key');
 
-$value = Cache::get('key', 'default');
+$value = RC_Cache::get('key', 'default');
 ````
 
 你甚至可以传递 `Closure` 作为默认值。如果指定的数据不存在于缓存中，将返回 `Closure` 的结果。传递闭包的方法可以允许你从数据库或其他外部服务中获取默认值：
 
 ````
-$value = Cache::get('key', function () {
+$value = RC_Cache::get('key', function () {
     return DB::table(...)->get();
 });
 ````
@@ -140,7 +140,7 @@ $value = Cache::get('key', function () {
 `has` 方法可用于确定缓存中是否存在项目。如果值为 `null` 或 `false`，则此方法将返回 `false`：
 
 ````
-if (Cache::has('key')) {
+if (RC_Cache::has('key')) {
     //
 }
 ````
@@ -150,18 +150,18 @@ if (Cache::has('key')) {
 `increment` 和 `decrement` 方法可以用来调整高速缓存中整数项的值。这两个方法都可以传入第二个可选参数，用来指示要递增或递减值的数量：
 
 ````
-Cache::increment('key');
-Cache::increment('key', $amount);
-Cache::decrement('key');
-Cache::decrement('key', $amount);
+RC_Cache::increment('key');
+RC_Cache::increment('key', $amount);
+RC_Cache::decrement('key');
+RC_Cache::decrement('key', $amount);
 ````
 
 #### 获取和更新
 
-有时你可能想从缓存中找出一个数据，而当在请求的数据不存在时，程序能为你存储默认值。例如，你可能会想从缓存中取出所有用户，如果缓存中不存在用户数据时，就从数据库中将这些用户取出并放入缓存中。你可以使用 `Cache::remember` 方法来做到这一点：
+有时你可能想从缓存中找出一个数据，而当在请求的数据不存在时，程序能为你存储默认值。例如，你可能会想从缓存中取出所有用户，如果缓存中不存在用户数据时，就从数据库中将这些用户取出并放入缓存中。你可以使用 `RC_Cache::remember` 方法来做到这一点：
 
 ````
-$value = Cache::remember('users', $minutes, function () {
+$value = RC_Cache::remember('users', $minutes, function () {
     return DB::table('users')->get();
 });
 ````
@@ -171,7 +171,7 @@ $value = Cache::remember('users', $minutes, function () {
 你还可以使用  `rememberForever` 方法从缓存中查找数据或永久存储它：
 
 ````
-$value = Cache::rememberForever('users', function() {
+$value = RC_Cache::rememberForever('users', function() {
     return DB::table('users')->get();
 });
 ````
@@ -181,7 +181,7 @@ $value = Cache::rememberForever('users', function() {
 如果你需要从缓存中获取到数据之后再删除它，你可以使用 `pull` 方法。和 `get` 方法一样，如果缓存中不存在该数据， 则返回 `null` :
 
 ````
-$value = Cache::pull('key');
+$value = RC_Cache::pull('key');
 ````
 
 <a name="storing-items-in-the-cache"></a>
@@ -190,7 +190,7 @@ $value = Cache::pull('key');
 你可以使用 `Cache` facade 的 `put` 方法来将数据存储到缓存中。当你在缓存中存放数据时，你需要使用第三个参数来设定缓存的过期时间：
 
 ````
-Cache::put('key', 'value', $minutes);
+RC_Cache::put('key', 'value', $minutes);
 ````
 
 除了以整数形式传递过期的分钟数，还可以传递一个 `DateTime` 实例来表示该数据的过期时间：
@@ -198,7 +198,7 @@ Cache::put('key', 'value', $minutes);
 ````
 $expiresAt = Carbon::now()->addMinutes(10);
 
-Cache::put('key', 'value', $expiresAt);
+RC_Cache::put('key', 'value', $expiresAt);
 ````
 
 #### 只存储没有的数据
@@ -206,7 +206,7 @@ Cache::put('key', 'value', $expiresAt);
 `add` 方法将不存在于缓存中的数据放入缓存中，如果存放成功返回 `true` ，否则返回 `false` ：
 
 ````
-Cache::add('key', 'value', $minutes);
+RC_Cache::add('key', 'value', $minutes);
 ````
 
 #### 数据永久存储
@@ -214,7 +214,7 @@ Cache::add('key', 'value', $minutes);
 `forever` 方法可以用来将数据永久存入缓存中。因为这些缓存数据不会过期，所以必须通过 `forget` 方法从缓存中手动删除它们：
 
 ````
-Cache::forever('key', 'value');
+RC_Cache::forever('key', 'value');
 ````
 
 > {tip} 如果你使用 Memcached 驱动，那么当缓存数量达到其大小限制时，可能会删除「永久」存储的数据。
@@ -225,13 +225,13 @@ Cache::forever('key', 'value');
 你可以使用 `forget` 方法从缓存中删除数据：
 
 ````
-Cache::forget('key');
+RC_Cache::forget('key');
 ````
 
 你也可以使用 `flush` 方法清空所有缓存：
 
 ````
-Cache::flush();
+RC_Cache::flush();
 ````
 
 > {note} 清空缓存的方法并不会考虑缓存前缀，会将缓存中所有的内容删除。因此在清除与其它应用程序共享的缓存时请谨慎考虑。
@@ -253,7 +253,7 @@ cache(['key' => 'value'], $minutes);
 cache(['key' => 'value'], Carbon::now()->addSeconds(10));
 ````
 
-> {tip} 如果在测试中使用全局函数 `cache`，可以使用 `Cache::shouldReceive`  方法，就像正在测试 facade一样。
+> {tip} 如果在测试中使用全局函数 `cache`，可以使用 `RC_Cache::shouldReceive`  方法，就像正在测试 facade一样。
 
 <a name="cache-tags"></a>
 ## 缓存标记
@@ -266,9 +266,9 @@ cache(['key' => 'value'], Carbon::now()->addSeconds(10));
 所谓的缓存标记，就是对缓存的数据打上相关的标记，以便清空所有被分配指定标记的缓存值。你可以通过传入标记名称的有序数组来为缓存数据写入标记。例如，我们可以将值 `put` 进缓存的同时标记它：
 
 ````
-Cache::tags(['people', 'artists'])->put('John', $john, $minutes);
+RC_Cache::tags(['people', 'artists'])->put('John', $john, $minutes);
 
-Cache::tags(['people', 'authors'])->put('Anne', $anne, $minutes);
+RC_Cache::tags(['people', 'authors'])->put('Anne', $anne, $minutes);
 ````
 
 <a name="accessing-tagged-cache-items"></a>
@@ -277,9 +277,9 @@ Cache::tags(['people', 'authors'])->put('Anne', $anne, $minutes);
 若要获取一个被标记的缓存数据，请将相同的有序标记数组传递给 `tags` 方法，然后调用 `get` 方法来获取你要检索的键：
 
 ````
-$john = Cache::tags(['people', 'artists'])->get('John');
+$john = RC_Cache::tags(['people', 'artists'])->get('John');
 
-$anne = Cache::tags(['people', 'authors'])->get('Anne');
+$anne = RC_Cache::tags(['people', 'authors'])->get('Anne');
 ````
 
 <a name="removing-tagged-cache-items"></a>
@@ -288,13 +288,13 @@ $anne = Cache::tags(['people', 'authors'])->get('Anne');
 你可以清空有单个标记或是一组标记的所有缓存数据。例如，下面的语句会删除被标记为 `people`、`authors` 或两者都有的缓存。所以，`Anne` 与 `John` 都会从缓存被删除：
 
 ````
-Cache::tags(['people', 'authors'])->flush();
+RC_Cache::tags(['people', 'authors'])->flush();
 ````
 
 相比之下，下面的语句只会删除被标记为 `authors` 的缓存，所以 `Anne` 会被移除，但 `John` 不会：
 
 ````
-Cache::tags('authors')->flush();
+RC_Cache::tags('authors')->flush();
 ````
 
 <a name="adding-custom-cache-drivers"></a>
@@ -330,8 +330,8 @@ class MongoStore implements Store
 我们只需要使用 MongoDB 的连接来实现这些方法。关于如何实现这些方法的示例，可以参阅框架源代码中的 `Royalcms\Cache\MemcachedStore`。一旦我们完成方法的实现，可以像下面这样完成自定义驱动的注册了。
 
 ````
-Cache::extend('mongo', function ($app) {
-    return Cache::repository(new MongoStore);
+RC_Cache::extend('mongo', function ($app) {
+    return RC_Cache::repository(new MongoStore);
 });
 ````
 
@@ -340,7 +340,7 @@ Cache::extend('mongo', function ($app) {
 <a name="registering-the-driver"></a>
 ### 注册驱动
 
-要使用 Royalcms 来注册自定义的缓存驱动，就要在 `Cache` facade 上使用 `extend` 方法。对 `Cache::extend` 的调用可以在最新的 Royalcms 应用程序中附带的 `App\Providers\AppServiceProvider` 的 `boot` 方法中完成，或者你可以创建自己的服务提供器来放置这些扩展，只是不要忘记在 `config/app.php` 中的 `providers` 数组中注册提供器：
+要使用 Royalcms 来注册自定义的缓存驱动，就要在 `Cache` facade 上使用 `extend` 方法。对 `RC_Cache::extend` 的调用可以在最新的 Royalcms 应用程序中附带的 `App\Providers\AppServiceProvider` 的 `boot` 方法中完成，或者你可以创建自己的服务提供器来放置这些扩展，只是不要忘记在 `config/app.php` 中的 `providers` 数组中注册提供器：
 
 ````
 <?php
@@ -360,8 +360,8 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Cache::extend('mongo', function ($app) {
-            return Cache::repository(new MongoStore);
+        RC_Cache::extend('mongo', function ($app) {
+            return RC_Cache::repository(new MongoStore);
         });
     }
 
