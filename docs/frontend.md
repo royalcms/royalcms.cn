@@ -21,9 +21,9 @@ Royalcms 并不需要你使用特定的 JavsScript 框架或者库来构建应�
 
 #### 移除前端脚手架
 
-如果要从你的应用程序中移除前端脚手架，可以使用 Artisan 命令 `preset`。该命令加上 `none` 选项时，将从应用程序中删除 Bootstrap 和 Vue 脚手架，只留下一个空白的 SASS 文件和一些常用的 JavaScript 实用程序库:
+如果要从你的应用程序中移除前端脚手架，可以使用 royalcms 命令 `preset`。该命令加上 `none` 选项时，将从应用程序中删除 Bootstrap 和 Vue 脚手架，只留下一个空白的 SASS 文件和一些常用的 JavaScript 实用程序库:
 
-    php artisan preset none
+    php royalcms preset none
 <a name="writing-css"></a>
 ## 编写 CSS
 
@@ -62,7 +62,7 @@ Royalcms 自带的 `webpack.mix.js` 默认会编译 `resources/assets/sass/app.s
 
     Vue.component('example-component', require('./components/ExampleConponent.vue'));
 
-在应用程序中使用组件，你只需要简单的将其放到你的 HTML 模板之中。例如，运行 Artisan 命令 `make:auth` 去生成应用的用户认证和注册的框架页面后，可以把组件放到 `home.blade.php` Blade 模板中：
+在应用程序中使用组件，你只需要简单的将其放到你的 HTML 模板之中。例如，运行 royalcms 命令 `make:auth` 去生成应用的用户认证和注册的框架页面后，可以把组件放到 `home.blade.php` Blade 模板中：
 
     @extends('layouts.app')
     
@@ -78,6 +78,6 @@ Royalcms 自带的 `webpack.mix.js` 默认会编译 `resources/assets/sass/app.s
 ### 使用 React
 如果你喜欢用 React 来构建你的 JavaScript 应用程序，Royalcms 很容易就能将 Vue 脚手架替换为 React 脚手架。在任何新建的 Royalcms 应用程序下，你可以用 `preset` 命令加 `react` 选项:
 
-    php artisan preset react
+    php royalcms preset react
 
 该命令将移除 Vue 脚手架并用 React 脚手架替换， 包括 Royalcms 自带的示例组件。
