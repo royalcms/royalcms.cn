@@ -39,7 +39,7 @@ RC_Schema::create('cache', function ($table) {
 });
 ````
 
-> {tip} 你也可以使用 Artisan 命令 `php artisan cache:table` 来生成合适的迁移。
+> {tip} 你也可以使用 royalcms 命令 `php royalcms cache:table` 来生成合适的迁移。
 
 #### Memcached
 
@@ -79,7 +79,7 @@ RC_Schema::create('cache', function ($table) {
 <a name="obtaining-a-cache-instance"></a>
 ### 获取缓存实例
 
-`Royalcms\Contracts\Cache\Factory` 和 `Royalcms\Contracts\Cache\Repository` [contracts](/docs/contracts) 提供了 Royalcms 缓存服务的访问机制。 `Factory`  contract  为你的应用程序定义了访问所有缓存驱动的机制。 `Repository` contract 通常是由 `cache` 配置文件指定的默认缓存驱动实现的。
+`Royalcms\Component\Contracts\Cache\Factory` 和 `Royalcms\Component\Contracts\Cache\Repository` [contracts](/docs/contracts) 提供了 Royalcms 缓存服务的访问机制。 `Factory`  contract  为你的应用程序定义了访问所有缓存驱动的机制。 `Repository` contract 通常是由 `cache` 配置文件指定的默认缓存驱动实现的。
 
 不过，你也可以使用 `Cache` facade，我们将在后续的文档中介绍。`Cache` facade 为 Royalcms 缓存 contract 底层的实现提供了方便又简洁的方法：
 
@@ -88,7 +88,7 @@ RC_Schema::create('cache', function ($table) {
 
 namespace App\Http\Controllers;
 
-use Royalcms\Support\Facades\Cache;
+use Royalcms\Component\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -303,14 +303,14 @@ RC_Cache::tags('authors')->flush();
 <a name="writing-the-driver"></a>
 ### 写驱动
 
-要创建自定义的缓存驱动程序，首先需要实现 `Royalcms\Contracts\Cache\Store` contract。因此，MongoDB 的缓存实现看起来会像这样：
+要创建自定义的缓存驱动程序，首先需要实现 `Royalcms\Component\Contracts\Cache\Store` contract。因此，MongoDB 的缓存实现看起来会像这样：
 
 ````
 <?php
 
 namespace App\Extensions;
 
-use Royalcms\Contracts\Cache\Store;
+use Royalcms\Component\Contracts\Cache\Store;
 
 class MongoStore implements Store
 {
@@ -327,7 +327,7 @@ class MongoStore implements Store
 }
 ````
 
-我们只需要使用 MongoDB 的连接来实现这些方法。关于如何实现这些方法的示例，可以参阅框架源代码中的 `Royalcms\Cache\MemcachedStore`。一旦我们完成方法的实现，可以像下面这样完成自定义驱动的注册了。
+我们只需要使用 MongoDB 的连接来实现这些方法。关于如何实现这些方法的示例，可以参阅框架源代码中的 `Royalcms\Component\Cache\MemcachedStore`。一旦我们完成方法的实现，可以像下面这样完成自定义驱动的注册了。
 
 ````
 RC_Cache::extend('mongo', function ($app) {
@@ -348,8 +348,8 @@ RC_Cache::extend('mongo', function ($app) {
 namespace App\Providers;
 
 use App\Extensions\MongoStore;
-use Royalcms\Support\Facades\Cache;
-use Royalcms\Support\ServiceProvider;
+use Royalcms\Component\Support\Facades\Cache;
+use Royalcms\Component\Support\ServiceProvider;
 
 class CacheServiceProvider extends ServiceProvider
 {
@@ -377,7 +377,7 @@ class CacheServiceProvider extends ServiceProvider
 }
 ````
 
-传递给 `extend` 方法的第一个参数是驱动程序的名称。这将与 `config/cache.php` 配置文件的 `driver` 选项相对应。第二个参数是应该返回 `Royalcms\Cache\Repository` 实例的闭包。这个闭包将传递一个服务容器的 `$app` 实例。
+传递给 `extend` 方法的第一个参数是驱动程序的名称。这将与 `config/cache.php` 配置文件的 `driver` 选项相对应。第二个参数是应该返回 `Royalcms\Component\Cache\Repository` 实例的闭包。这个闭包将传递一个服务容器的 `$app` 实例。
 
 你的自定义的扩展注册后，需要将 `config/cache.php` 配置文件中的 `driver` 选项更新为你的扩展名。
 
@@ -393,19 +393,19 @@ class CacheServiceProvider extends ServiceProvider
  * @var array
  */
 protected $listen = [
-    'Royalcms\Cache\Events\CacheHit' => [
+    'Royalcms\Component\Cache\Events\CacheHit' => [
         'App\Listeners\LogCacheHit',
     ],
 
-    'Royalcms\Cache\Events\CacheMissed' => [
+    'Royalcms\Component\Cache\Events\CacheMissed' => [
         'App\Listeners\LogCacheMissed',
     ],
 
-    'Royalcms\Cache\Events\KeyForgotten' => [
+    'Royalcms\Component\Cache\Events\KeyForgotten' => [
         'App\Listeners\LogKeyForgotten',
     ],
 
-    'Royalcms\Cache\Events\KeyWritten' => [
+    'Royalcms\Component\Cache\Events\KeyWritten' => [
         'App\Listeners\LogKeyWritten',
     ],
 ];

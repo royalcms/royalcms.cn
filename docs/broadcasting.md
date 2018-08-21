@@ -189,7 +189,7 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
 <a name="defining-broadcast-events"></a>
 ## 定义广播事件
 
-要告知 Royalcms 一个给定的事件是广播类型，只需在事件类中实现 `Royalcms\Contracts\Broadcasting\ShouldBroadcast` 接口即可。该接口已经被导入到所有由框架生成的事件类中，所以你可以很方便地将它添加到你自己的事件中。
+要告知 Royalcms 一个给定的事件是广播类型，只需在事件类中实现 `Royalcms\Component\Contracts\Broadcasting\ShouldBroadcast` 接口即可。该接口已经被导入到所有由框架生成的事件类中，所以你可以很方便地将它添加到你自己的事件中。
 
 `ShouldBroadcast` 接口要求你实现一个方法：`broadcastOn`. `broadcastOn` 方法返回一个频道或一个频道数组，事件会被广播到这些频道。频道必须是 `Channel`、`PrivateChannel` 或 `PresenceChannel` 的实例。`Channel` 实例表示任何用户都可以订阅的公开频道，而 `PrivateChannels` 和 `PresenceChannels` 则表示需要 [频道授权](#authorizing-channels) 的私有频道：
 
