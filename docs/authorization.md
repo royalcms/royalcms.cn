@@ -116,13 +116,13 @@ Gates 也可以使用 `Class@method` 风格的回调字符串来定义，比如�
 
 策略是在特定模型或者资源中组织授权逻辑的类。例如，如果你的应用是一个博客，会有一个 `Post` 模型和一个相应的 `PostPolicy` 来授权用户动作，比如创建或者更新博客。
 
-可以使用 `make:policy` [artisan 命令](/docs/{{version}}/artisan) 来生成策略。生成的策略将放置在 `app/Policies` 目录。如果在你的应用中不存在这个目录，那么 Royalcms 会自动创建：
+可以使用 `make:policy` royalcms 来生成策略。生成的策略将放置在 `app/Policies` 目录。如果在你的应用中不存在这个目录，那么 Royalcms 会自动创建：
 
-    php artisan make:policy PostPolicy
+    php royalcms make:policy PostPolicy
 
 `make:policy` 会生成空的策略类。如果希望生成的类包含基本的「CRUD」策略方法， 可以在使用命令时指定 `--model` 选项：
 
-    php artisan make:policy PostPolicy --model=Post
+    php royalcms make:policy PostPolicy --model=Post
 
 > {tip} 所有授权策略会通过 Royalcms [服务容器](/docs/{{version}}/container) 解析，意指你可以在授权策略的构造器对任何需要的依赖使用类型提示，它们将会被自动注入。
 
@@ -137,8 +137,8 @@ Gates 也可以使用 `Class@method` 风格的回调字符串来定义，比如�
     
     use App\Post;
     use App\Policies\PostPolicy;
-    use IlluRoyalcmsminate\Support\Facades\Gate;
-    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Component\Support\Facades\Gate;
+    use Royalcms\Component\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -198,7 +198,7 @@ Gates 也可以使用 `Class@method` 风格的回调字符串来定义，比如�
 
 你可以继续为此授权策略定义额外的方法，作为各种权限所需要的授权。例如，你可以定义 `view` 或 `delete` 方法来授权 `Post` 的多种行为。可以为自定义策略方法使用自己喜欢的名字。
 
-> {tip} 如果在 Artisan 控制台生成策略时使用 `--model` 选项，会自动包含`view`、`create`、`update` 和 `delete` 动作。
+> {tip} 如果在 royalcms 控制台生成策略时使用 `--model` 选项，会自动包含`view`、`create`、`update` 和 `delete` 动作。
 
 <a name="methods-without-models"></a>
 ### 不包含模型方法
@@ -259,7 +259,7 @@ Royalcms 应用内置的 `User` 模型包含 2 个有用的方法来授权动作
 <a name="via-middleware"></a>
 ### 通过中间件
 
-Royalcms 包含一个可以在请求到达路由或控制器之前就进行动作授权的中间件。默认，`Royalcms\Auth\Middleware\Authorize` 中间件被指定到 `App\Http\Kernel` 类中 `can` 键上。我们用一个授权用户更新博客的例子来讲解 `can` 中间件的使用：
+Royalcms 包含一个可以在请求到达路由或控制器之前就进行动作授权的中间件。默认，`Royalcms\Component\Auth\Middleware\Authorize` 中间件被指定到 `App\Http\Kernel` 类中 `can` 键上。我们用一个授权用户更新博客的例子来讲解 `can` 中间件的使用：
 
     use App\Post;
     
@@ -287,7 +287,7 @@ Royalcms 包含一个可以在请求到达路由或控制器之前就进行动�
     namespace App\Http\Controllers;
     
     use App\Post;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PostController extends Controller
