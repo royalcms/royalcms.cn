@@ -136,12 +136,12 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
     
     namespace App\Events;
     
-    use Royalcms\Broadcasting\Channel;
-    use Royalcms\Queue\SerializesModels;
-    use Royalcms\Broadcasting\PrivateChannel;
-    use Royalcms\Broadcasting\PresenceChannel;
-    use Royalcms\Broadcasting\InteractsWithSockets;
-    use Royalcms\Contracts\Broadcasting\ShouldBroadcast;
+    use Royalcms\Component\Broadcasting\Channel;
+    use Royalcms\Component\Queue\SerializesModels;
+    use Royalcms\Component\Broadcasting\PrivateChannel;
+    use Royalcms\Component\Broadcasting\PresenceChannel;
+    use Royalcms\Component\Broadcasting\InteractsWithSockets;
+    use Royalcms\Component\Contracts\Broadcasting\ShouldBroadcast;
     
     class ShippingStatusUpdated implements ShouldBroadcast
     {
@@ -198,12 +198,12 @@ Royalcms 的事件广播允许你使用基于驱动的 WebSockets 将服务端�
     
     namespace App\Events;
     
-    use Royalcms\Broadcasting\Channel;
-    use Royalcms\Queue\SerializesModels;
-    use Royalcms\Broadcasting\PrivateChannel;
-    use Royalcms\Broadcasting\PresenceChannel;
-    use Royalcms\Broadcasting\InteractsWithSockets;
-    use Royalcms\Contracts\Broadcasting\ShouldBroadcast;
+    use Royalcms\Component\Broadcasting\Channel;
+    use Royalcms\Component\Queue\SerializesModels;
+    use Royalcms\Component\Broadcasting\PrivateChannel;
+    use Royalcms\Component\Broadcasting\PresenceChannel;
+    use Royalcms\Component\Broadcasting\InteractsWithSockets;
+    use Royalcms\Component\Contracts\Broadcasting\ShouldBroadcast;
     
     class ServerCreated implements ShouldBroadcast
     {
@@ -298,7 +298,7 @@ Royalcms 默认会使用事件的类名作为广播名称来广播事件。不�
 
     <?php
     
-    use Royalcms\Contracts\Broadcasting\ShouldBroadcastNow;
+    use Royalcms\Component\Contracts\Broadcasting\ShouldBroadcastNow;
     
     class ShippingStatusUpdated implements ShouldBroadcastNow
     {

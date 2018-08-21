@@ -62,7 +62,7 @@ royalcms 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
     
     use App\User;
     use App\DripEmailer;
-    use Royalcms\Console\Command;
+    use Royalcms\Component\Console\Command;
     
     class SendEmails extends Command
     {
