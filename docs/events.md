@@ -17,7 +17,7 @@
 <a name="introduction"></a>
 ## 简介
 
-Royalcms 的事件提供了一个简单的观察者实现，能够订阅和监听应用中发生的各种事件。事件类保存在 `app/Events` 目录中，而这些事件的的监听器则被保存在 `app/Listeners` 目录下。这些目录只有当你使用 Artisan 命令来生成事件和监听器时才会被自动创建。
+Royalcms 的事件提供了一个简单的观察者实现，能够订阅和监听应用中发生的各种事件。事件类保存在 `app/Events` 目录中，而这些事件的的监听器则被保存在 `app/Listeners` 目录下。这些目录只有当你使用 royalcms 命令来生成事件和监听器时才会被自动创建。
 
 事件机制是一种很好的应用解耦方式，因为一个事件可以拥有多个互不依赖的监听器。例如，如果你希望每次订单发货时向用户发送一个 Slack 通知。你可以简单地发起一个 `OrderShipped` 事件，让监听器接收之后转化成一个 Slack 通知，这样你就可以不用把订单的业务代码跟 Slack 通知的代码耦合在一起了。
 
@@ -45,7 +45,7 @@ protected $listen = [
 为每个事件和监听器手动创建文件是件很麻烦的事情，而在这里，你只需将监听器和事件添加到  `EventServiceProvider` 中，再使用 `event:generate` 命令即可。这个命令会生成在 `EventServiceProvider` 中列出的所有事件和监听器。当然，已经存在的事件和监听器将保持不变：
 
 ````
-php artisan event:generate
+php royalcms event:generate
 ````
 
 <a name="manually-registering-events"></a>
@@ -90,7 +90,7 @@ RC_Event::listen('event.*', function ($eventName, array $data) {
 namespace App\Events;
 
 use App\Order;
-use Royalcms\Queue\SerializesModels;
+use Royalcms\Component\Queue\SerializesModels;
 
 class OrderShipped
 {
@@ -161,7 +161,7 @@ class SendShipmentNotification
 
 如果你的监听器中要执行诸如发送邮件或者进行 HTTP 请求等比较慢的任务，你可以选择将其丢给队列处理。在开始使用监听器队列之前，请确保在你的服务器或本地开发环境中能够配置并启动 [队列](/docs/{{version}}/queues) 监听器。
 
-要指定监听器启动队列，只需将 `ShouldQueue` 接口添加到监听器类。由 Artisan 命令 `event:generate` 生成的监听器已经将此接口导入到当前命名空间中，因此你可以直接使用它：
+要指定监听器启动队列，只需将 `ShouldQueue` 接口添加到监听器类。由 royalcms 命令 `event:generate` 生成的监听器已经将此接口导入到当前命名空间中，因此你可以直接使用它：
 
 ````
 <?php
@@ -169,7 +169,7 @@ class SendShipmentNotification
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Royalcms\Contracts\Queue\ShouldQueue;
+use Royalcms\Component\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -189,7 +189,7 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Royalcms\Contracts\Queue\ShouldQueue;
+use Royalcms\Component\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -212,7 +212,7 @@ class SendShipmentNotification implements ShouldQueue
 <a name="manually-accessing-the-queue"></a>
 ### 手动访问队列
 
-如果你需要手动访问监听器下面队列任务的 `delete` 和 `release` 方法，你可以添加 `Royalcms\Queue\InteractsWithQueue` trait 来实现。这个 trait 会默认加载到生成的监听器中，并提供对这些方法的访问：
+如果你需要手动访问监听器下面队列任务的 `delete` 和 `release` 方法，你可以添加 `Royalcms\Component\Queue\InteractsWithQueue` trait 来实现。这个 trait 会默认加载到生成的监听器中，并提供对这些方法的访问：
 
 ````
 <?php
@@ -220,8 +220,8 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Royalcms\Queue\InteractsWithQueue;
-use Royalcms\Contracts\Queue\ShouldQueue;
+use Royalcms\Component\Queue\InteractsWithQueue;
+use Royalcms\Component\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -252,8 +252,8 @@ class SendShipmentNotification implements ShouldQueue
 namespace App\Listeners;
 
 use App\Events\OrderShipped;
-use Royalcms\Queue\InteractsWithQueue;
-use Royalcms\Contracts\Queue\ShouldQueue;
+use Royalcms\Component\Queue\InteractsWithQueue;
+use Royalcms\Component\Contracts\Queue\ShouldQueue;
 
 class SendShipmentNotification implements ShouldQueue
 {
@@ -347,17 +347,17 @@ class UserEventSubscriber
     /**
      * 为订阅者注册监听器。
      *
-     * @param  Royalcms\Events\Dispatcher  $events
+     * @param  Royalcms\Component\Events\Dispatcher  $events
      */
     public function subscribe($events)
     {
         $events->listen(
-            'Royalcms\Auth\Events\Login',
+            'Royalcms\Component\Auth\Events\Login',
             'App\Listeners\UserEventSubscriber@onUserLogin'
         );
 
         $events->listen(
-            'Royalcms\Auth\Events\Logout',
+            'Royalcms\Component\Auth\Events\Logout',
             'App\Listeners\UserEventSubscriber@onUserLogout'
         );
     }
@@ -375,7 +375,7 @@ class UserEventSubscriber
 
 namespace App\Providers;
 
-use Royalcms\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Royalcms\Component\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
 {
