@@ -135,7 +135,7 @@
 <a name="resource-controllers"></a>
 ## 资源控制器
 
-Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的控制器。比如，创建一个控制器来处理应用保存的「照片」的所有 HTTP 请求。使用 Artisan 命令 `make:controller` 来快速创建控制器：
+Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的控制器。比如，创建一个控制器来处理应用保存的「照片」的所有 HTTP 请求。使用 royalcms 命令 `make:controller` 来快速创建控制器：
 
     php royalcms make:controller PhotoController --resource
 
@@ -347,7 +347,7 @@ Royalcms 使用服务容器来解析所有的控制器。因此，你可以在�
 
 > {note} 基于闭包的路由不能被缓存。如果要使用路由缓存，你必须将所有的闭包路由转换成控制器类路由。
 
-如果你的应用只使用了基于控制器的路由，那么你应该充分利用 Royalcms 的路由缓存。使用路由缓存将极大地减少注册所有应用路由所需的时间。某些情况下，路由注册的速度甚至可以快一百倍。要生成路由缓存，只需执行 Artisan 命令 `route:cache`：
+如果你的应用只使用了基于控制器的路由，那么你应该充分利用 Royalcms 的路由缓存。使用路由缓存将极大地减少注册所有应用路由所需的时间。某些情况下，路由注册的速度甚至可以快一百倍。要生成路由缓存，只需执行 royalcms 命令 `route:cache`：
 
     php royalcms route:cache
 
