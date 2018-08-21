@@ -25,7 +25,7 @@
 
 接下来，必须创建一个表来存储密码重置令牌。因为 Royalcms 已经自带了用于生成这张表的迁移，就存放在 `database/migrations` 目录下。因此只需要运行数据库迁移：
 
-    php artisan migrate
+    php royalcms migrate
 
 <a name="resetting-routing"></a>
 ## 路由
