@@ -47,18 +47,18 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 
 有些应用可能不需要把任务发到不同的队列，而只发到一个简单的队列中就行了。但是把任务推到不同的队列仍然是非常有用的，因为 Royalcms 队列处理器允许你定义队列的优先级，所以你能给不同的队列划分不同的优先级或者区分不同任务的不同处理方式了。比如说，如果你把任务推到 `high` 队列中，你就能让队列处理器优先处理这些任务了：
 
-    php artisan queue:work --queue=high,default
+    php royalcms queue:work --queue=high,default
 
 <a name="driver-prerequisites"></a>
 ### 驱动的必要设置
 
 #### 数据库
 
-要使用 `database` 这个队列驱动的话，你需要创建一个数据表来存储任务。你可以用 `queue:table` 这个 Artisan 命令来创建这个数据表的迁移。当迁移创建好以后,就可以用 `migrate` 这条命令来创建数据表：
+要使用 `database` 这个队列驱动的话，你需要创建一个数据表来存储任务。你可以用 `queue:table` 这个 royalcms 命令来创建这个数据表的迁移。当迁移创建好以后,就可以用 `migrate` 这条命令来创建数据表：
 
-    php artisan queue:table
+    php royalcms queue:table
     
-    php artisan migrate
+    php royalcms migrate
 
 #### Redis
 
@@ -89,11 +89,11 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 <a name="generating-job-classes"></a>
 ### 生成任务类
 
-在你的应用程序中，队列的任务类都默认放在 `app/Jobs` 目录下。如果这个目录不存在，那当你运行 `make:job` Artisan 命令时目录就会被自动创建。你可以用以下的 Artisan 命令来生成一个新的队列任务：
+在你的应用程序中，队列的任务类都默认放在 `app/Jobs` 目录下。如果这个目录不存在，那当你运行 `make:job` royalcms 命令时目录就会被自动创建。你可以用以下的 royalcms 命令来生成一个新的队列任务：
 
-    php artisan make:job SendReminderEmail
+    php royalcms make:job SendReminderEmail
 
-生成的类实现了 `Royalcms\Contracts\Queue\ShouldQueue` 接口，这意味着这个任务将会被推送到队列中，而不是同步执行。
+生成的类实现了 `Royalcms\Component\Contracts\Queue\ShouldQueue` 接口，这意味着这个任务将会被推送到队列中，而不是同步执行。
 
 <a name="class-structure"></a>
 ### 任务类结构
@@ -106,11 +106,11 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     
     use App\Podcast;
     use App\AudioProcessor;
-    use Royalcms\Bus\Queueable;
-    use Royalcms\Queue\SerializesModels;
-    use Royalcms\Queue\InteractsWithQueue;
-    use Royalcms\Contracts\Queue\ShouldQueue;
-    use Royalcms\Foundation\Bus\Dispatchable;
+    use Royalcms\Component\Bus\Queueable;
+    use Royalcms\Component\Queue\SerializesModels;
+    use Royalcms\Component\Queue\InteractsWithQueue;
+    use Royalcms\Component\Contracts\Queue\ShouldQueue;
+    use Royalcms\Component\Foundation\Bus\Dispatchable;
     
     class ProcessPodcast implements ShouldQueue
     {
@@ -157,7 +157,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -187,7 +187,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     
     use Carbon\Carbon;
     use App\Jobs\ProcessPodcast;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -231,7 +231,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -259,7 +259,7 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
     namespace App\Http\Controllers;
     
     use App\Jobs\ProcessPodcast;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class PodcastController extends Controller
@@ -289,9 +289,9 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 
 #### 最大尝试次数
 
-在一项任务中指定最大的尝试次数可以尝试通过 Artisan 命令行 `--tries` 来设置：
+在一项任务中指定最大的尝试次数可以尝试通过 royalcms 命令行 `--tries` 来设置：
 
-    php artisan queue:work --tries=3
+    php royalcms queue:work --tries=3
 
 但是，你可以采取更为精致的方法来完成这项工作比如说在任务类中定义最大尝试次数。如果在类和命令行中都定义了最大尝试次数，Royalcms 会优先执行任务类中的值：
 
@@ -313,9 +313,9 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 
 > {note} `timeout` 功能针对 PHP 7.1+ 和 `pcntl` PHP 扩展进行了优化。
 
-同样的，任务可以运行的最大秒数可以使用 Artisan 命令行上的 `--timeout` 开关指定：
+同样的，任务可以运行的最大秒数可以使用 royalcms 命令行上的 `--timeout` 开关指定：
 
-    php artisan queue:work --timeout=30
+    php royalcms queue:work --timeout=30
 
 然而，你也可以在任务类中定义一个变量来设置可运行的最大描述，如果在类和命令行中都定义了最大尝试次数，Royalcms 会优先执行任务类中的值：
 
@@ -336,14 +336,14 @@ Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanst
 <a name="error-handling"></a>
 ### 错误处理
 
-如果任务运行的时候抛出异常，这个任务就自动被释放回队列，这样它就能被再重新运行了。如果继续抛出异常，这个任务会继续被释放回队列，直到重试次数达到你应用允许的最多次数。这个最多次数是在调用 `queue:work` Artisan 命令时通过 `--tries` 参数或在类中定义变量来指定的。更多队列处理器的信息可以 [在下面看到](#running-the-queue-worker)。
+如果任务运行的时候抛出异常，这个任务就自动被释放回队列，这样它就能被再重新运行了。如果继续抛出异常，这个任务会继续被释放回队列，直到重试次数达到你应用允许的最多次数。这个最多次数是在调用 `queue:work` royalcms 命令时通过 `--tries` 参数或在类中定义变量来指定的。更多队列处理器的信息可以 [在下面看到](#running-the-queue-worker)。
 
 <a name="running-the-queue-worker"></a>
 ## 运行队列处理器
 
 Royalcms 包含一个队列处理器，当新任务被推到队列中时它能处理这些任务。你可以通过 `queue:work` 命令来运行处理器。要注意，一旦 `queue:work` 命令开始，它将一直运行，直到你手动停止或者你关闭控制台：
 
-    php artisan queue:work
+    php royalcms queue:work
 
 > {tip} 要让 `queue:work` 进程永久在后台运行，你应该使用进程监控工具，比如 [Supervisor](#supervisor-configuration) 来保证队列处理器没有停止运行。
 
@@ -353,17 +353,17 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 你可以使用 `--once` 选项来指定仅对队列中的单一任务进行处理：
 
-    php artisan queue:work --once
+    php royalcms queue:work --once
 
 #### 指定连接 & 队列
 
 你可以指定队列处理器所使用的连接。你在 `config/queue.php` 配置文件里定义了多个连接，而你传递给 `work` 命令的连接名字要至少跟它们其中一个是一致的：
 
-    php artisan queue:work redis
+    php royalcms queue:work redis
 
 你可以自定义队列处理器，方式是处理给定连接的特定队列。举例来说，如果你所有的邮件都是在 `redis` 连接中的 `emails` 队列中处理的，你就能通过以下命令启动一个只处理那个特定队列的队列处理器了：
 
-    php artisan queue:work redis --queue=emails
+    php royalcms queue:work redis --queue=emails
 
 #### 资源注意事项
 
@@ -378,14 +378,14 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 要验证 `high` 队列中的任务都是在 `low` 队列中的任务之前处理的，你要启动一个队列处理器，传递给它队列名字的列表并以英文逗号，间隔：
 
-    php artisan queue:work --queue=high,low
+    php royalcms queue:work --queue=high,low
 
 <a name="queue-workers-and-deployment"></a>
 ### 队列处理器 & 部署
 
 因为队列处理器都是 「常驻」 进程，如果代码改变而队列处理器没有重启，他们是不能应用新代码的。所以最简单的方式就是重新部署过程中要重启队列处理器。你可以很优雅地只输入 `queue:restart` 来重启所有队列处理器。
 
-    php artisan queue:restart
+    php royalcms queue:restart
 
 这个命令将会告诉所有队列处理器在执行完当前任务后结束进程，这样才不会有任务丢失。因为队列处理器在执行 `queue:restart` 命令时对结束进程，你应该运行一个进程管理器，比如 [Supervisor](#supervisor-configuration) 来自动重新启动队列处理器。
 
@@ -402,9 +402,9 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 #### 队列处理器超时
 
-`queue:work` Artisan 命令对外有一个 `--timeout` 选项。这个选项指定了 `Royalcms` 队列处理器最多执行多长时间后就应该被关闭掉。有时候一个队列的子进程会因为很多原因僵死，比如一个外部的 HTTP 请求没有响应。这个 `--timeout` 选项会移除超出指定事件限制的僵死进程：
+`queue:work` royalcms 命令对外有一个 `--timeout` 选项。这个选项指定了 `Royalcms` 队列处理器最多执行多长时间后就应该被关闭掉。有时候一个队列的子进程会因为很多原因僵死，比如一个外部的 HTTP 请求没有响应。这个 `--timeout` 选项会移除超出指定事件限制的僵死进程：
 
-    php artisan queue:work --timeout=60
+    php royalcms queue:work --timeout=60
 
 `retry_after` 配置选项和 `--timeout` 命令行选项是不一样的，但是可以同时工作来保证任务不会丢失并且不会重复执行。
 
@@ -414,7 +414,7 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 当队列需要处理任务时，进程将继续处理任务，它们之间没有延迟。但是，如果没有新的工作可用，`sleep` 参数决定了工作进程将 「睡眠」 多长时间：
 
-    php artisan queue:work --sleep=3
+    php royalcms queue:work --sleep=3
 
 <a name="supervisor-configuration"></a>
 ## Supervisor 配置
@@ -433,7 +433,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 
     [program:Royalcms-worker]
     process_name=%(program_name)s_%(process_num)02d
-    command=php /home/forge/app.com/artisan queue:work sqs --sleep=3 --tries=3
+    command=php /home/forge/app.com/royalcms queue:work sqs --sleep=3 --tries=3
     autostart=true
     autorestart=true
     user=forge
@@ -458,15 +458,15 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 <a name="dealing-with-failed-jobs"></a>
 ## 处理失败的任务
 
-有时候你队列中的任务会失败。不要担心，本来事情就不会一帆风顺。Royalcms 内置了一个方便的方式来指定任务重试的最大次数。当任务超出这个重试次数后，它就会被插入到 `failed_jobs` 数据表里面。要创建 `failed_jobs` 表的迁移文件，你可以用 `queue:failed-table` 命令，接着使用 `migrate` Artisan 命令生成 `failed_jobs` 表：
+有时候你队列中的任务会失败。不要担心，本来事情就不会一帆风顺。Royalcms 内置了一个方便的方式来指定任务重试的最大次数。当任务超出这个重试次数后，它就会被插入到 `failed_jobs` 数据表里面。要创建 `failed_jobs` 表的迁移文件，你可以用 `queue:failed-table` 命令，接着使用 `migrate` royalcms 命令生成 `failed_jobs` 表：
 
-    php artisan queue:failed-table
+    php royalcms queue:failed-table
     
-    php artisan migrate
+    php royalcms migrate
 
 然后运行队列处理器，在调用 [queue worker](#running-the-queue-worker)，命令时你应该通过 `--tries` 参数指定任务的最大重试次数。如果不指定，任务就会永久重试：
 
-    php artisan queue:work redis --tries=3
+    php royalcms queue:work redis --tries=3
 
 <a name="cleaning-up-after-failed-jobs"></a>
 ### 清除失败任务
@@ -480,10 +480,10 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
     use Exception;
     use App\Podcast;
     use App\AudioProcessor;
-    use Royalcms\Bus\Queueable;
-    use Royalcms\Queue\SerializesModels;
-    use Royalcms\Queue\InteractsWithQueue;
-    use Royalcms\Contracts\Queue\ShouldQueue;
+    use Royalcms\Component\Bus\Queueable;
+    use Royalcms\Component\Queue\SerializesModels;
+    use Royalcms\Component\Queue\InteractsWithQueue;
+    use Royalcms\Component\Contracts\Queue\ShouldQueue;
     
     class ProcessPodcast implements ShouldQueue
     {
@@ -534,9 +534,9 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\Queue;
-    use Royalcms\Queue\Events\JobFailed;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\Queue;
+    use Royalcms\Component\Queue\Events\JobFailed;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -568,25 +568,25 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 <a name="retrying-failed-jobs"></a>
 ### 重试失败任务
 
-要查看你在 `failed_jobs` 数据表中的所有失败任务，则可以用 `queue:failed` 这个 Artisan 命令：
+要查看你在 `failed_jobs` 数据表中的所有失败任务，则可以用 `queue:failed` 这个 royalcms 命令：
 
-    php artisan queue:failed
+    php royalcms queue:failed
 
 `queue:failed` 命令会列出所有任务的 ID、连接、队列以及失败时间，任务 ID 可以被用在重试失败的任务上。例如要重试一个 ID 为 `5` 的失败任务，其命令如下：
 
-    php artisan queue:retry 5
+    php royalcms queue:retry 5
 
 要重试所有失败的任务，可以使用 `queue:retry` 并使用 `all` 作为 ID：
 
-    php artisan queue:retry all
+    php royalcms queue:retry all
 
 如果你想删除掉一个失败任务，可以用 `queue:forget` 命令：
 
-    php artisan queue:forget 5
+    php royalcms queue:forget 5
 
 `queue:flush` 命令可以让你删除所有失败的任务：
 
-    php artisan queue:flush
+    php royalcms queue:flush
 
 <a name="job-events"></a>
 ## 任务事件
@@ -597,10 +597,10 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\Queue;
-    use Royalcms\Support\ServiceProvider;
-    use Royalcms\Queue\Events\JobProcessed;
-    use Royalcms\Queue\Events\JobProcessing;
+    use Royalcms\Component\Support\Facades\Queue;
+    use Royalcms\Component\Support\ServiceProvider;
+    use Royalcms\Component\Queue\Events\JobProcessed;
+    use Royalcms\Component\Queue\Events\JobProcessing;
     
     class AppServiceProvider extends ServiceProvider
     {
