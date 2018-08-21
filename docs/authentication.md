@@ -24,7 +24,7 @@
 <a name="introduction"></a>
 ## 简介
 
-> {tip} **想要快点开始？** 只需在新的 Royalcms 应用上运行 `php artisan make:auth` 和 `php artisan migrate` 命令。然后可以用浏览器访问 `http://your-app.dev/register` 或者你在程序中定义的其它 URL 。这两个命令就可以构建好整个认证系统。
+> {tip} **想要快点开始？** 只需在新的 Royalcms 应用上运行 `php royalcms make:auth` 和 `php royalcms migrate` 命令。然后可以用浏览器访问 `http://your-app.dev/register` 或者你在程序中定义的其它 URL 。这两个命令就可以构建好整个认证系统。
 
 Royalcms 中实现用户认证非常简单。实际上，几乎所有东西都已经为你配置好了。其配置文件位于 `config/auth.php`，其中包含了用于调整认证服务行为的注释清晰的选项配置。
 
@@ -53,14 +53,14 @@ Royalcms 自带几个预构建的认证控制器，它们被放置在 `App\Http\
 
 Royalcms 提供了一个简单的命令来快速生成身份验证所需的路由和视图：
 
-    php artisan make:auth
+    php royalcms make:auth
 
 该命令最好在新的应用下使用，它会生成布局、注册和登录视图以及所有的认证接口的路由。同时它还会生成 `HomeController` 来处理应用的登录请求。
 
 <a name="included-views"></a>
 ### 视图
 
-`php artisan make:auth` 命令会在 `resources/views/auth` 目录创建所有认证需要的视图。
+`php royalcms make:auth` 命令会在 `resources/views/auth` 目录创建所有认证需要的视图。
 
 同时，`make:auth` 命令还创建了 `resources/views/layouts` 目录，该目录包含了应用的基本布局视图。所有这些视图都是用 Bootstrap CSS 框架，你也可以根据需要对其自定义。
 
@@ -96,7 +96,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 你还可以自定义用于认证和注册用户的「看守器」。要实现这一功能，需要在 `LoginController`、`RegisterController` 和 `ResetPasswordController` 中定义 `guard` 方法。该方法需要返回一个看守器实例：
 
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     protected function guard()
     {
@@ -116,7 +116,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 你可以通过 `Auth` facade 来访问认证的用户：
 
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     // 获取当前已认证的用户...
     $user = Auth::user();
@@ -124,13 +124,13 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
     // 获取当前已认证的用户 ID...
     $id = Auth::id();
 
-或者，你还可以通过 `Royalcms\Http\Request` 实例来访问已认证的用户。请记住，类型提示的类会被自动注入到您的控制器方法中：
+或者，你还可以通过 `Royalcms\Component\Http\Request` 实例来访问已认证的用户。请记住，类型提示的类会被自动注入到您的控制器方法中：
 
     <?php
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     
     class ProfileController extends Controller
     {
@@ -150,7 +150,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 
 你可以使用 `Auth` facade 的 `check` 方法来检查用户是否登录，如果已经认证，将会返回 `true`：
 
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     if (Auth::check()) {
         // 用户已登录...
@@ -161,7 +161,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 <a name="protecting-routes"></a>
 ### 保护路由
 
-[路由中间件](/docs/middleware) 用于只允许通过认证的用户访问指定的路由。Royalcms 自带了在 `Royalcms\Auth\Middleware\Authenticate` 中定义的 `auth` 中间件。由于这个中间件已经在 HTTP 内核中注册，所以只需要将中间件附加到路由定义中：
+[路由中间件](/docs/middleware) 用于只允许通过认证的用户访问指定的路由。Royalcms 自带了在 `Royalcms\Component\Auth\Middleware\Authenticate` 中定义的 `auth` 中间件。由于这个中间件已经在 HTTP 内核中注册，所以只需要将中间件附加到路由定义中：
 
     RC_Route::get('profile', function () {
         // 只有认证过的用户可以...
@@ -186,7 +186,7 @@ Royalcms 默认使用 `email` 字段来认证。如果你想用其他字段认�
 <a name="login-throttling"></a>
 ### 登录限制
 
-Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundation\Auth\ThrottlesLogins` trait。默认情况下，如果用户在进行几次尝试后仍不能提供正确的凭证，该用户将在一分钟内无法进行登录。这个限制基于用户的用户名／邮件地址和 IP 地址。
+Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Component\Foundation\Auth\ThrottlesLogins` trait。默认情况下，如果用户在进行几次尝试后仍不能提供正确的凭证，该用户将在一分钟内无法进行登录。这个限制基于用户的用户名／邮件地址和 IP 地址。
 
 <a name="authenticating-users"></a>
 ## 手动认证用户
@@ -199,7 +199,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     class LoginController extends Controller
     {
@@ -271,7 +271,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 
 #### 验证用户实例
 
-如果需要将现有用户实例记录到应用，可以使用用户实例调用 `login` 方法。给定的对象必须实现了 `Royalcms\Contracts\Auth\Authenticatable`契约。当然，Royalcms 自带的 `App\User` 模型已经实现了这个接口：
+如果需要将现有用户实例记录到应用，可以使用用户实例调用 `login` 方法。给定的对象必须实现了 `Royalcms\Component\Contracts\Auth\Authenticatable`契约。当然，Royalcms 自带的 `App\User` 模型已经实现了这个接口：
 
     Auth::login($user);
     
@@ -324,16 +324,16 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 
     <?php
     
-    namespace Royalcms\Auth\Middleware;
+    namespace Royalcms\Component\Auth\Middleware;
     
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     class AuthenticateOnceWithBasicAuth
     {
         /**
          * 处理传入的请求。
          *
-         * @param  \Royalcms\Http\Request  $request
+         * @param  \Royalcms\Component\Http\Request  $request
          * @param  \Closure  $next
          * @return mixed
          */
@@ -360,8 +360,8 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
     namespace App\Providers;
     
     use App\Services\Auth\JwtGuard;
-    use Royalcms\Support\Facades\Auth;
-    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Component\Support\Facades\Auth;
+    use Royalcms\Component\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -375,14 +375,14 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
             $this->registerPolicies();
     
             Auth::extend('jwt', function ($app, $name, array $config) {
-                // 返回一个 Royalcms\Contracts\Auth\Guard 实例...
+                // 返回一个 Royalcms\Component\Contracts\Auth\Guard 实例...
     
                 return new JwtGuard(Auth::createUserProvider($config['provider']));
             });
         }
     }
 
-正如上面的代码所示，传递给 `extend` 方法的回调应该返回 `Royalcms\Contracts\Auth\Guard` 的实现的实例。 这个接口包含你需要实现的方法来定义一个自定义看守器。定义完之后，你可以在 `auth.php` 配置文件的 `guards` 配置中使用这个看守器：
+正如上面的代码所示，传递给 `extend` 方法的回调应该返回 `Royalcms\Component\Contracts\Auth\Guard` 的实现的实例。 这个接口包含你需要实现的方法来定义一个自定义看守器。定义完之后，你可以在 `auth.php` 配置文件的 `guards` 配置中使用这个看守器：
 
     'guards' => [
         'api' => [
@@ -400,9 +400,9 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     use App\Extensions\RiakUserProvider;
-    use Royalcms\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+    use Royalcms\Component\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
     
     class AuthServiceProvider extends ServiceProvider
     {
@@ -416,7 +416,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
             $this->registerPolicies();
     
             Auth::provider('riak', function ($app, array $config) {
-                // 返回 Royalcms\Contracts\Auth\UserProvider 实例...
+                // 返回 Royalcms\Component\Contracts\Auth\UserProvider 实例...
     
                 return new RiakUserProvider($app->make('riak.connection'));
             });
@@ -443,13 +443,13 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 <a name="the-user-provider-contract"></a>
 ### 用户提供器契约
 
-`Royalcms\Contracts\Auth\UserProvider` 的实现只负责从永久存储系统（如 MySQL、Riak 等）中获取 `Royalcms\Contracts\Auth\Authenticatable` 的实现实例。这两个接口允许 Royalcms 认证机制继续运行，无论用户数据如何被存储或使用什么类型的类实现它。
+`Royalcms\Component\Contracts\Auth\UserProvider` 的实现只负责从永久存储系统（如 MySQL、Riak 等）中获取 `Royalcms\Contracts\Auth\Authenticatable` 的实现实例。这两个接口允许 Royalcms 认证机制继续运行，无论用户数据如何被存储或使用什么类型的类实现它。
 
-让我们来看看 `Royalcms\Contracts\Auth\UserProvider` 契约：
+让我们来看看 `Royalcms\Component\Contracts\Auth\UserProvider` 契约：
 
     <?php
     
-    namespace Royalcms\Contracts\Auth;
+    namespace Royalcms\Component\Contracts\Auth;
     
     interface UserProvider {
     
@@ -478,7 +478,7 @@ Royalcms 内置的控制器 `LoginController` 已经包含了 `Royalcms\Foundati
 
     <?php
     
-    namespace Royalcms\Contracts\Auth;
+    namespace Royalcms\Component\Contracts\Auth;
     
     interface Authenticatable {
     
@@ -504,31 +504,31 @@ Royalcms 在认证过程中引发了各种各样的 [事件](/docs/events)。你
      * @var array
      */
     protected $listen = [
-        'Royalcms\Auth\Events\Registered' => [
+        'Royalcms\Component\Auth\Events\Registered' => [
             'App\Listeners\LogRegisteredUser',
         ],
     
-        'Royalcms\Auth\Events\Attempting' => [
+        'Royalcms\Component\Auth\Events\Attempting' => [
             'App\Listeners\LogAuthenticationAttempt',
         ],
     
-        'Royalcms\Auth\Events\Authenticated' => [
+        'Royalcms\Component\Auth\Events\Authenticated' => [
             'App\Listeners\LogAuthenticated',
         ],
     
-        'Royalcms\Auth\Events\Login' => [
+        'Royalcms\Component\Auth\Events\Login' => [
             'App\Listeners\LogSuccessfulLogin',
         ],
     
-        'Royalcms\Auth\Events\Failed' => [
+        'Royalcms\Component\Auth\Events\Failed' => [
             'App\Listeners\LogFailedLogin',
         ],
     
-        'Royalcms\Auth\Events\Logout' => [
+        'Royalcms\Component\Auth\Events\Logout' => [
             'App\Listeners\LogSuccessfulLogout',
         ],
     
-        'Royalcms\Auth\Events\Lockout' => [
+        'Royalcms\Component\Auth\Events\Lockout' => [
             'App\Listeners\LogLockout',
         ],
     ];
