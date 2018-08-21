@@ -36,7 +36,7 @@
 
 #### 响应对象
 
-一般来说，你不会只从路由行为返回简单的字符串或数组。你也许会返回完整的 `Royalcms\Http\Response` 实例或 [视图](/docs/views)。
+一般来说，你不会只从路由行为返回简单的字符串或数组。你也许会返回完整的 `Royalcms\Component\Http\Response` 实例或 [视图](/docs/views)。
 
 返回完整的 `Response` 实例允许你自定义响应的 HTTP 状态码和响应头信息。`Response` 实例继承自 `Symfony\Component\HttpFoundation\Response` 类，该类提供了各种构建 HTTP 响应的方法：
 
@@ -111,7 +111,7 @@
 <a name="redirecting-named-routes"></a>
 ### 重定向至命名路由
 
-当你不带参数调用辅助函数 `redirect` 时，会返回 `Royalcms\Routing\Redirector` 实例。这个实例允许你调用 `Redirector` 上的任何方法。例如为命名路由生成 `RedirectResponse`，可以使用 `route` 方法：
+当你不带参数调用辅助函数 `redirect` 时，会返回 `Royalcms\Component\Routing\Redirector` 实例。这个实例允许你调用 `Redirector` 上的任何方法。例如为命名路由生成 `RedirectResponse`，可以使用 `route` 方法：
 
     return redirect()->route('login');
 
@@ -176,7 +176,7 @@
 <a name="other-response-types"></a>
 ## 其他响应类型
 
-使用辅助函数 `response` 可以用来生成其他类型的响应实例。当不带参数调用辅助函数 `response` 时，会返回 `Royalcms\Contracts\Routing\ResponseFactory`契约的实例。 契约提供了几种辅助生成响应的方法。
+使用辅助函数 `response` 可以用来生成其他类型的响应实例。当不带参数调用辅助函数 `response` 时，会返回 `Royalcms\Component\Contracts\Routing\ResponseFactory`契约的实例。 契约提供了几种辅助生成响应的方法。
 
 <a name="view-responses"></a>
 ### 视图响应
