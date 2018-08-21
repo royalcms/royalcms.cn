@@ -38,8 +38,8 @@ Royalcms 天生就具有测试的基因。事实上，Royalcms 默认就支持�
     namespace Tests\Unit;
     
     use Tests\TestCase;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
