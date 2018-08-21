@@ -399,7 +399,7 @@ Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+        RC_Schema::defaultStringLength(191);
     }
 
 或者，你可以开启数据库的 `innodb_large_prefix` 选项，至于如何正确开启，请自行查阅数据库文档。
@@ -418,7 +418,7 @@ Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis
 
 如果将字段数组传递给 `dropIndex` 方法，会删除根据表名、字段和键类型生成的索引名称：
 
-    Schema::table('geo', function (Blueprint $table) {
+    RC_Schema::table('geo', function (Blueprint $table) {
         $table->dropIndex(['state']); // 移除索引 'geo_state_index'
     });
 
@@ -427,7 +427,7 @@ Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis
 
 Royalcms 还支持创建用于在数据库层中的强制引用完整性的外键约束。例如，让我们在 `posts` 表上定义一个引用 `users` 表的 `id` 字段的 `user_id` 字段：
 
-    Schema::table('posts', function (Blueprint $table) {
+    RC_Schema::table('posts', function (Blueprint $table) {
         $table->integer('user_id')->unsigned();
     
         $table->foreign('user_id')->references('id')->on('users');
@@ -449,6 +449,6 @@ Royalcms 还支持创建用于在数据库层中的强制引用完整性的外�
 
 你可以在迁移文件里使用以下方法来开启或关闭外键约束：
 
-    Schema::enableForeignKeyConstraints();
+    RC_Schema::enableForeignKeyConstraints();
     
-    Schema::disableForeignKeyConstraints();
+    RC_Schema::disableForeignKeyConstraints();

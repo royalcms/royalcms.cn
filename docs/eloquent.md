@@ -478,7 +478,7 @@ $flight->fill(['name' => 'Flight 22']);
 
 你也应该添加 `deleted_at` 字段到数据表中。Royalcms [结构生成器](/docs/migrations) 包含了一个辅助函数用来创建此字段：
 
-    Schema::table('flights', function ($table) {
+    RC_Schema::table('flights', function ($table) {
         $table->softDeletes();
     });
 
