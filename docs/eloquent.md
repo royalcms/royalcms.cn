@@ -33,17 +33,17 @@ Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和�
 <a name="defining-models"></a>
 ## 定义模型
 
-首先，创建一个 Eloquent 模型，生成的模型通常放在 `app` 目录中，但你可以通过 `composer.json` 随意地将它们放在可被自动加载的地方。所有的 Eloquent 模型都继承了 `Royalcms\Database\Eloquent\Model` 类。
+首先，创建一个 Eloquent 模型，生成的模型通常放在 `app` 目录中，但你可以通过 `composer.json` 随意地将它们放在可被自动加载的地方。所有的 Eloquent 模型都继承了 `Royalcms\Component\Database\Eloquent\Model` 类。
 
-创建模型实例的最简单方法是使用 [Artisan 命令](/docs/artisan) `make:model`：
+创建模型实例的最简单方法是使用 [royalcms 命令](/docs/royalcms) `make:model`：
 
-    php artisan make:model User
+    php royalcms make:model User
 
 如果要在生成模型时生成 [数据库迁移](/docs/migrations)，可以使用 `--migration` 或 `-m` 选项：
 
-    php artisan make:model User --migration
+    php royalcms make:model User --migration
     
-    php artisan make:model User -m
+    php royalcms make:model User -m
 
 <a name="eloquent-model-conventions"></a>
 ### Eloquent 模型约定
@@ -54,7 +54,7 @@ Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -70,7 +70,7 @@ Royalcms 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -97,7 +97,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -115,7 +115,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -146,7 +146,7 @@ Eloquent 也会假定每个数据表都有一个名为 `id` 的主键字段。�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -188,7 +188,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
 <a name="collections"></a>
 ### 集合
 
-使用 Eloquent 中的方法比如 `all` 和 `get` 可以检索多个结果，并且会返回一个 `Royalcms\Database\Eloquent\Collection` 实例。`Collection` 类提供了 [很多辅助函数](/docs/eloquent-collections#available-methods) 来处理Eloquent 结果。
+使用 Eloquent 中的方法比如 `all` 和 `get` 可以检索多个结果，并且会返回一个 `Royalcms\Component\Database\Eloquent\Collection` 实例。`Collection` 类提供了 [很多辅助函数](/docs/eloquent-collections#available-methods) 来处理Eloquent 结果。
 
 
     $flights = $flights->reject(function ($flight) {
@@ -242,7 +242,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
 
 #### 「找不到」异常
 
-如果你希望在找不到模型时抛出异常，可以使用 `findOrFail` 以及 `firstOrFail` 方法。这些方法会检索查询的第一个结果。如果没有找到相应结果，就会抛出一个 `Royalcms\Database\Eloquent\ModelNotFoundException`：
+如果你希望在找不到模型时抛出异常，可以使用 `findOrFail` 以及 `firstOrFail` 方法。这些方法会检索查询的第一个结果。如果没有找到相应结果，就会抛出一个 `Royalcms\Component\Database\Eloquent\ModelNotFoundException`：
 
     $model = App\Flight::findOrFail(1);
     
@@ -276,7 +276,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
     namespace App\Http\Controllers;
     
     use App\Flight;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class FlightController extends Controller
@@ -337,7 +337,7 @@ Eloquent 的 `all` 方法会返回模型表中所有的结果。由于每个 Elo
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -370,7 +370,7 @@ $flight->fill(['name' => 'Flight 22']);
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -455,14 +455,14 @@ $flight->fill(['name' => 'Flight 22']);
 <a name="soft-deleting"></a>
 ### 软删除
 
-除了真的从数据库中删除记录，Eloquent 也可以「软删除」模型。当模型被软删除时，它们并不是真的从数据库中被删除。模型上设置了一个 `deleted_at` 属性并将其添加到数据库，也就是说，如果模型具有非空的 `deleted_at` 值，那就代表模型已经被软删除了。要启动模型上的软删除，则必须在模型上使用 `Royalcms\Database\Eloquent\SoftDeletes` trait 并添加 `deleted_at` 字段到 `$dates` 属性上：
+除了真的从数据库中删除记录，Eloquent 也可以「软删除」模型。当模型被软删除时，它们并不是真的从数据库中被删除。模型上设置了一个 `deleted_at` 属性并将其添加到数据库，也就是说，如果模型具有非空的 `deleted_at` 值，那就代表模型已经被软删除了。要启动模型上的软删除，则必须在模型上使用 `Royalcms\Component\Database\Eloquent\SoftDeletes` trait 并添加 `deleted_at` 字段到 `$dates` 属性上：
 
     <?php
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
-    use Royalcms\Database\Eloquent\SoftDeletes;
+    use Royalcms\Component\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\SoftDeletes;
     
     class Flight extends Model
     {
@@ -557,17 +557,17 @@ $flight->fill(['name' => 'Flight 22']);
     
     namespace App\Scopes;
     
-    use Royalcms\Database\Eloquent\Scope;
-    use Royalcms\Database\Eloquent\Model;
-    use Royalcms\Database\Eloquent\Builder;
+    use Royalcms\Component\Database\Eloquent\Scope;
+    use Royalcms\Component\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Builder;
     
     class AgeScope implements Scope
     {
         /**
          * 将范围应用于给定的 Eloquent 查询生成器
          *
-         * @param  \Royalcms\Database\Eloquent\Builder  $builder
-         * @param  \Royalcms\Database\Eloquent\Model  $model
+         * @param  \Royalcms\Component\Database\Eloquent\Builder  $builder
+         * @param  \Royalcms\Component\Database\Eloquent\Model  $model
          * @return void
          */
         public function apply(Builder $builder, Model $model)
@@ -587,7 +587,7 @@ $flight->fill(['name' => 'Flight 22']);
     namespace App;
     
     use App\Scopes\AgeScope;
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -616,8 +616,8 @@ Eloquent 还能使用闭包定义全局作用域，如此一来，便就没必�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
-    use Royalcms\Database\Eloquent\Builder;
+    use Royalcms\Component\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Builder;
     
     class User extends Model
     {
@@ -666,14 +666,14 @@ User::withoutGlobalScopes([
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
         /**
          * 限制查询只包括受欢迎的用户。
          *
-         * @return \Royalcms\Database\Eloquent\Builder
+         * @return \Royalcms\Component\Database\Eloquent\Builder
          */
         public function scopePopular($query)
         {
@@ -683,7 +683,7 @@ User::withoutGlobalScopes([
         /**
          * 限制查询只包括活跃的用户。
          *
-         * @return \Royalcms\Database\Eloquent\Builder
+         * @return \Royalcms\Component\Database\Eloquent\Builder
          */
         public function scopeActive($query)
         {
@@ -705,14 +705,14 @@ User::withoutGlobalScopes([
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
         /**
          * 限制查询只包括指定类型的用户。
          *
-         * @return \Royalcms\Database\Eloquent\Builder
+         * @return \Royalcms\Component\Database\Eloquent\Builder
          */
         public function scopeOfType($query, $type)
         {
@@ -740,8 +740,8 @@ Eloquent 的模型触发了几个事件，可以在模型的生命周期的以�
     
     use App\Events\UserSaved;
     use App\Events\UserDeleted;
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -801,7 +801,7 @@ Eloquent 的模型触发了几个事件，可以在模型的生命周期的以�
     
     use App\User;
     use App\Observers\UserObserver;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {

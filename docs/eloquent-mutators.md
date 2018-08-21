@@ -28,7 +28,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -59,7 +59,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -92,7 +92,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -130,7 +130,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Flight extends Model
     {
@@ -166,7 +166,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -197,7 +197,7 @@
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {

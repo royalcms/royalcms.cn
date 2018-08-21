@@ -54,7 +54,7 @@ Eloquent 关联在 Eloquent 模型类中以方法的形式呈现。如同 Eloque
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -87,7 +87,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Phone extends Model
     {
@@ -164,7 +164,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Post extends Model
     {
@@ -206,7 +206,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Comment extends Model
     {
@@ -256,7 +256,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -297,7 +297,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Role extends Model
     {
@@ -342,14 +342,14 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
 
 #### 定义自定义中间表模型
 
-如果您想定义一个自定义模型来表示关联关系中的中间表，可以在定义关联时调用 `using` 方法。所有自定义中间表模型都必须扩展自 `Royalcms\Database\Eloquent\Relations\Pivot` 类。例如，
+如果您想定义一个自定义模型来表示关联关系中的中间表，可以在定义关联时调用 `using` 方法。所有自定义中间表模型都必须扩展自 `Royalcms\Component\Database\Eloquent\Relations\Pivot` 类。例如，
 我们在写 `Role` 模型的关联时，使用自定义中间表模型 `UserRole`：
 
     <?php
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Role extends Model
     {
@@ -368,7 +368,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Relations\Pivot;
+    use Royalcms\Component\Database\Eloquent\Relations\Pivot;
     
     class UserRole extends Pivot
     {
@@ -402,7 +402,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Country extends Model
     {
@@ -467,7 +467,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Comment extends Model
     {
@@ -524,7 +524,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
 
 默认，Royalcms 会使用完全限定类名作为关联模型保存在多态模型上的类型字段值。比如，在上面的例子中，`Comment` 属于 `Post` 或者 `Video`，那么 `commentable_type`的默认值对应地就是 `App\Post` 和 `App\Video`。但是，您可能希望将数据库与程序内部结构解耦。那样的话，你可以定义一个「多态映射表」来指示 Eloquent 使用每个模型自定义类型字段名而不是类名：
 
-    use Royalcms\Database\Eloquent\Relations\Relation;
+    use Royalcms\Component\Database\Eloquent\Relations\Relation;
     
     Relation::morphMap([
         'posts' => 'App\Post',
@@ -565,7 +565,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Post extends Model
     {
@@ -586,7 +586,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Tag extends Model
     {
@@ -636,7 +636,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class User extends Model
     {
@@ -750,7 +750,7 @@ Eloquent 会基于模型名决定外键名称。在当前场景中，Eloquent �
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Book extends Model
     {
@@ -976,7 +976,7 @@ Eloquent 也提供了几个额外的辅助方法，让操作关联模型更加�
     
     namespace App;
     
-    use Royalcms\Database\Eloquent\Model;
+    use Royalcms\Component\Database\Eloquent\Model;
     
     class Comment extends Model
     {
