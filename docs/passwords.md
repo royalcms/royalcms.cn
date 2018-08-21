@@ -19,7 +19,7 @@
 <a name="resetting-database"></a>
 ## 数据库注意事项
 
-开始之前，请确认你的 `App\User` 模型实现了 `Royalcms\Contracts\Auth\CanResetPassword` 契约。当然，Royalcms 框架中包含的 `App\User` 模型已经实现了这个接口，并且使用 `Royalcms\Auth\Passwords\CanResetPassword` trait 来包含实现接口所需的方法。
+开始之前，请确认你的 `App\User` 模型实现了 `Royalcms\Component\Contracts\Auth\CanResetPassword` 契约。当然，Royalcms 框架中包含的 `App\User` 模型已经实现了这个接口，并且使用 `Royalcms\Auth\Passwords\CanResetPassword` trait 来包含实现接口所需的方法。
 
 #### 生成重置令牌的表迁移
 
@@ -32,7 +32,7 @@
 
 Royalcms 在 `Auth\ForgotPasswordController` 和 `Auth\ResetPasswordController` 这两个类中分别实现了通过邮件发送重置密码链接和重置密码的逻辑。执行密码重置所需的所有路由都可以使用 Artisan 命令 `make:auth` 生成：
 
-    php artisan make:auth
+    php royalcms make:auth
 
 <a name="resetting-views"></a>
 ## 视图
@@ -57,7 +57,7 @@ Royalcms 在 `Auth\ForgotPasswordController` 和 `Auth\ResetPasswordController
 
 在 `auth.php` 配置文件中，你可以配置多个「看守器」，可用于定义多个用户表的身份验证行为。可以通过在 `ResetPasswordController`  控制器上重写 `guard` 方法来指定你想使用的自定义的看守器。这个方法需要返回一个看守器实例：
 
-    use Royalcms\Support\Facades\Auth;
+    use Royalcms\Component\Support\Facades\Auth;
     
     protected function guard()
     {
@@ -68,7 +68,7 @@ Royalcms 在 `Auth\ForgotPasswordController` 和 `Auth\ResetPasswordController
 
 在 `auth.php` 配置文件中，你可以配置多个密码 「brokers」，用于多个用户表上的密码重置。你可以通过重写 `ForgotPasswordController` 和 `ResetPasswordController` 中的 `broker` 方法来选择你想使用的自定义 broker：
 
-    use Royalcms\Support\Facades\Password;
+    use Royalcms\Component\Support\Facades\Password;
     
     /**
      * 在密码重置期间获取使用代理。
