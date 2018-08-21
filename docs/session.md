@@ -254,7 +254,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
          */
         public function boot()
         {
-            Session::extend('mongo', function ($app) {
+            RC_Session::extend('mongo', function ($app) {
                 // Return implementation of SessionHandlerInterface...
                 return new MongoSessionStore;
             });
