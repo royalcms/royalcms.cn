@@ -42,7 +42,7 @@
 
 使用 Composer 安装 Passport ：
 
-    composer require Royalcms/passport
+    composer require Royalcms/Component/passport
 
 接下来，将 Passport 的服务提供者注册到配置文件 `config/app.php` 的 `providers` 数组中：
 
@@ -50,7 +50,7 @@
 
 Passport 服务提供器使用框架注册自己的数据库迁移目录，因此在注册提供器后，就应该运行 Passport 的迁移命令来自动创建存储客户端和令牌的数据表：
 
-    php artisan migrate
+    php royalcms migrate
 
 > {note} 如果你不打算使用 Passport 的默认迁移，你应该在 `AppServiceProvider` 的 `register` 方法中调用 `Passport::ignoreMigrations` 方法。 你可以用这个命令 `php artisan vendor:publish --tag=passport-migrations` 导出默认迁移。
 
