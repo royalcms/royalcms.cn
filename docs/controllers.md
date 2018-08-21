@@ -137,7 +137,7 @@
 
 Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的控制器。比如，创建一个控制器来处理应用保存的「照片」的所有 HTTP 请求。使用 Artisan 命令 `make:controller` 来快速创建控制器：
 
-    php artisan make:controller PhotoController --resource
+    php royalcms make:controller PhotoController --resource
 
 这个命令会生成一个控制器 `app/Http/Controllers/PhotoController.php`。其中包含了每个可用资源的操作方法。
 
@@ -163,7 +163,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
 
 如果你使用了路由模型绑定，并且想在资源控制器的方法中使用类型提示，你可以在生成控制器的时候使用 `--model` 选项：
 
-    php artisan make:controller PhotoController --resource --model=Photo
+    php royalcms make:controller PhotoController --resource --model=Photo
 
 #### 伪造表单方法
 
@@ -349,10 +349,10 @@ Royalcms 使用服务容器来解析所有的控制器。因此，你可以在�
 
 如果你的应用只使用了基于控制器的路由，那么你应该充分利用 Royalcms 的路由缓存。使用路由缓存将极大地减少注册所有应用路由所需的时间。某些情况下，路由注册的速度甚至可以快一百倍。要生成路由缓存，只需执行 Artisan 命令 `route:cache`：
 
-    php artisan route:cache
+    php royalcms route:cache
 
 运行这个命令之后，每一次请求的时候都将会加载缓存的路由文件。如果你添加了新的路由，你需要生成 一个新的路由缓存。因此，你应该只在生产环境运行 `route:cache` 命令：
 
 你可以使用 `route:clear` 命令清除路由缓存：
 
-    php artisan route:clear
+    php royalcms route:clear
