@@ -1064,7 +1064,7 @@ Royalcms 提供了许多有用的验证规则，同时也支持自定义规则�
 <a name="using-extensions"></a>
 ### 使用扩展
 
-另外一个注册自定义验证规则的方法，就是使用 `Validator` [Facade](/docs/{{version}}/facades) 中的 `extend` 方法。让我们在 [服务提供器](/docs/{{version}}/providers) 中使用这个方法来注册自定义验证规则：
+另外一个注册自定义验证规则的方法，就是使用 `Validator` [Facade](/docs/facades) 中的 `extend` 方法。让我们在 [服务提供器](/docs/{{version}}/providers) 中使用这个方法来注册自定义验证规则：
 
     <?php
     
