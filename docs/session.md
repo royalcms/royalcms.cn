@@ -56,7 +56,7 @@ Session `driver` 的配置选项定义了每个请求存储 Session 数据的位
         $table->integer('last_activity');
     });
 
-使用 Artisan 命令 `session:table` 命令为此生成迁移：
+使用 royalcms 命令 `session:table` 命令为此生成迁移：
 
     php royalcms session:table
     

@@ -178,9 +178,9 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 <a name="creating-form-requests"></a>
 ### 创建表单请求
 
-面对更复杂的验证情境中，你可以创建一个「表单请求」来处理更为复杂的逻辑。表单请求是包含验证逻辑的自定义请求类。可使用 Artisan 命令 `make:request` 来创建表单请求类：
+面对更复杂的验证情境中，你可以创建一个「表单请求」来处理更为复杂的逻辑。表单请求是包含验证逻辑的自定义请求类。可使用 royalcms 命令 `make:request` 来创建表单请求类：
 
-    php artisan make:request StoreBlogPost
+    php royalcms make:request StoreBlogPost
 
 新生成的类保存在 `app/Http/Requests` 目录下。如果这个目录不存在，运行 `make:request` 命令时它会被创建出来。让我们添加一些验证规则到 `rules` 方法中：
 
@@ -1004,9 +1004,9 @@ Royalcms 提供了几种不同的方法来验证传入应用程序的数据。�
 <a name="using-rule-objects"></a>
 ### 使用规则对象
 
-Royalcms 提供了许多有用的验证规则，同时也支持自定义规则。注册自定义验证规则的方法之一，就是使用规则对象。可以使用 Artisan 命令 `make:rule` 来生成新的规则对象。接下来，让我们用这个命令生成一个验证字符串是大写的规则。Royalcms 会将新的规则存放在 `app/Rules` 目录中：
+Royalcms 提供了许多有用的验证规则，同时也支持自定义规则。注册自定义验证规则的方法之一，就是使用规则对象。可以使用 royalcms 命令 `make:rule` 来生成新的规则对象。接下来，让我们用这个命令生成一个验证字符串是大写的规则。Royalcms 会将新的规则存放在 `app/Rules` 目录中：
 
-    php artisan make:rule Uppercase
+    php royalcms make:rule Uppercase
 
 一旦创建了规则，我们就可以定义它的行为。规则对象包含两个方法： `passes` 和 `message` 。 `passes` 方法接收属性值和名称，并根据属性值是否符合规则而返回 `true` 或者 `false`。 `message` 应返回验证失败时应使用的验证错误消息：
 
