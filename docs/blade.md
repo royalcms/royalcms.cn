@@ -454,8 +454,8 @@ Blade 甚至允许你使用 `directive` 方法来定义自定义指令。当 Bla
     
     namespace App\Providers;
     
-    use Royalcms\Support\Facades\Blade;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\Blade;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class AppServiceProvider extends ServiceProvider
     {
@@ -493,7 +493,7 @@ Blade 甚至允许你使用 `directive` 方法来定义自定义指令。当 Bla
 
 编写自定义指令有时候比定义简单、常见的条件语句更复杂，但是它又非常必要。因此，Blade 提供了一个 `Blade::if` 方法，它能使用闭包来快速定义自定义条件指令。 例如，定义一个自定义条件来检查当前的应用程序环境。我们可以在 `AppServiceProvider` 的 `boot` 方法中这样做：
 
-    use Royalcms\Support\Facades\Blade;
+    use Royalcms\Component\Support\Facades\Blade;
     
     /**
      * Perform post-registration booting of services.

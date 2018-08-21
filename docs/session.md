@@ -47,7 +47,7 @@ Session `driver` 的配置选项定义了每个请求存储 Session 数据的位
 
 使用 `database` 作为 Session 驱动时，你需要创建一张包含 Session 各项数据的表。以下例子是使用 `Schema` 建表：
 
-    Schema::create('sessions', function ($table) {
+    RC_Schema::create('sessions', function ($table) {
         $table->string('id')->unique();
         $table->integer('user_id')->nullable();
         $table->string('ip_address', 45)->nullable();
@@ -58,9 +58,9 @@ Session `driver` 的配置选项定义了每个请求存储 Session 数据的位
 
 使用 Artisan 命令 `session:table` 命令为此生成迁移：
 
-    php artisan session:table
+    php royalcms session:table
     
-    php artisan migrate
+    php royalcms migrate
 
 #### Redis
 
@@ -78,7 +78,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -242,8 +242,8 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
     namespace App\Providers;
     
     use App\Extensions\MongoSessionStore;
-    use Royalcms\Support\Facades\Session;
-    use Royalcms\Support\ServiceProvider;
+    use Royalcms\Component\Support\Facades\Session;
+    use Royalcms\Component\Support\ServiceProvider;
     
     class SessionServiceProvider extends ServiceProvider
     {
