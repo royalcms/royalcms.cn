@@ -143,9 +143,9 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
     namespace App\Mail;
     
     use App\Order;
-    use Royalcms\Bus\Queueable;
-    use Royalcms\Mail\Mailable;
-    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Component\Bus\Queueable;
+    use Royalcms\Component\Mail\Mailable;
+    use Royalcms\Component\Queue\SerializesModels;
     
     class OrderShipped extends Mailable
     {
@@ -194,9 +194,9 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
     namespace App\Mail;
     
     use App\Order;
-    use Royalcms\Bus\Queueable;
-    use Royalcms\Mail\Mailable;
-    use Royalcms\Queue\SerializesModels;
+    use Royalcms\Component\Bus\Queueable;
+    use Royalcms\Component\Mail\Mailable;
+    use Royalcms\Component\Queue\SerializesModels;
     
     class OrderShipped extends Mailable
     {
@@ -437,8 +437,8 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
     
     use App\Order;
     use App\Mail\OrderShipped;
-    use Royalcms\Http\Request;
-    use Royalcms\Support\Facades\Mail;
+    use Royalcms\Component\Http\Request;
+    use Royalcms\Component\Support\Facades\Mail;
     use App\Http\Controllers\Controller;
     
     class OrderController extends Controller
