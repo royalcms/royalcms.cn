@@ -39,7 +39,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\DB;
+    use Royalcms\Component\Support\Facades\DB;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -57,7 +57,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
         }
     }
 
-`get` 方法会返回一个包含 `Royalcms\Support\Collection` 的结果，其中每个结果都是一个 PHP `StdClass` 对象的一个实例。你可以通过访问字段作为对象的属性来访问每列的值：
+`get` 方法会返回一个包含 `Royalcms\Component\Support\Collection` 的结果，其中每个结果都是一个 PHP `StdClass` 对象的一个实例。你可以通过访问字段作为对象的属性来访问每列的值：
 
     foreach ($users as $user) {
         echo $user->name;
@@ -96,7 +96,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 <a name="chunking-results"></a>
 ### 结果分块
 
-如果你需要操作数千条数据库记录，可以考虑使用 `chunk` 方法。这个方法每次只取出一小块结果传递给 `闭包` 处理，这对于编写数千条记录的 [Artisan 命令](/docs/artisan) 而言是非常有用的。例如，一次处理整个 `users` 表中的 100 个记录：
+如果你需要操作数千条数据库记录，可以考虑使用 `chunk` 方法。这个方法每次只取出一小块结果传递给 `闭包` 处理，这对于编写数千条记录的 [royalcms 命令](/docs/royalcms) 而言是非常有用的。例如，一次处理整个 `users` 表中的 100 个记录：
 
     DB::table('users')->orderBy('id')->chunk(100, function ($users) {
         foreach ($users as $user) {
