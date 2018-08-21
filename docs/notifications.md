@@ -81,7 +81,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
     
     $user->notify(new InvoicePaid($invoice));
 
-> {tip} 记住，你可以在任意模型中使用 `Royalcms\Notifications\Notifiable` trait，而不仅仅是在 `User` 模型中。
+> {tip} 记住，你可以在任意模型中使用 `Royalcms\Component\Notifications\Notifiable` trait，而不仅仅是在 `User` 模型中。
 
 <a name="using-the-notification-facade"></a>
 ### 使用 Notification Facade
@@ -122,7 +122,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
     namespace App\Notifications;
     
     use Royalcms\Bus\Queueable;
-    use Royalcms\Notifications\Notification;
+    use Royalcms\Component\Notifications\Notification;
     use Royalcms\Contracts\Queue\ShouldQueue;
     
     class InvoicePaid extends Notification implements ShouldQueue
@@ -163,7 +163,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
      * 获取通知的邮件展示方式
      *
      * @param  mixed  $notifiable
-     * @return \Royalcms\Notifications\Messages\MailMessage
+     * @return \Royalcms\Component\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
@@ -191,7 +191,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
      * 获取通知的邮件展示方式
      *
      * @param  mixed  $notifiable
-     * @return \Royalcms\Notifications\Messages\MailMessage
+     * @return \Royalcms\Component\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
@@ -243,8 +243,8 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
     
     namespace App;
     
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -270,7 +270,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
      * 获取通知的邮件展示方式
      *
      * @param  mixed  $notifiable
-     * @return \Royalcms\Notifications\Messages\MailMessage
+     * @return \Royalcms\Component\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
@@ -304,7 +304,7 @@ Markdown 邮件通知可让您利用邮件通知的预先构建的模板，同�
      * 获取通知的邮件展示方式
      *
      * @param  mixed  $notifiable
-     * @return \Royalcms\Notifications\Messages\MailMessage
+     * @return \Royalcms\Component\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
