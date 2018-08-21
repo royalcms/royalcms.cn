@@ -43,17 +43,17 @@ Royalcms Dusk 提供了富有表现力、简单易用的浏览器自动化以及
 
 > {note} 永远不要在生产环境安装 Dusk。否则，任何人都可以未经授权地访问你的应用。
 
-安装了 Dusk 之后，你需要注册 `Royalcms\Dusk\DuskServiceProvider` 服务提供者。通常，这将通过 Royalcms 的服务提供者自动发现机制去自动完成。
+安装了 Dusk 之后，你需要注册 `Royalcms\Component\Dusk\DuskServiceProvider` 服务提供者。通常，这将通过 Royalcms 的服务提供者自动发现机制去自动完成。
 
-接下来运行 `dusk:install` Artisan 命令：
+接下来运行 `dusk:install` royalcms 命令：
 
-    php artisan dusk:install
+    php royalcms dusk:install
 
 这将会在你的 `tests` 目录下创建一个 `Browser` 目录，同时包含了一个测试用例模版。然后在你的 `.env` 文件中设置 `APP_URL` 环境变量。这个变量值要与你在浏览器访问你应用的 URL 一致。
 
-使用 `dusk` Artisan 命令来运行你的测试。`dusk` 命令可以接受任何 `phpunit` 能接受的参数：
+使用 `dusk` royalcms 命令来运行你的测试。`dusk` 命令可以接受任何 `phpunit` 能接受的参数：
 
-    php artisan dusk
+    php royalcms dusk
 
 <a name="using-other-browsers"></a>
 ### 使用其他浏览器
@@ -93,20 +93,20 @@ Dusk 默认使用 Google Chrome 和 [ChromeDriver](https://sites.google.com/a/ch
 <a name="generating-tests"></a>
 ### 创建测试
 
-使用 `dusk:make` Artisan 命令来创建 Dusk 测试。创建好的测试类会放在 `tests/Browser` 目录：
+使用 `dusk:make` royalcms 命令来创建 Dusk 测试。创建好的测试类会放在 `tests/Browser` 目录：
 
-    php artisan dusk:make LoginTest
+    php royalcms dusk:make LoginTest
 
 <a name="running-tests"></a>
 ### 运行测试
 
-使用 `dusk` Artisan 命令来运行你的浏览器测试：
+使用 `dusk` royalcms 命令来运行你的浏览器测试：
 
-    php artisan dusk
+    php royalcms dusk
 
 `dusk` 命令可以接受任何 PHPUnit 能接受的参数。例如，让你可以只在指定 [分组](https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.group) 中运行测试:
 
-    php artisan dusk --group=foo
+    php royalcms dusk --group=foo
 
 #### 手动运行 ChromeDriver
 
@@ -155,8 +155,8 @@ Dusk 默认会尝试自动运行 ChromeDriver。如果在你特定的系统中�
     
     use App\User;
     use Tests\DuskTestCase;
-    use Royalcms\Dusk\Chrome;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Dusk\Chrome;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
     
     class ExampleTest extends DuskTestCase
     {
@@ -185,7 +185,7 @@ Dusk 默认会尝试自动运行 ChromeDriver。如果在你特定的系统中�
 
 在上面的示例中，你可以看到 `browse` 方法接受一个回调参数。 Dusk 会自动将这个浏览器实例注入到回调当中，而这个浏览器实例可以让你与你的应用之间进行交互和断言。
 
-> {tip} 这个测试用例可以测试由 `make:auth` Artisan 命令来生成的登录页面。
+> {tip} 这个测试用例可以测试由 `make:auth` royalcms 命令来生成的登录页面。
 
 #### 创建多个浏览器
 
@@ -493,9 +493,9 @@ Assertion  | Description
 <a name="generating-pages"></a>
 ### 创建页面
 
-使用 `dusk:page` Artisan 命令来创建页面对象。所有的页面对象会存放在 `tests/Browser/Pages` 目录中：
+使用 `dusk:page` royalcms 命令来创建页面对象。所有的页面对象会存放在 `tests/Browser/Pages` 目录中：
 
-    php artisan dusk:page Login
+    php royalcms dusk:page Login
 
 <a name="configuring-pages"></a>
 ### 配置页面
@@ -594,7 +594,7 @@ Assertion  | Description
     
     namespace Tests\Browser\Pages;
     
-    use Royalcms\Dusk\Browser;
+    use Royalcms\Component\Dusk\Browser;
     
     class Dashboard extends Page
     {
@@ -603,7 +603,7 @@ Assertion  | Description
         /**
          * 创建一个新的播放列表。
          *
-         * @param  \Royalcms\Dusk\Browser  $browser
+         * @param  \Royalcms\Component\Dusk\Browser  $browser
          * @param  string  $name
          * @return void
          */
@@ -629,7 +629,7 @@ Assertion  | Description
 <a name="running-tests-on-travis-ci"></a>
 ### Travis CI
 
-在 Travis CI 中运行 Dusk 时需要「sudo-enabled」的 Ubuntu 14.04 (Trusty) 环境。由于 Travis CI 不是图形环境，我们需要一些额外的步骤去启动 Chrome 浏览器，另外，我们需要使用 `php artisan serve` 命令去启动 PHP 的内置服务器。
+在 Travis CI 中运行 Dusk 时需要「sudo-enabled」的 Ubuntu 14.04 (Trusty) 环境。由于 Travis CI 不是图形环境，我们需要一些额外的步骤去启动 Chrome 浏览器，另外，我们需要使用 `php royalcms serve` 命令去启动 PHP 的内置服务器。
 
     sudo: required
     dist: trusty
@@ -643,17 +643,17 @@ Assertion  | Description
     
     before_script:
        - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-       - php artisan serve &
+       - php royalcms serve &
     
     script:
-       - php artisan dusk
+       - php royalcms dusk
 
 <a name="running-tests-on-circle-ci"></a>
 ### CircleCI
 
 #### CircleCI 1.0
 
-在 CircleCI 1.0 中运行 Dusk 时需要使用以下配置进行启动。与 TravisCI 相同，我们需要使用 `php artisan serve` 命令去启动 PHP 的内置服务器。
+在 CircleCI 1.0 中运行 Dusk 时需要使用以下配置进行启动。与 TravisCI 相同，我们需要使用 `php royalcms serve` 命令去启动 PHP 的内置服务器。
 
     dependencies:
       pre:
@@ -667,11 +667,11 @@ Assertion  | Description
         - "./vendor/Royalcms/dusk/bin/chromedriver-linux":
             background: true
         - cp .env.testing .env
-        - "php artisan serve":
+        - "php royalcms serve":
             background: true
     
       override:
-        - php artisan dusk
+        - php royalcms dusk
 
  #### CircleCI 2.0
 
@@ -695,9 +695,9 @@ Assertion  | Description
     
           - run:
             name: Run Royalcms Server
-            command: php artisan serve
+            command: php royalcms serve
             background: true
     
           - run:
             name: Run Royalcms Dusk Tests
-            command: php artisan dusk
+            command: php royalcms dusk
