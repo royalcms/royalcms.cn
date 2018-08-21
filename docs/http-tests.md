@@ -16,9 +16,9 @@ Royalcms 为 HTTP 请求的生成和输出的检查都提供了非常流畅的 A
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
@@ -139,11 +139,11 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
     namespace Tests\Feature;
     
     use Tests\TestCase;
-    use Royalcms\Http\UploadedFile;
-    use Royalcms\Support\Facades\Storage;
-    use Royalcms\Foundation\Testing\WithoutMiddleware;
-    use Royalcms\Foundation\Testing\DatabaseMigrations;
-    use Royalcms\Foundation\Testing\DatabaseTransactions;
+    use Royalcms\Component\Http\UploadedFile;
+    use Royalcms\Component\Support\Facades\Storage;
+    use Royalcms\Component\Foundation\Testing\WithoutMiddleware;
+    use Royalcms\Component\Foundation\Testing\DatabaseMigrations;
+    use Royalcms\Component\Foundation\Testing\DatabaseTransactions;
     
     class ExampleTest extends TestCase
     {
