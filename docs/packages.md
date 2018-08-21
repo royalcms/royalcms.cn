@@ -99,7 +99,7 @@
 
     $value = config('courier.option');
 
-> {note} 您不应在配置文件中定义闭包函数。 当用户执行 `config:cache` Artisan命令时，它们不能正确地序列化。
+> {note} 您不应在配置文件中定义闭包函数。 当用户执行 `config:cache` royalcms命令时，它们不能正确地序列化。
 
 #### 默认的扩展包配置文件
 
@@ -188,7 +188,7 @@
         ]);
     }
 
-现在，当使用你扩展包的用户运行 Royalcms 的 `vendor:publish` Artisan 命令时，扩展包的语言包将会被复制到指定的位置上。
+现在，当使用你扩展包的用户运行 Royalcms 的 `vendor:publish` royalcms 命令时，扩展包的语言包将会被复制到指定的位置上。
 
 <a name="views"></a>
 ### 视图
@@ -233,12 +233,12 @@
         ]);
     }
 
-现在，当你的扩展包用户运行 Royalcms 的 `vendor:publish` Artisan 命令时，扩展包的视图将会被复制到指定的位置上。
+现在，当你的扩展包用户运行 Royalcms 的 `vendor:publish` royalcms 命令时，扩展包的视图将会被复制到指定的位置上。
 
 <a name="commands"></a>
 ## 命令
 
-给你的扩展包注册 Artisan 命令，您可以使用 `commands` 方法。此方法需要一个命令类的数组。一旦命令被注册，您可以使用 [Artisan 命令行](/docs/artisan) 执行它们：
+给你的扩展包注册 royalcms 命令，您可以使用 `commands` 方法。此方法需要一个命令类的数组。一旦命令被注册，您可以使用 royalcms 执行它们：
 
     /**
      * 在注册后进行服务的启动。
@@ -297,6 +297,6 @@
         ], 'migrations');
     }
 
-现在当你的用户使用 `vendor:publish` Artisan 命令时，就可以通过标签名称分别发布不同分类的资源文件：
+现在当你的用户使用 `vendor:publish` royalcms 命令时，就可以通过标签名称分别发布不同分类的资源文件：
 
-    php artisan vendor:publish --tag=config
+    php royalcms vendor:publish --tag=config
