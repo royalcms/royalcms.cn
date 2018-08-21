@@ -51,7 +51,7 @@
 
 Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文件夹里）。看不到的话不要担心，运行一下 `make:notification` 命令就能创建了：
 
-    php artisan make:notification InvoicePaid
+    php royalcms make:notification InvoicePaid
 
 这个命令会在 `app/Notifications` 目录下生成一个新的通知类。这个类包含 `via` 方法和几个消息构建方法（比如 `toMail` 或 `toDatabase`），它们会针对指定的渠道把通知转换过为对应的消息。
 
@@ -121,9 +121,9 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
     
     namespace App\Notifications;
     
-    use Royalcms\Bus\Queueable;
+    use Royalcms\Component\Bus\Queueable;
     use Royalcms\Component\Notifications\Notification;
-    use Royalcms\Contracts\Queue\ShouldQueue;
+    use Royalcms\Component\Contracts\Queue\ShouldQueue;
     
     class InvoicePaid extends Notification implements ShouldQueue
     {
@@ -157,7 +157,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 <a name="formatting-mail-messages"></a>
 ### 格式化邮件消息
 
-如果一条通知支持以邮件发送，你应该在通知类里定义一个 `toMail` 方法。这个方法将收到一个 `$notifiable` 实体并返回一个 `Royalcms\Notifications\Messages\MailMessage` 实例。邮件消息可以包含多行文本也可以是引导链接。我们来看一个 `toMail` 方法的例子：
+如果一条通知支持以邮件发送，你应该在通知类里定义一个 `toMail` 方法。这个方法将收到一个 `$notifiable` 实体并返回一个 `Royalcms\Component\Notifications\Messages\MailMessage` 实例。邮件消息可以包含多行文本也可以是引导链接。我们来看一个 `toMail` 方法的例子：
 
     /**
      * 获取通知的邮件展示方式
@@ -224,7 +224,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
      * 获取通知的邮件展示方式
      *
      * @param  mixed  $notifiable
-     * @return \Royalcms\Notifications\Messages\MailMessage
+     * @return \Royalcms\Component\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
@@ -284,7 +284,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 
 你可以通过发布通知包的资源来修改 HTML 模板和纯文本模板。运行这个命令后，邮件通知模板就被放在了 `resources/views/vendor/notifications` 文件夹下：
 
-    php artisan vendor:publish --tag=Royalcms-notifications
+    php royalcms vendor:publish --tag=Royalcms-notifications
 
 <a name="markdown-mail-notifications"></a>
 ## Markdown 邮件通知
@@ -294,9 +294,9 @@ Markdown 邮件通知可让您利用邮件通知的预先构建的模板，同�
 <a name="generating-the-message"></a>
 ### 生成消息
 
-要使用相应的 Markdown 模板生成通知，您可以使用 `make：notification` Artisan命令的 `--markdown` 选项：
+要使用相应的 Markdown 模板生成通知，您可以使用 `make：notification` royalcms命令的 `--markdown` 选项：
 
-    php artisan make:notification InvoicePaid --markdown=mail.invoice.paid
+    php royalcms make:notification InvoicePaid --markdown=mail.invoice.paid
 
 与所有其他邮件通知一样，使用 Markdown 模板的通知应在其通知类上定义一个 `toMail` 方法。 但是，不使用 `line` 和 `action` 方法来构造通知，而是使用 `markdown` 方法来指定应该使用的 Markdown 模板的名称：
 
@@ -363,9 +363,9 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="customizing-the-components"></a>
 ### 自定义组件
 
-您可以将所有 Markdown 通知组件导出到您自己的应用程序中进行自定义。 要导出组件，请使用 `vendor：publish` Artisan命令来发布 `Royalcms-mail` 标签：
+您可以将所有 Markdown 通知组件导出到您自己的应用程序中进行自定义。 要导出组件，请使用 `vendor：publish` royalcms命令来发布 `Royalcms-mail` 标签：
 
-    php artisan vendor:publish --tag=Royalcms-mail
+    php royalcms vendor:publish --tag=Royalcms-mail
 
 此命令将 Markdown 邮件组件发布到 `resources/views/vendor/mail` 目录。 `mail` 目录将包含一个 `html` 和一个 `markdown` 目录，每个目录包含它们各自可用组件的展示方式。 您可以随意自定义这些组件。
 
@@ -385,9 +385,9 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 
 你可以查询这张表的内容在应用界面上展示通知。但是在这之前，你需要先创建一个数据表来保存通知。你可以用 `notifications:table` 命令来生成迁移表：
 
-    php artisan notifications:table
+    php royalcms notifications:table
     
-    php artisan migrate
+    php royalcms migrate
 
 <a name="formatting-database-notifications"></a>
 ### 格式化数据库通知
@@ -415,7 +415,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="accessing-the-notifications"></a>
 ### 访问通知
 
-一旦通知被存到数据库中，你需要一种方便的方式来从通知实体中访问它们。 `Royalcms\Notifications\Notifiable` trait 包含一个可以返回这个实体所有通知的 `notifications` Eloquent 关联。要获取这些通知，你可以像用其他 Eloquent 关联一样来使用这个方法。默认情况下，通知将会以 `created_at` 时间戳来排序：
+一旦通知被存到数据库中，你需要一种方便的方式来从通知实体中访问它们。 `Royalcms\Component\Notifications\Notifiable` trait 包含一个可以返回这个实体所有通知的 `notifications` Eloquent 关联。要获取这些通知，你可以像用其他 Eloquent 关联一样来使用这个方法。默认情况下，通知将会以 `created_at` 时间戳来排序：
 
     $user = App\User::find(1);
     
@@ -436,7 +436,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="marking-notifications-as-read"></a>
 ### 标为已读
 
-通常情况下，当用户查看了通知时，你就希望把通知标为已读。`Royalcms\Notifications\Notifiable` trait 提供了一个 `markAsRead` 方法，它能在对应的数据库记录里更新 `read_at` 列：
+通常情况下，当用户查看了通知时，你就希望把通知标为已读。`Royalcms\Component\Notifications\Notifiable` trait 提供了一个 `markAsRead` 方法，它能在对应的数据库记录里更新 `read_at` 列：
 
     $user = App\User::find(1);
     
@@ -471,7 +471,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 
 `broadcast` 频道使用 Royalcms  [事件广播](/docs/broadcasting) 服务来广播通知，它使得 JavaScript 客户端可以实时捕捉通知。如果一条通知支持广播，你应该在通知类里定义一个 `toBroadcast` 或 `toArray` 方法。这个方法将收到一个 `$notifiable` 实体并返回一个普通的 PHP 数组。返回的数组会被编码成 JSON 格式并广播给你的 JavaScript 客户端。我们来看个 `toArray` 方法的例子：
 
-    use Royalcms\Notifications\Messages\BroadcastMessage;
+    use Royalcms\Component\Notifications\Messages\BroadcastMessage;
     
     /**
      * 获取通知的数组展示方式
@@ -515,9 +515,9 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
     
     namespace App;
     
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Broadcasting\PrivateChannel;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Broadcasting\PrivateChannel;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -555,7 +555,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="formatting-sms-notifications"></a>
 ### 格式化短信通知
 
-如果通知支持以短信方式发送，你应该在通知类里定义一个 `toNexmo` 方法。这个方法将会收到一个  `$notifiable` 实体并返回一个 `Royalcms\Notifications\Messages\NexmoMessage` 实例：
+如果通知支持以短信方式发送，你应该在通知类里定义一个 `toNexmo` 方法。这个方法将会收到一个  `$notifiable` 实体并返回一个 `Royalcms\Component\Notifications\Messages\NexmoMessage` 实例：
 
     /**
      * 获取通知的 Nexmo / 短信展示方式
@@ -613,8 +613,8 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
     
     namespace App;
     
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -646,7 +646,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="formatting-slack-notifications"></a>
 ### 格式化 Slack 通知
 
-如果通知支持被当做 Slack 消息发送，你应该在通知类里定义一个 `toSlack` 方法。这个方法将收到一个 `$notifiable` 实体并且返回一个 `Royalcms\Notifications\Messages\SlackMessage` 实例。Slack 消息可以包含文本内容以及一个 「attachment」 用来格式化额外文本或者字段数组。我们来看个基本的 `toSlack` 例子：
+如果通知支持被当做 Slack 消息发送，你应该在通知类里定义一个 `toSlack` 方法。这个方法将收到一个 `$notifiable` 实体并且返回一个 `Royalcms\Component\Notifications\Messages\SlackMessage` 实例。Slack 消息可以包含文本内容以及一个 「attachment」 用来格式化额外文本或者字段数组。我们来看个基本的 `toSlack` 例子：
 
     /**
      * 获取通知的 Slack 展示方式
@@ -789,8 +789,8 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
     
     namespace App;
     
-    use Royalcms\Notifications\Notifiable;
-    use Royalcms\Foundation\Auth\User as Authenticatable;
+    use Royalcms\Component\Notifications\Notifiable;
+    use Royalcms\Component\Foundation\Auth\User as Authenticatable;
     
     class User extends Authenticatable
     {
@@ -810,7 +810,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
 <a name="notification-events"></a>
 ## 通知事件
 
-当通知发送后，通知系统就会触发 `Royalcms\Notifications\Events\NotificationSent` 事件。它包含了 「notifiable」 实体和通知实例本身。你应该在 `EventServiceProvider` 中注册监听器：
+当通知发送后，通知系统就会触发 `Royalcms\Component\Notifications\Events\NotificationSent` 事件。它包含了 「notifiable」 实体和通知实例本身。你应该在 `EventServiceProvider` 中注册监听器：
 
     /**
      * 应用中的事件监听映射
@@ -818,12 +818,12 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
      * @var array
      */
     protected $listen = [
-        'Royalcms\Notifications\Events\NotificationSent' => [
+        'Royalcms\Component\Notifications\Events\NotificationSent' => [
             'App\Listeners\LogNotification',
         ],
     ];
 
-> {tip} 注册完监听器后，使用 `event:generate` Artisan 命令来快速生成监听器类。
+> {tip} 注册完监听器后，使用 `event:generate` royalcms 命令来快速生成监听器类。
 
 在事件监听器中，你可以访问事件中的 `notifiable`, `notification`, 和 `channel` 属性，来了解通知接收者和通知本身：
 
@@ -849,7 +849,7 @@ Royalcms 提供了开箱即用的通知频道，但是你可能会想编写自�
     
     namespace App\Channels;
     
-    use Royalcms\Notifications\Notification;
+    use Royalcms\Component\Notifications\Notification;
     
     class VoiceChannel
     {
@@ -857,7 +857,7 @@ Royalcms 提供了开箱即用的通知频道，但是你可能会想编写自�
          * 发送给定通知
          *
          * @param  mixed  $notifiable
-         * @param  \Royalcms\Notifications\Notification  $notification
+         * @param  \Royalcms\Component\Notifications\Notification  $notification
          * @return void
          */
         public function send($notifiable, Notification $notification)
@@ -874,11 +874,11 @@ Royalcms 提供了开箱即用的通知频道，但是你可能会想编写自�
     
     namespace App\Notifications;
     
-    use Royalcms\Bus\Queueable;
+    use Royalcms\Component\Bus\Queueable;
     use App\Channels\VoiceChannel;
     use App\Channels\Messages\VoiceMessage;
-    use Royalcms\Notifications\Notification;
-    use Royalcms\Contracts\Queue\ShouldQueue;
+    use Royalcms\Component\Notifications\Notification;
+    use Royalcms\Component\Contracts\Queue\ShouldQueue;
     
     class InvoicePaid extends Notification
     {
