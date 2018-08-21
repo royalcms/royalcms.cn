@@ -1206,7 +1206,7 @@ echo url('user/profile');
 echo url('user/profile', [1]);
 ````
 
-如果没有提供路径，则返回 `Royalcms\Routing\UrlGenerator` 实例：
+如果没有提供路径，则返回 `Royalcms\Component\Routing\UrlGenerator` 实例：
 
 ````
 echo url()->current();
@@ -1596,7 +1596,7 @@ logger()->error('You are not allowed here.');
 <a name="method-now"></a>
 #### `now()` {#collection-method}
 
-`now` 函数为当前时间创建一个新的 `Royalcms\Support\Carbon` 实例:
+`now` 函数为当前时间创建一个新的 `Royalcms\Component\Support\Carbon` 实例:
 
 ````
 $now = now();
@@ -1771,7 +1771,7 @@ $user = tap($user)->update([
 
 #### `today()` {#collection-method}
 
-`today` 函数为当前日期创建一个新的 `Royalcms\Support\Carbon` 实例:
+`today` 函数为当前日期创建一个新的 `Royalcms\Component\Support\Carbon` 实例:
 
 ````
 $today = today();
@@ -1814,7 +1814,7 @@ throw_unless(
 `trait_uses_recursive` 函数返回一个类使用的所有 trait：
 
 ````
-$traits = trait_uses_recursive(\Royalcms\Notifications\Notifiable::class);
+$traits = trait_uses_recursive(\Royalcms\Component\Notifications\Notifiable::class);
 ````
 
 <a name="method-transform"></a>
