@@ -32,7 +32,7 @@ Royalcms 为各种后端缓存提供丰富而统一的 API，而其配置信息�
 当使用 `database` 缓存驱动时，你需要配置一个表来存放缓存数据，下面是构建缓存数据表结构的 `Schema` 声明示例：
 
 ````
-Schema::create('cache', function ($table) {
+RC_Schema::create('cache', function ($table) {
     $table->string('key')->unique();
     $table->text('value');
     $table->integer('expiration');

@@ -64,7 +64,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
          */
         public function up()
         {
-            Schema::create('flights', function (Blueprint $table) {
+            RC_Schema::create('flights', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
                 $table->string('airline');
@@ -79,7 +79,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
          */
         public function down()
         {
-            Schema::drop('flights');
+            RC_Schema::drop('flights');
         }
     }
 
@@ -140,7 +140,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 可以使用 `Schema` facade 的 `create` 方法来创建新的数据库表。`create` 方法接受两个参数：第一个参数为数据表的名称，第二个参数是 `闭包`，此闭包会接收一个用于定义新数据表的 `Blueprint` 对象：
 
-    Schema::create('users', function (Blueprint $table) {
+    RC_Schema::create('users', function (Blueprint $table) {
         $table->increments('id');
     });
 
@@ -150,11 +150,11 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 可以使用 `hasTable` 和 `hasColumn` 方法来检查数据表或字段是否存在：
 
-    if (Schema::hasTable('users')) {
+    if (RC_Schema::hasTable('users')) {
         //
     }
     
-    if (Schema::hasColumn('users', 'email')) {
+    if (RC_Schema::hasColumn('users', 'email')) {
         //
     }
 
@@ -162,7 +162,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 如果要对非默认连接的数据库连接执行结构操作，可以使用 `connection` 方法：
 
-    Schema::connection('foo')->create('users', function (Blueprint $table) {
+    RC_Schema::connection('foo')->create('users', function (Blueprint $table) {
         $table->increments('id');
     });
 
@@ -180,13 +180,13 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 若要重命名数据表，可以使用 `rename` 方法：
 
-    Schema::rename($from, $to);
+    RC_Schema::rename($from, $to);
 
 要删除数据表，可使用 `drop` 或 `dropIfExists` 方法：
 
-    Schema::drop('users');
+    RC_Schema::drop('users');
     
-    Schema::dropIfExists('users');
+    RC_Schema::dropIfExists('users');
 
 #### 重命名带外键的数据表
 
@@ -200,7 +200,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 使用 `Schema` facade 的 `table` 方法可以更新现有的数据表。如同 `create` 方法一样，`table` 方法会接受两个参数：一个是数据表的名称，另一个则是接收可以用来向表中添加字段的 `Blueprint` 实例的`闭包`：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->string('email');
     });
 
@@ -270,7 +270,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 除了上述列出的字段类型之外，还有几个可以在添加字段时使用的「修饰符」。例如，如果要把字段设置为「可空」，就使用 `nullable` 方法：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->string('email')->nullable();
     });
 
@@ -304,13 +304,13 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 `change` 方法可以将现有的字段类型修改为新的类型或修改属性。比如，你可能想增加字符串字段的长度，可以使用 `change` 方法把 `name` 字段的长度从 25 增加到 50 ：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->string('name', 50)->change();
     });
 
 将字段修改为可空：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->string('name', 50)->nullable()->change();
     });
 
@@ -321,7 +321,7 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 可以使用结构生成器上的 `renameColumn` 方法来重命名字段。在重命名字段前，请确保你的 `composer.json` 文件内已经加入 `doctrine/dbal` 依赖：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->renameColumn('from', 'to');
     });
 
@@ -332,13 +332,13 @@ Royalcms `Schema` facade对所有 Royalcms 支持的数据库系统提供了创�
 
 可以使用结构生成器上的 `dropColumn` 方法来删除字段。在从 SQLite 数据库删除字段前，你需要在 `composer.json` 文件中加入 `doctrine/dbal` 依赖并在终端执行 `composer update` 来安装该依赖：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->dropColumn('votes');
     });
 
 你可以传递一个字段数组给 `dropCloumn` 方法来删除多个字段：
 
-    Schema::table('users', function (Blueprint $table) {
+    RC_Schema::table('users', function (Blueprint $table) {
         $table->dropColumn(['votes', 'avatar', 'location']);
     });
 
@@ -388,7 +388,7 @@ Royalcms 会自动生成一个合理的索引名称，但你也可以传递第�
 
 #### 索引长度 & MySQL / MariaDB
 
-Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis」。如果你是在版本低于5.7.7 的 MySQL release 或者版本低于10.2.2 的 MariaDB release 上创建索引，那就需要你手动配置迁移生成的默认字符串长度。即在 `AppServiceProvider` 中调用 `Schema::defaultStringLength` 方法来配置它：
+Royalcms 默认使用 `utf8mb4` 字符，它支持在数据库中存储「emojis」。如果你是在版本低于5.7.7 的 MySQL release 或者版本低于10.2.2 的 MariaDB release 上创建索引，那就需要你手动配置迁移生成的默认字符串长度。即在 `AppServiceProvider` 中调用 `RC_Schema::defaultStringLength` 方法来配置它：
 
     use Royalcms\Support\Facades\Schema;
     

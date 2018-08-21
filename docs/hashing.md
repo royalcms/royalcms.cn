@@ -19,8 +19,8 @@ Royalcms `Hash` Facade提供安全的 Bcrypt 哈希保存用户密码。 如果�
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Http\Request;
-    use Royalcms\Support\Facades\Hash;
+    use Royalcms\Component\Http\Request;
+    use Royalcms\Component\Support\Facades\Hash;
     use App\Http\Controllers\Controller;
     
     class UpdatePasswordController extends Controller
