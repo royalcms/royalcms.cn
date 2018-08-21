@@ -149,7 +149,7 @@
         $this->loadMigrationsFrom(__DIR__.'/path/to/migrations');
     }
 
-完成扩展包迁移文件注册之后，在运行 `php artisan migrate` 命令时，它们就会自动被执行。你并不需要把他们导出到应用程序的 `database/migrations` 目录。
+完成扩展包迁移文件注册之后，在运行 `php royalcms migrate` 命令时，它们就会自动被执行。你并不需要把他们导出到应用程序的 `database/migrations` 目录。
 
 <a name="translations"></a>
 ### 语言包
@@ -274,7 +274,7 @@
 
 现在，当您的扩展包的用户执行 `vendor:publish` 命令时，您的 Assets 将被复制到指定的发布位置。由于每次更新包时通常都需要覆盖资源，因此您可以使用 `--force` 标志：
 
-    php artisan vendor:publish --tag=public --force
+    php royalcms vendor:publish --tag=public --force
 
 <a name="publishing-file-groups"></a>
 ## 发布群组文件

@@ -23,7 +23,7 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
 
 运行Artisan 命令 `make:middleware` 创建新的中间件：
 
-    php artisan make:middleware CheckAge
+    php royalcms make:middleware CheckAge
 
 该命令将会在 `app/Http/Middleware` 目录内新建一个 `CheckAge` 类。在这个中间件里，我们仅允许提供的参数 `age` 大于 200 的请求访问该路由。否则，我们会将用户重定向到 `home` 。
 
@@ -125,13 +125,13 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
 
 一旦在 Kernel 中定义了中间件，就可使用 `middleware` 方法将中间件分配给路由：
 
-    RC_RC_Route::get('admin/profile', function () {
+    RC_Route::get('admin/profile', function () {
         //
     })->middleware('auth');
 
 你还可以为路由分配多个中间件：
 
-    RC_RC_RC_Route::get('/', function () {
+    RC_Route::get('/', function () {
         //
     })->middleware('first', 'second');
 
@@ -139,7 +139,7 @@ Royalcms 自带了一些中间件，包括身份验证、CSRF 保护等。所有
 
     use App\Http\Middleware\CheckAge;
     
-    RC_RC_Route::get('admin/profile', function () {
+    RC_Route::get('admin/profile', function () {
         //
     })->middleware(CheckAge::class);
 
@@ -173,11 +173,11 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
 可以使用与单个中间件相同的语法将中间件组分配给路由和控制器操作。重申一遍，中间件组只是更方便地实现了一次为路由分配多个中间件。
 
-    RC_RC_Route::get('/', function () {
+    RC_Route::get('/', function () {
         //
     })->middleware('web');
     
-    RC_RC_Route::group(['middleware' => ['web']], function () {
+    RC_Route::group(['middleware' => ['web']], function () {
         //
     });
 
@@ -219,7 +219,7 @@ Royalcms 自带的 `web` 和 `api` 中间件组包含了你可能会应用到 We
 
 定义路由时通过一个 `:` 来隔开中间件名称和参数来指定中间件参数。多个参数就使用逗号分隔：
 
-    RC_RC_Route::put('post/{id}', function ($id) {
+    RC_Route::put('post/{id}', function ($id) {
         //
     })->middleware('role:editor');
 
