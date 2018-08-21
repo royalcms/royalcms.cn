@@ -4,7 +4,7 @@
 
 - [定义调度](#defining-schedules)
 
-    - [Artisan 命令调度](#scheduling-artisan-commands)
+    - [royalcms 命令调度](#scheduling-royalcms-commands)
     - [队列任务调度](#scheduling-queued-jobs)
     - [Shell 调度命令](#scheduling-shell-commands)
     - [调度频率设置](#schedule-frequency-options)
@@ -26,7 +26,7 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 使用调度器时，只需将以下 Cron 项目添加到服务器。如果你不知道如何将 Cron 项目添加到服务器，可以考虑使用 [Royalcms Forge](https://forge.Royalcms.com) 等服务来管理你的 Cron 项目：
 
 ````
-* * * * * php /path-to-your-project/artisan schedule:run >> /dev/null 2>&1
+* * * * * php /path-to-your-project/royalcms schedule:run >> /dev/null 2>&1
 ````
 
 上面这个 Cron 会每分钟调用一次 Royalcms 命令调度器。执行 `schedule:run` 命令时， Royalcms 会根据你的调度运行预定任务。
@@ -48,7 +48,7 @@ use Royalcms\Component\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
-     * 应用提供的 Artisan 命令
+     * 应用提供的 royalcms 命令
      *
      * @var array
      */
@@ -71,11 +71,11 @@ class Kernel extends ConsoleKernel
 }
 ````
 
-<a name="scheduling-artisan-commands"></a>
+<a name="scheduling-royalcms-commands"></a>
 
-### Artisan 命令调度
+### royalcms 命令调度
 
-除了计划 `Closure` 调用，你还能调度 [Artisan 命令](/docs/artisan) 和操作系统命令。举个例子，你可以给 `command` 方法传递命令名称或者类名称来调度一个 `Artisan` 命令：
+除了计划 `Closure` 调用，你还能调度 [royalcms 命令](/docs/royalcms) 和操作系统命令。举个例子，你可以给 `command` 方法传递命令名称或者类名称来调度一个 `royalcms` 命令：
 
 ````
 $schedule->command('emails:send --force')->daily();
@@ -204,7 +204,7 @@ $schedule->command('emails:send')->daily()->skip(function () {
 $schedule->command('emails:send')->withoutOverlapping();
 ````
 
-在上面这个例子中，如果没有其它 [Artisan 命令](/docs/artisan)  `emails:send` 在运行的话，此任务将于每分钟被运行一次。如果你的任务在执行时间上有很大的不同，你无法准确预测给定任务需要多长时间，`withoutOverlapping` 方法将会特别有帮助。
+在上面这个例子中，如果没有其它 [royalcms 命令](/docs/royalcms)  `emails:send` 在运行的话，此任务将于每分钟被运行一次。如果你的任务在执行时间上有很大的不同，你无法准确预测给定任务需要多长时间，`withoutOverlapping` 方法将会特别有帮助。
 
 <a name="maintenance-mode"></a>
 ### 维护模式
