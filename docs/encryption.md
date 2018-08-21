@@ -12,7 +12,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 <a name="configuration"></a>
 ## 设置
 
-在使用 Royalcms 的加密程序之前, 你必须先设置 `config/app.php` 配置文件中的 `key` 选项。运行 Artisan命令 `php artisan key:generate`，它会使用 PHP 的安全随机字节生成器来构建密钥。如果这个 key 值没有被正确设置，则所有由 Royalcms 加密的值都将是不安全的。
+在使用 Royalcms 的加密程序之前, 你必须先设置 `config/app.php` 配置文件中的 `key` 选项。运行 royalcms 命令 `php royalcms key:generate`，它会使用 PHP 的安全随机字节生成器来构建密钥。如果这个 key 值没有被正确设置，则所有由 Royalcms 加密的值都将是不安全的。
 
 <a name="using-the-encrypter"></a>
 ## 使用
@@ -26,7 +26,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
     namespace App\Http\Controllers;
     
     use App\User;
-    use Royalcms\Http\Request;
+    use Royalcms\Component\Http\Request;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -52,7 +52,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 
 加密值在加密期间通过 `serialize` 传递，这允许对象和数组的加密。因此，接收加密值的非PHP客户端将需要 `unserialize` 数据。如果想在不序列化的情况下加密和解密值，可以使用 `Crypt` Facade 的 `encryptString` 和 `decryptString` 方法：
 
-    use Royalcms\Support\Facades\Crypt;
+    use Royalcms\Component\Support\Facades\Crypt;
     
     $encrypted = Crypt::encryptString('Hello world.');
     
@@ -62,7 +62,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 
 你可以使用辅助函数 `decrypt` 来解密一个值。如果该值不能被正确解密，例如当 MAC 无效时，会抛出异常 `Royalcms\Contracts\Encryption\DecryptException`：
 
-    use Royalcms\Contracts\Encryption\DecryptException;
+    use Royalcms\Component\Contracts\Encryption\DecryptException;
     
     try {
         $decrypted = decrypt($encryptedValue);
