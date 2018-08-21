@@ -1,4 +1,4 @@
-# Royalcms 的 Artisan 命令行工具
+# Royalcms 的 royalcms 命令行工具
 
 - [简介](#introduction)
 - [编写命令](#writing-commands)
@@ -21,31 +21,31 @@
 <a name="introduction"></a>
 ## 简介
 
-Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命令来帮助你构建 Royalcms 应用。要查看所有可用的 Artisan 命令的列表，可以使用 `list` 命令：
+royalcms 是 Royalcms 自带的命令行接口，它提供了许多实用的命令来帮助你构建 Royalcms 应用。要查看所有可用的 royalcms 命令的列表，可以使用 `list` 命令：
 
-    php artisan list
+    php royalcms list
 
 每个命令包含了「帮助」界面，它会显示并概述命令的可用参数及选项。只需要在命令前面加上 `help` 即可查看命令帮助界面：
 
-    php artisan help migrate
+    php royalcms help migrate
 
 #### Royalcms REPL
 
-所有 Royalcms 应用都包含了 Tinker，一个基于 [PsySH](https://github.com/bobthecow/psysh) 包提供支持的 REPL。 `Tinker` 让你可以在命令行中与你整个的 Royalcms 应用进行交互，包括 Eloquent ORM、任务、事件等等。运行 Artisan 命令 `tinker` 进入 Tinker 环境：
+所有 Royalcms 应用都包含了 Tinker，一个基于 [PsySH](https://github.com/bobthecow/psysh) 包提供支持的 REPL。 `Tinker` 让你可以在命令行中与你整个的 Royalcms 应用进行交互，包括 Eloquent ORM、任务、事件等等。运行 royalcms 命令 `tinker` 进入 Tinker 环境：
 
-    php artisan tinker
+    php royalcms tinker
 
 <a name="writing-commands"></a>
 ## 编写命令
 
-除 Artisan 提供的命令之外，还可以构建自己的自定义命令。命令默认存储在 `app/Console/Commands` 目录，你也可以修改 `composer.json` 文件来指定你想要存放的目录。
+除 royalcms 提供的命令之外，还可以构建自己的自定义命令。命令默认存储在 `app/Console/Commands` 目录，你也可以修改 `composer.json` 文件来指定你想要存放的目录。
 
 <a name="generating-commands"></a>
 ### 生成命令
 
-要创建一个新的命令，可以使用 Artisan 命令 `make:command`。这个命令会在 `app/Console/Commands` 目录中创建一个新的命令类。 不必担心应用中不存在这个目录，因为它会在你第一次运行 Artisan 命令 `make:command` 时创建。生成的命令会包括所有命令中默认存在的属性和方法：
+要创建一个新的命令，可以使用 royalcms 命令 `make:command`。这个命令会在 `app/Console/Commands` 目录中创建一个新的命令类。 不必担心应用中不存在这个目录，因为它会在你第一次运行 royalcms 命令 `make:command` 时创建。生成的命令会包括所有命令中默认存在的属性和方法：
 
-    php artisan make:command SendEmails
+    php royalcms make:command SendEmails
 
 <a name="command-structure"></a>
 ### 命令结构
@@ -126,9 +126,9 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
         require base_path('routes/console.php');
     }
 
-虽然这个文件没有定义 HTTP 路由，它也将基于控制台的入口点（路由）定义到应用中。在这个文件中，你可以使用 `Artisan::command` 方法定义所有基于闭包的路由。`command` 方法接收两个参数：[命令签名](#defining-input-expectations) 和一个接收命令参数和选项的闭包：
+虽然这个文件没有定义 HTTP 路由，它也将基于控制台的入口点（路由）定义到应用中。在这个文件中，你可以使用 `royalcms::command` 方法定义所有基于闭包的路由。`command` 方法接收两个参数：[命令签名](#defining-input-expectations) 和一个接收命令参数和选项的闭包：
 
-    Artisan::command('build {project}', function ($project) {
+    royalcms::command('build {project}', function ($project) {
         $this->info("Building {$project}!");
     });
 
@@ -141,15 +141,15 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
     use App\User;
     use App\DripEmailer;
     
-    Artisan::command('email:send {user}', function (DripEmailer $drip, $user) {
+    royalcms::command('email:send {user}', function (DripEmailer $drip, $user) {
         $drip->send(User::find($user));
     });
 
 #### 闭包命令描述
 
-当定义一个基于闭包的命令时，你可以使用 `describe` 方法来为命令添加描述。这个描述会在你执行 `php artisan list` 或 `php artisan help` 命令时显示：
+当定义一个基于闭包的命令时，你可以使用 `describe` 方法来为命令添加描述。这个描述会在你执行 `php royalcms list` 或 `php royalcms help` 命令时显示：
 
-    Artisan::command('build {project}', function ($project) {
+    royalcms::command('build {project}', function ($project) {
         $this->info("Building {$project}!");
     })->describe('Build the project');
 
@@ -190,9 +190,9 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
      */
     protected $signature = 'email:send {user} {--queue}';
 
-在这个例子中，可以在调用Artisan命令时指定 `--queue` 开关。如果 `--queue` 开关被传递，该选项的值为 `true` ，否则为 `false` ：
+在这个例子中，可以在调用royalcms命令时指定 `--queue` 开关。如果 `--queue` 开关被传递，该选项的值为 `true` ，否则为 `false` ：
 
-    php artisan email:send 1 --queue
+    php royalcms email:send 1 --queue
 
 <a name="options-with-values"></a>
 #### 带值的选项
@@ -208,7 +208,7 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
 
 在这个例子中， 用户可以传递该选项的值，如下所示：
 
-    php artisan email:send 1 --queue=default
+    php royalcms email:send 1 --queue=default
 你可以通过在选项名称后面指定默认值来设定选项的默认值。如果用户没有传递选项值，将使用设定的默认值：
 
     email:send {user} {--queue=default}
@@ -229,13 +229,13 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
 
 调用此方法时，可以传递 `user` 参数给命令行。例如，以下命令会设置 `user` 的值为 `['foo', 'bar']` ：
 
-    php artisan email:send foo bar
+    php royalcms email:send foo bar
 
 在定义期望数组输入的选项时，传递给命令的每个选项值都应以选项名称为前缀：
 
     email:send {user} {--id=*}
     
-    php artisan email:send --id=1 --id=2
+    php royalcms email:send --id=1 --id=2
 
 <a name="input-descriptions"></a>
 ### 输入说明
@@ -378,7 +378,7 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
 <a name="registering-commands"></a>
 ## 注册命令
 
-由于在控制台内核的 `commands` 方法中调用了 `load` 方法，所以 `app/Console/Commands` 目录下的所有命令都将自动注册到 Artisan。 实际上，你可以自由地调用 `load` 方法来扫描 Artisan 命令的其他目录：
+由于在控制台内核的 `commands` 方法中调用了 `load` 方法，所以 `app/Console/Commands` 目录下的所有命令都将自动注册到 royalcms。 实际上，你可以自由地调用 `load` 方法来扫描 royalcms 命令的其他目录：
 
     /**
      * 注册应用程序的命令。
@@ -393,7 +393,7 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
         // ...
     }
 
-你还可以通过将其类名添加到 `app/Console/Kernel.php` 文件的 `$command` 属性来手动注册命令。当 Artisan 启动时，该属性中列出的所有命令将由服务容器 解析并在 Artisan 注册：
+你还可以通过将其类名添加到 `app/Console/Kernel.php` 文件的 `$command` 属性来手动注册命令。当 royalcms 启动时，该属性中列出的所有命令将由服务容器 解析并在 royalcms 注册：
 
     protected $commands = [
         Commands\SendEmails::class
@@ -402,20 +402,20 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
 <a name="programmatically-executing-commands"></a>
 ## 以编程方式执行命令
 
-有时你可能希望在 CLI 之外执行 Artisan 命令。例如，你可能希望从路由或控制器触发 Artisan 命令。你可以使用 `Artisan` facade 上的 `call` 方法来完成。 `call` 方法接受命令的名称作为第一个参数，命令参数的数组作为第二个参数。结束码会被返回：
+有时你可能希望在 CLI 之外执行 royalcms 命令。例如，你可能希望从路由或控制器触发 royalcms 命令。你可以使用 `royalcms` facade 上的 `call` 方法来完成。 `call` 方法接受命令的名称作为第一个参数，命令参数的数组作为第二个参数。结束码会被返回：
 
     RC_Route::get('/foo', function () {
-        $exitCode = Artisan::call('email:send', [
+        $exitCode = royalcms::call('email:send', [
             'user' => 1, '--queue' => 'default'
         ]);
     
         //
     });
 
-在 `Artisan` facade 上使用 `queue` 方法，可以将 Artisan 命令交由 [队列工作进程](/docs/queues) 在后台进行处理。在使用此方法之前，请确保已配置队列并运行了队列监听器：
+在 `royalcms` facade 上使用 `queue` 方法，可以将 royalcms 命令交由 [队列工作进程](/docs/queues) 在后台进行处理。在使用此方法之前，请确保已配置队列并运行了队列监听器：
 
     RC_Route::get('/foo', function () {
-        Artisan::queue('email:send', [
+        royalcms::queue('email:send', [
             'user' => 1, '--queue' => 'default'
         ]);
     
@@ -424,14 +424,14 @@ Artisan 是 Royalcms 自带的命令行接口，它提供了许多实用的命�
 
 如果需要指定不接受字符串值的选项的值，例如 `migrate：refresh` 命令中的 `--force` 标志，则可以传递 `true` 或 `false` ：
 
-    $exitCode = Artisan::call('migrate:refresh', [
+    $exitCode = royalcms::call('migrate:refresh', [
         '--force' => true,
     ]);
 
 <a name="calling-commands-from-other-commands"></a>
 ### 从其他命令调用命令
 
-有时候你希望从现有的 Artisan 命令中调用其它命令。你可以使用 `call` 方法。`call` 方法接受命令名称和命令参数的数组：
+有时候你希望从现有的 royalcms 命令中调用其它命令。你可以使用 `call` 方法。`call` 方法接受命令名称和命令参数的数组：
 
     /**
      * 执行控制台命令。
