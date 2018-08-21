@@ -29,7 +29,7 @@
     
     namespace App\Http\Controllers;
     
-    use Royalcms\Support\Facades\DB;
+    use Royalcms\Component\Support\Facades\DB;
     use App\Http\Controllers\Controller;
     
     class UserController extends Controller
@@ -73,7 +73,7 @@
 <a name="manually-creating-a-paginator"></a>
 ### 手动创建分页
 
-如果你想手动创建分页实例并且最终得到一个数组类型的结果，可以根据需求来创建 `Royalcms\Pagination\Paginator` 或者 `Royalcms\Pagination\LengthAwarePaginator` 实例来实现。
+如果你想手动创建分页实例并且最终得到一个数组类型的结果，可以根据需求来创建 `Royalcms\Component\Pagination\Paginator` 或者 `Royalcms\Component\Pagination\LengthAwarePaginator` 实例来实现。
 
 `Paginator` 类不需要知道结果集中的数据量，因此该类没有检索最后一页索引的方法。而 `LengthAwarePaginator` 接收的参数几乎和 `Paginator` 一样，但它却需要计算结果集中的数据量。
 
@@ -84,7 +84,7 @@
 <a name="displaying-pagination-results"></a>
 ## 显示分页结果
 
-在调用 `paginate` 方法时，你将会接收到一个 `Royalcms\Pagination\LengthAwarePaginator` 实例。当调用 `simplePaginate` 方法时，你将会接收到一个 `Royalcms\Pagination\Paginator` 实例。这些对象提供了一些用于渲染结果集的函数。除了这些辅助函数，分页器实例是一个迭代器，也可以作为数组循环。因此，一旦检测到结果集，你可以使用Blade模板显示结果集并渲染页面链接：
+在调用 `paginate` 方法时，你将会接收到一个 `Royalcms\Component\Pagination\LengthAwarePaginator` 实例。当调用 `simplePaginate` 方法时，你将会接收到一个 `Royalcms\Component\Pagination\Paginator` 实例。这些对象提供了一些用于渲染结果集的函数。除了这些辅助函数，分页器实例是一个迭代器，也可以作为数组循环。因此，一旦检测到结果集，你可以使用Blade模板显示结果集并渲染页面链接：
 
     <div class="container">
         @foreach ($users as $user)
@@ -121,7 +121,7 @@
 <a name="converting-results-to-json"></a>
 ### 将结果转换为 JSON
 
-Royalcms 分页器结果类实现了 `Royalcms\Contracts\Support\Jsonable` 接口契约并且提供 `toJson` 方法，因此将分页结果转换为 JSON 非常简单。你也可以在路由或控制器操作中简单地将分页实例转换为 JSON 返回：
+Royalcms 分页器结果类实现了 `Royalcms\Component\Contracts\Support\Jsonable` 接口契约并且提供 `toJson` 方法，因此将分页结果转换为 JSON 非常简单。你也可以在路由或控制器操作中简单地将分页实例转换为 JSON 返回：
 
     RC_Route::get('users', function () {
         return App\User::paginate();
@@ -163,7 +163,7 @@ Royalcms 分页器结果类实现了 `Royalcms\Contracts\Support\Jsonable` 接�
 
 自定义分页视图的制作最简单的方法是使用 `vendor:publish` 命令将它们导出到 `resources/views/vendor` 目录：
 
-    php artisan vendor:publish --tag=Royalcms-pagination
+    php royalcms vendor:publish --tag=Royalcms-pagination
 
 这个命令将这些视图放置在 `resources/views/vendor/pagination` 目录中。这个目录下的 `default.blade.php` 文件对应默认的分页视图，你可以简单地编辑这个文件来修改分页的 HTML 。
 
