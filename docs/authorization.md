@@ -280,7 +280,7 @@ Royalcms 包含一个可以在请求到达路由或控制器之前就进行动�
 <a name="via-controller-helpers"></a>
 ### 通过控制器辅助函数
 
-除了在 `User` 模型中提供辅助方法外，Royalcms 也为所有继承了 `App\Http\Controllers\Controller` 基类的控制器提供了一个有用的 `authorize` 方法。和 `can` 方法类似，这个方法接收需要授权的动作和相关的模型作为参数。如果动作不被授权，`authorize` 方法会抛出 `Royalcms\Auth\Access\AuthorizationException` 异常，然后被 Royalcms 默认的异常处理器转化为带有 `403` 状态码的 HTTP 响应：
+除了在 `User` 模型中提供辅助方法外，Royalcms 也为所有继承了 `App\Http\Controllers\Controller` 基类的控制器提供了一个有用的 `authorize` 方法。和 `can` 方法类似，这个方法接收需要授权的动作和相关的模型作为参数。如果动作不被授权，`authorize` 方法会抛出 `Royalcms\Component\Auth\Access\AuthorizationException` 异常，然后被 Royalcms 默认的异常处理器转化为带有 `403` 状态码的 HTTP 响应：
 
     <?php
     

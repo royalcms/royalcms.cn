@@ -60,7 +60,7 @@ Royalcms 的加密机制使用 OpenSSL 提供 AES-256 和 AES-128 的加密。�
 
 #### 解密一个值
 
-你可以使用辅助函数 `decrypt` 来解密一个值。如果该值不能被正确解密，例如当 MAC 无效时，会抛出异常 `Royalcms\Contracts\Encryption\DecryptException`：
+你可以使用辅助函数 `decrypt` 来解密一个值。如果该值不能被正确解密，例如当 MAC 无效时，会抛出异常 `Royalcms\Component\Contracts\Encryption\DecryptException`：
 
     use Royalcms\Component\Contracts\Encryption\DecryptException;
     
