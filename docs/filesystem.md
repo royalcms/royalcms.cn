@@ -33,9 +33,9 @@ Royalcms 提供了一个强大的文件系统抽象，这得益于 Frank de Jong
 
 `public` 磁盘适用于要公开访问的文件。默认情况下， `public` 磁盘使用 `local` 驱动，并且将这些文件存储在 `storage/app/public` 目录下。为了使它们能通过网络访问，你需要创建 `public/storage` 到 `storage/app/public` 的符号链接。这种方式能把可公开访问文件都保留在同一个目录下，以便在使用零停机时间部署系统如[Envoyer](https://envoyer.io/) 的时候，就可以轻松地在不同的部署之间共享这些文件。
 
-你可以使用 Artisan 命令 `storage:link` 来创建符号链接：
+你可以使用 royalcms 命令 `storage:link` 来创建符号链接：
 
-    php artisan storage:link
+    php royalcms storage:link
 
 当然，一旦一个文件被存储并且已经创建了符号链接，你就可以使用辅助函数 `asset` 来创建文件的 URL：
 
