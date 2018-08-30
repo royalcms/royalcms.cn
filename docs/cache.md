@@ -29,7 +29,7 @@ Royalcms 为各种后端缓存提供丰富而统一的 API，而其配置信息�
 
 #### 数据库
 
-当使用 `database` 缓存驱动时，你需要配置一个表来存放缓存数据，下面是构建缓存数据表结构的 `Schema` 声明示例：
+当使用 `database` 缓存驱动时，你需要配置一个表来存放缓存数据，下面是构建缓存数据表结构的 `RC_Schema` 声明示例：
 
 ````
 RC_Schema::create('cache', function ($table) {
@@ -81,7 +81,7 @@ RC_Schema::create('cache', function ($table) {
 
 `Royalcms\Component\Contracts\Cache\Factory` 和 `Royalcms\Component\Contracts\Cache\Repository` [contracts](/docs/contracts) 提供了 Royalcms 缓存服务的访问机制。 `Factory`  contract  为你的应用程序定义了访问所有缓存驱动的机制。 `Repository` contract 通常是由 `cache` 配置文件指定的默认缓存驱动实现的。
 
-不过，你也可以使用 `Cache` facade，我们将在后续的文档中介绍。`Cache` facade 为 Royalcms 缓存 contract 底层的实现提供了方便又简洁的方法：
+不过，你也可以使用 `RC_Cache` facade，我们将在后续的文档中介绍。`RC_Cache` facade 为 Royalcms 缓存 contract 底层的实现提供了方便又简洁的方法：
 
 ````
 <?php
@@ -108,7 +108,7 @@ class UserController extends Controller
 
 #### 访问多个缓存存储
 
-使用 `Cache` facade，你可以通过 `store` 方法来访问各种缓存存储。 传入 `store` 方法的键应该对应 `cache` 配置信息文件中的 `stores` 配置数组中所列的存储之一：
+使用 `RC_Cache` facade，你可以通过 `store` 方法来访问各种缓存存储。 传入 `store` 方法的键应该对应 `cache` 配置信息文件中的 `stores` 配置数组中所列的存储之一：
 
 ````
 $value = RC_Cache::store('file')->get('foo');
@@ -119,7 +119,7 @@ RC_Cache::store('redis')->put('bar', 'baz', 10);
 <a name="retrieving-items-from-the-cache"></a>
 ### 从缓存中获取数据
 
-`Cache`  facade 中的 `get`  方法是用来从缓存中获取数据的方法。如果该数据不存在于缓存中，则该方法返回 `null`。你也可以向 `get` 方法传递第二个参数，用来指定如果查找的数据不存在时，你希望返回的默认值：
+`RC_Cache`  facade 中的 `get`  方法是用来从缓存中获取数据的方法。如果该数据不存在于缓存中，则该方法返回 `null`。你也可以向 `get` 方法传递第二个参数，用来指定如果查找的数据不存在时，你希望返回的默认值：
 
 ````
 $value = RC_Cache::get('key');
@@ -187,7 +187,7 @@ $value = RC_Cache::pull('key');
 <a name="storing-items-in-the-cache"></a>
 ### 在缓存中存储数据
 
-你可以使用 `Cache` facade 的 `put` 方法来将数据存储到缓存中。当你在缓存中存放数据时，你需要使用第三个参数来设定缓存的过期时间：
+你可以使用 `RC_Cache` facade 的 `put` 方法来将数据存储到缓存中。当你在缓存中存放数据时，你需要使用第三个参数来设定缓存的过期时间：
 
 ````
 RC_Cache::put('key', 'value', $minutes);
@@ -239,7 +239,7 @@ RC_Cache::flush();
 <a name="the-cache-helper"></a>
 ### 辅助函数 Cache
 
-除了可以使用 `Cache` facade 或者 [cache contract](/docs/contracts)之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
+除了可以使用 `RC_Cache` facade 或者 [cache contract](/docs/contracts)之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
 
 ````
 $value = cache('key');
@@ -340,7 +340,7 @@ RC_Cache::extend('mongo', function ($app) {
 <a name="registering-the-driver"></a>
 ### 注册驱动
 
-要使用 Royalcms 来注册自定义的缓存驱动，就要在 `Cache` facade 上使用 `extend` 方法。对 `RC_Cache::extend` 的调用可以在最新的 Royalcms 应用程序中附带的 `App\Providers\AppServiceProvider` 的 `boot` 方法中完成，或者你可以创建自己的服务提供器来放置这些扩展，只是不要忘记在 `config/app.php` 中的 `providers` 数组中注册提供器：
+要使用 Royalcms 来注册自定义的缓存驱动，就要在 `RC_Cache` facade 上使用 `extend` 方法。对 `RC_Cache::extend` 的调用可以在最新的 Royalcms 应用程序中附带的 `App\Providers\AppServiceProvider` 的 `boot` 方法中完成，或者你可以创建自己的服务提供器来放置这些扩展，只是不要忘记在 `config/app.php` 中的 `providers` 数组中注册提供器：
 
 ````
 <?php
