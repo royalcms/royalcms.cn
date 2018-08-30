@@ -12,13 +12,13 @@
 <a name="introduction"></a>
 ## 简介
 
-Royalcms 的本地化功能为在应用程序中支持多种语言提供方便的方法来检索各种语言的字符串。语言字符串存储在 `resources/lang` 目录下的文件里。在此目录中，但凡应用支持的语言都应该有一个对应的子目录：
+Royalcms 的本地化功能为在应用程序中支持多种语言提供方便的方法来检索各种语言的字符串。语言字符串存储在 `content/languages` 目录下的文件里。在此目录中，但凡应用支持的语言都应该有一个对应的子目录：
 
-    /resources
-        /lang
-            /en
+    /content
+        /languages
+            /en_US
                 messages.php
-            /es
+            /zh_CN
                 messages.php
 
 所有语言文件只返回键值对数组，例如：
@@ -31,25 +31,25 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 
 ### 区域设置
 
-应用的默认语言保存在 `config/app.php` 配置文件中。你可以根据需要修改当前设置。还可以使用 `App` Facade 的 `setLocale` 方法动态地更改当前语言：
+应用的默认语言保存在 `config/system.php` 配置文件中。你可以根据需要修改当前设置。还可以使用 `Royalcms` Facade 的 `setLocale` 方法动态地更改当前语言：
 
     RC_Route::get('welcome/{locale}', function ($locale) {
-        RC_App::setLocale($locale);
+        Royalcms::setLocale($locale);
     
         //
     });
 
-你也可以设置 「备用语言」 ，它将会在当前语言不包含给定的翻译字符串时被使用。像默认语言一样，备用语言也可以在 `config/app.php` 配置文件设置：
+你也可以设置 「备用语言」 ，它将会在当前语言不包含给定的翻译字符串时被使用。像默认语言一样，备用语言也可以在 `config/system.php` 配置文件设置：
 
     'fallback_locale' => 'en',
 
 #### 确定当前语言环境
 
-你可以使用 `App` Facade 的 `getLocale` 及 `isLocale` 方法确定当前的区域设置或者检查语言环境是否为给定值：
+你可以使用 `Royalcms` Facade 的 `getLocale` 及 `isLocale` 方法确定当前的区域设置或者检查语言环境是否为给定值：
 
-    $locale = RC_App::getLocale();
+    $locale = Royalcms::getLocale();
     
-    if (RC_App::isLocale('en')) {
+    if (Royalcms::isLocale('en')) {
         //
     }
 
@@ -59,20 +59,20 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 <a name="using-short-keys"></a>
 ### 使用短键
 
-通常，翻译字符串存放在 `resources/lang` 目录下的文件里。在此目录中但凡应用支持的语言都应该有一个对应的子目录：
+通常，翻译字符串存放在 `content/languages ` 目录下的文件里。在此目录中但凡应用支持的语言都应该有一个对应的子目录：
 
-    /resources
-        /lang
-            /en
+    /content
+        /languages
+            /en_US
                 messages.php
-            /es
+            /zh_CN
                 messages.php
 
 所有语言文件只返回键值对数组，例如：
 
     <?php
     
-    // resources/lang/en/messages.php
+    // content/languages/en_US/messages.php
     
     return [
         'welcome' => 'Welcome to our application'
@@ -83,7 +83,7 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 
 对于有大量翻译需求的应用， 如果每一条翻译语句都使用 「短键」 来定义，那么当你在视图中尝试去引用这些 「短键」 的时候，很容易变得混乱。因此，Royalcms 也提供支持使用字符串的「默认」翻译作为关键字定义翻译字符串。
 
-使用翻译字符串作为键的翻译文件作为 JSON 文件存储在 `resources/lang` 目录中。例如，如果你的应用中有西班牙语翻译，你应该新建一个 `resources/lang/es.json` 文件：
+使用翻译字符串作为键的翻译文件作为 JSON 文件存储在 `content/languages` 目录中。例如，如果你的应用中有西班牙语翻译，你应该新建一个 `content/languages/en_US.json` 文件：
 
     {
         "I love programming.": "Me encanta programar."
@@ -92,7 +92,7 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 <a name="retrieving-translation-strings"></a>
 ## 检索翻译字符串
 
-你可以使用辅助函数 `__` 从语言文件中检索，`__` 方法接受翻译字符串的文件名和键值作为其第一个参数。例如，让我们检索 `resources/lang/messages.php` 语言文件中的 `welcome` 翻译字符串：
+你可以使用辅助函数 `__` 从语言文件中检索，`__` 方法接受翻译字符串的文件名和键值作为其第一个参数。例如，让我们检索 `content/languages/messages.php` 语言文件中的 `welcome` 翻译字符串：
 
     echo __('messages.welcome');
     
@@ -141,6 +141,6 @@ Royalcms 的本地化功能为在应用程序中支持多种语言提供方便�
 <a name="overriding-package-language-files"></a>
 ## 重写扩展包的语言文件
 
-部分扩展包可能会附带自己的语言文件。你可以通过在 `resources/lang/vendor/{package}/{locale}` 放置文件来重写它们，而不是直接修改扩展包的核心文件。
+部分扩展包可能会附带自己的语言文件。你可以通过在 `content/languages/vendor/{package}/{locale}` 放置文件来重写它们，而不是直接修改扩展包的核心文件。
 
-例如，你需要重写 `skyrim/hearthfire` 扩展包的英文语言文件 `messages.php` ，则需要把文件放置在 `resources/lang/vendor/hearthfire/en/messages.php` 。在这个文件中只应定义要覆盖的翻译字符串。任何没有被覆盖的翻译字符串仍将从扩展包的原始语言文件中加载。
+例如，你需要重写 `skyrim/hearthfire` 扩展包的英文语言文件 `messages.php` ，则需要把文件放置在 `content/languages/vendor/hearthfire/en/messages.php` 。在这个文件中只应定义要覆盖的翻译字符串。任何没有被覆盖的翻译字符串仍将从扩展包的原始语言文件中加载。
