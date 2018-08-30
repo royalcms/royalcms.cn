@@ -61,7 +61,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
     - [Blade 模板](/docs/blade)
     - [本地化](/docs/localization)
     - [前端指南](/docs/frontend)
-    - [编辑资源 Mix](/docs/mix)
+
 - ## 安全相关
     - [用户认证](/docs/authentication)
     - [API 认证](/docs/passport)
