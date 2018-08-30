@@ -191,7 +191,7 @@ Royalcms 包含各种各样的全局「辅助」PHP 函数，框架本身也大�
 ## 数组
 
 <a name="method-array-add"></a>
-#### `array_add()` {#collection-method .first-collection-method}
+#### `array_add()` {#collection-method}
 
 如果给定的健不在数组中，那么 `array_add` 函数将会把给定的键/值对添加到数组中：
 
