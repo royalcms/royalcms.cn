@@ -71,7 +71,6 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
     - [重置密码](/docs/passwords)
 - ## 综合话题
     - [royalcms 命令行](/docs/royalcms)
-    - [广播系统](/docs/broadcasting)
     - [缓存系统](/docs/cache)
     - [集合](/docs/collections)
     - [事件系统](/docs/events)
