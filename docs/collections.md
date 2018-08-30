@@ -145,7 +145,7 @@
 </style>
 
 <a name="method-all"></a>
-#### `all()` {#collection-method .first-collection-method}
+#### `all()` {#collection-method}
 
 `all` 方法返回该集合表示的底层 `数组`：
 
