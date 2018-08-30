@@ -429,7 +429,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 <a name="sending-mail"></a>
 ## 发送邮件
 
-要发送邮件，使用 `Mail`facade的 `to` 方法。 `to` 方法接受一个邮件地址，一个 user 实现或一个 users 集合。如果传递一个对象或集合，mailer 将自动使用 `email` 和 `name` 属性来设置邮件收件人，所以确保你的对象里有这些属性。一旦指定收件人，你可以传递一个实现到 Mailable 类的 `send` 方法：
+要发送邮件，使用 `RC_Mail`facade的 `to` 方法。 `to` 方法接受一个邮件地址，一个 user 实现或一个 users 集合。如果传递一个对象或集合，mailer 将自动使用 `email` 和 `name` 属性来设置邮件收件人，所以确保你的对象里有这些属性。一旦指定收件人，你可以传递一个实现到 Mailable 类的 `send` 方法：
 
     <?php
     
@@ -472,7 +472,7 @@ Markdown Mailable 使用 Blade 组件和 Markdown 语法的组合，允许你轻
 
 #### 将邮件消息加入队列
 
-由于发送消息会大幅延迟应用响应时间，许多开发者选择将邮件消息加入队列在后台进行发送。Royalcms 使用内置的 [统一的队列 API](/docs/queues) 来轻松完成此工作。将邮件消息加入队列，使用 `Mail` facade 的 `queue` 方法：
+由于发送消息会大幅延迟应用响应时间，许多开发者选择将邮件消息加入队列在后台进行发送。Royalcms 使用内置的 [统一的队列 API](/docs/queues) 来轻松完成此工作。将邮件消息加入队列，使用 `RC_Mail` facade 的 `queue` 方法：
 
     RC_Mail::to($request->user())
         ->cc($moreUsers)
