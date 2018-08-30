@@ -746,10 +746,6 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
                     });
     }
 
-上面的例子将会生成一条类似下面的 Slack 消息：
-
-<img src="http://royalcms.com/assets/img/slack-fields-attachment.png">
-
 #### Markdown 附件内容
 
 如果一些附件字段包含 Markdown ，您可以使用 `markdown` 方法指示 Slack 解析并将给定的附件字段显示为 Markdown 格式的文本：
