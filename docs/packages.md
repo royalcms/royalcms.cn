@@ -73,7 +73,7 @@
 
 服务提供者 是你的扩展包与 Royalcms 连接的重点。服务提供者负责绑定一些东西至 Royalcms 的服务容器并告知 Royalcms 要从哪加载扩展包的资源，例如视图、配置文件、语言包。
 
-服务提供者继承了 `Royalcms\Component\Support\ServiceProvider` 类并包含了两个方法： `register` 和 `boot`. 。基底的 `ServiceProvider` 类被放置在 Composer 的 `Royalcms/support` 扩展包，你必须将它加入至你自己的扩展包依赖中。
+服务提供者继承了 `Royalcms\Component\Support\ServiceProvider` 类并包含了两个方法： `register` 和 `boot`. 。基底的 `ServiceProvider` 类被放置在 Composer 的 `Royalcms/Component/support` 扩展包，你必须将它加入至你自己的扩展包依赖中。
 
 <a name="resources"></a>
 ## 资源文件
@@ -99,7 +99,7 @@
 
     $value = config('courier.option');
 
-> {note} 您不应在配置文件中定义闭包函数。 当用户执行 `config:cache` royalcms命令时，它们不能正确地序列化。
+> {note} 您不应在配置文件中定义闭包函数。 当用户执行 `RC_Config:cache` royalcms命令时，它们不能正确地序列化。
 
 #### 默认的扩展包配置文件
 

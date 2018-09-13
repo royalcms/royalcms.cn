@@ -124,7 +124,7 @@ Gates 也可以使用 `Class@method` 风格的回调字符串来定义，比如�
 
     php royalcms make:policy PostPolicy --model=Post
 
-> {tip} 所有授权策略会通过 Royalcms [服务容器](/docs/{{version}}/container) 解析，意指你可以在授权策略的构造器对任何需要的依赖使用类型提示，它们将会被自动注入。
+> {tip} 所有授权策略会通过 Royalcms 服务容器解析，意指你可以在授权策略的构造器对任何需要的依赖使用类型提示，它们将会被自动注入。
 
 <a name="registering-policies"></a>
 ### 注册策略
@@ -267,7 +267,7 @@ Royalcms 包含一个可以在请求到达路由或控制器之前就进行动�
         // 当前用户可以更新博客...
     })->middleware('can:update,post');
 
-在这个例子中，我们传递给 `can` 中间件 2 个参数。第一个是需要授权的动作的名称，第二个是我们希望传递给策略方法的路由参数。这里因为使用了 [隐式模型绑定](/docs/{{version}}/routing#implicit-binding)，一个 `Post` 会被传递给策略方法。如果用户不被授权访问指定的动作，这个中间件会生成带有 `403` 状态码的 HTTP 响应。
+在这个例子中，我们传递给 `can` 中间件 2 个参数。第一个是需要授权的动作的名称，第二个是我们希望传递给策略方法的路由参数。这里因为使用了 [隐式模型绑定](/docs/routing#implicit-binding)，一个 `Post` 会被传递给策略方法。如果用户不被授权访问指定的动作，这个中间件会生成带有 `403` 状态码的 HTTP 响应。
 
 #### 不需要指定模型的动作
 

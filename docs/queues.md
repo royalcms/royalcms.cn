@@ -389,7 +389,7 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 这个命令将会告诉所有队列处理器在执行完当前任务后结束进程，这样才不会有任务丢失。因为队列处理器在执行 `queue:restart` 命令时对结束进程，你应该运行一个进程管理器，比如 [Supervisor](#supervisor-configuration) 来自动重新启动队列处理器。
 
-> {tip} 队列使用 [缓存](/docs/{{version}}/cache) 来存储重新启动信号，所以在使用此功能之前，你应该确保应用程序的缓存驱动程序已正确配置。
+> {tip} 队列使用 [缓存](/docs/cache) 来存储重新启动信号，所以在使用此功能之前，你应该确保应用程序的缓存驱动程序已正确配置。
 
 <a name="job-expirations-and-timeouts"></a>
 ### 任务过期 & 超时
@@ -425,7 +425,6 @@ Supervisor 是一个 Linux 操作系统上的进程监控软件，它会在 `que
 
     sudo apt-get install supervisor
 
-> {tip} 如果自己手动配置 Supervisor 听起来有点难以应付，可以考虑使用 [Royalcms Forge](https://forge.Royalcms.com)，它能给你的 Royalcms 项目自动安装与配置 Supervisor。
 
 #### 配置 Supervisor
 

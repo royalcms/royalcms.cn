@@ -102,7 +102,7 @@ Royalcms 基于 [SwiftMailer](http://swiftmailer.org) 函数库提供了一套�
 <a name="configuring-the-view"></a>
 ### 配置视图
 
-在 `build`方法内，你可以使用 `view` 方法指定邮件的模板，以渲染邮件的内容。因为所有邮件都会使用 [Blade 模板](/docs/{{version}}/blade) 渲染内容，你能很容易的使用 Blade 模板引擎构建邮件的 HTML：
+在 `build`方法内，你可以使用 `view` 方法指定邮件的模板，以渲染邮件的内容。因为所有邮件都会使用 [Blade 模板](/docs/blade) 渲染内容，你能很容易的使用 Blade 模板引擎构建邮件的 HTML：
 
     /**
      * Build the message.

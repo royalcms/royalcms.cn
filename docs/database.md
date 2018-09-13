@@ -127,31 +127,31 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent OR
 
 除了使用 `?` 来表示参数绑定外，你也可以使用命名绑定来执行一个查询：
 
-    $results = DB::select('select * from users where id = :id', ['id' => 1]);
+    $results = RC_DB::select('select * from users where id = :id', ['id' => 1]);
 
 #### 运行插入语句
 
-可以在 `DB` facade 上使用 `insert` 方法来执行 `insert` 语句。与 `select` 一样，该方法将原生 SQL 查询作为其第一个参数，并将其绑定的数据作为第二个参数：
+可以在 `RC_DB` facade 上使用 `insert` 方法来执行 `insert` 语句。与 `select` 一样，该方法将原生 SQL 查询作为其第一个参数，并将其绑定的数据作为第二个参数：
 
-    DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
+    RC_DB::insert('insert into users (id, name) values (?, ?)', [1, 'Dayle']);
 
 #### 运行更新语句
 
  `update` 方法用于更新数据库中的现有记录。该方法会返回受该语句影响的行数：
 
-    $affected = DB::update('update users set votes = 100 where name = ?', ['John']);
+    $affected = RC_DB::update('update users set votes = 100 where name = ?', ['John']);
 
 #### 运行删除语句
 
 `delete` 方法用于删除数据库中记录。与 `update` 一样，会返回受该语句影响的行数：
 
-    $deleted = DB::delete('delete from users');
+    $deleted = RC_DB::delete('delete from users');
 
 #### 运行普通语句
 
-有些数据库语句不会返回任何值。对于这些语句，可以在 `DB` facade 上使用 `statement` 方法来操作：
+有些数据库语句不会返回任何值。对于这些语句，可以在 `RC_DB` facade 上使用 `statement` 方法来操作：
 
-    DB::statement('drop table users');
+    RC_DB::statement('drop table users');
 
 <a name="listening-for-query-events"></a>
 
@@ -197,36 +197,36 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent OR
 
 ## 数据库事务
 
-你可以在 `DB` facade 上使用 `transaction` 方法来运行数据库事务中的一组操作。如果在事务 `Closure` 中发生了异常，事务将自动回滚。而如果 `Closure` 成功执行，事务将自动被提交。也就是说，使用数据库事务，你就不需要在数据库语句执行发生异常时手动回滚或提交。
+你可以在 `RC_DB` facade 上使用 `transaction` 方法来运行数据库事务中的一组操作。如果在事务 `Closure` 中发生了异常，事务将自动回滚。而如果 `Closure` 成功执行，事务将自动被提交。也就是说，使用数据库事务，你就不需要在数据库语句执行发生异常时手动回滚或提交。
 
-    DB::transaction(function () {
-        DB::table('users')->update(['votes' => 1]);
+    RC_DB::transaction(function () {
+        RC_DB::table('users')->update(['votes' => 1]);
     
-        DB::table('posts')->delete();
+        RC_DB::table('posts')->delete();
     });
 
 #### 处理死锁
 
 传递第二个可选参数给 `transaction` 方法，该参数定义在发生死锁时应该重新尝试事务的次数。一旦尝试次数都用尽了，就会抛出一个异常：
 
-    DB::transaction(function () {
-        DB::table('users')->update(['votes' => 1]);
+    RC_DB::transaction(function () {
+        RC_DB::table('users')->update(['votes' => 1]);
     
-        DB::table('posts')->delete();
+        RC_DB::table('posts')->delete();
     }, 5);
 
 #### 手动操作事务
 
 如果你想要手动开始一个事务，并且能够完全控制回滚和提交，那么你可以在 `DB` facade 上使用 `beginTransaction` 方法：
 
-    DB::beginTransaction();
+    RC_DB::beginTransaction();
 
 可以通过 `rollBack` 方法回滚事务：
 
-    DB::rollBack();
+    RC_DB::rollBack();
 
 最后记得要通过 `commit` 方法提交事务：
 
-    DB::commit();
+    RC_DB::commit();
 
-> {tip}  `DB` facade 的事务方法也适用于 [查询语句构造器](/docs/queries) 和 [Eloquent ORM](/docs/eloquent) 的事务。
+> {tip}  `RC_DB` facade 的事务方法也适用于 [查询语句构造器](/docs/queries) 和 [Eloquent ORM](/docs/eloquent) 的事务。

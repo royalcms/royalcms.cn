@@ -42,7 +42,7 @@
 <a name="introduction"></a>
 ## 简介
 
-除了 [发送邮件](/docs/{{version}}/mail)，Royalcms 还支持通过多种频道发送通知，包括邮件、短信（通过 [Nexmo](https://www.nexmo.com/)）以及 [Slack](https://slack.com) 。通知还能存到数据库，这样就能在网页界面上显示了。
+除了 [发送邮件](/docs/mail)，Royalcms 还支持通过多种频道发送通知，包括邮件、短信（通过 [Nexmo](https://www.nexmo.com/)）以及 [Slack](https://slack.com) 。通知还能存到数据库，这样就能在网页界面上显示了。
 
 通常情况下，通知应该是简短、有信息量的消息来通知用户你的应用发生了什么。举例来说，如果你在编写一个在线交易应用，你应该会通过邮件和短信频道来给用户发送一条 「账单已付」 的通知。
 
@@ -95,7 +95,6 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 
 每个通知类都有个 `via` 方法，它决定了通知在哪个频道上发送。开箱即用的通知频道有 `mail`, `database`, `broadcast`, `nexmo`, 和 `slack` 。
 
-> {tip} 如果你想用其他的频道比如 Telegram 或者 Pusher ，可以去看下社区驱动的 [Royalcms 通知频道网站](http://Royalcms-notification-channels.com) 。
 
 `via` 方法受到一个 `$notifiable` 实例，它是接收通知的类实例。你可以用 `$notifiable` 来决定通知用哪个频道来发送：
 
