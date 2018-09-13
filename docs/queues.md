@@ -638,7 +638,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 在 `队列`facade中使用 `looping` 方法，你可以尝试在队列获取任务之前执行指定的回调方法。举个例子，你可以用闭包来回滚之前已失败任务的事务。
 
     RC_Queue::looping(function () {
-        while (DB::transactionLevel() > 0) {
-            DB::rollBack();
+        while (RC_DB::transactionLevel() > 0) {
+            RC_DB::rollBack();
         }
     });

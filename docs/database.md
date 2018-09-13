@@ -76,22 +76,22 @@ Royalcms 能使用原生 SQL、[查询构造器](/docs/queries) 和 [Eloquent OR
 
 ### 使用多个数据库连接
 
-使用多个连接时，可以通过 `DB` facade 上的 `connection` 方法访问每个连接。传递给 `connection` 方法的 `name` 应该对应于 `config/database.php` 配置信息文件中列出的连接之一：
+使用多个连接时，可以通过 `RC_DB` facade 上的 `connection` 方法访问每个连接。传递给 `connection` 方法的 `name` 应该对应于 `config/database.php` 配置信息文件中列出的连接之一：
 
-    $users = DB::connection('foo')->select(...);
+    $users = RC_DB::connection('foo')->select(...);
 
 你也可以在连接实例上使用 `getPdo` 方法访问底层的原生 PDO 实例 ：
 
-    $pdo = DB::connection()->getPdo();
+    $pdo = RC_DB::connection()->getPdo();
 
 <a name="running-queries"></a>
 
 ## 运行原生 SQL 查询
 
-配置好数据库连接后，可以使用 `DB` facade 运行查询。`DB` facade 为每种类型的查询提供了方法：`select`、`update`、`insert`、`delete` 和 `statement`。
+配置好数据库连接后，可以使用 `RC_DB` facade 运行查询。`RC_DB` facade 为每种类型的查询提供了方法：`select`、`update`、`insert`、`delete` 和 `statement`。
 #### 运行 Select 查询
 
-运行基础的查询语句，你可以使用 `DB` facade 上使用 `select` 方法:
+运行基础的查询语句，你可以使用 `RC_DB` facade 上使用 `select` 方法:
 
     <?php
     
