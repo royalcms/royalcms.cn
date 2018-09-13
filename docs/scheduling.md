@@ -23,7 +23,7 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 
 ### 启动调度器
 
-使用调度器时，只需将以下 Cron 项目添加到服务器。如果你不知道如何将 Cron 项目添加到服务器，可以考虑使用 [Royalcms Forge](https://forge.Royalcms.com) 等服务来管理你的 Cron 项目：
+使用调度器时，只需将以下 Cron 项目添加到服务器。如果你不知道如何将 Cron 项目添加到服务器，可以考虑使用“在线服务”来管理你的 Cron 项目：
 
 ````
 * * * * * php /path-to-your-project/royalcms schedule:run >> /dev/null 2>&1
@@ -41,7 +41,7 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 
 namespace App\Console;
 
-use DB;
+use RC_DB;
 use Royalcms\Component\Console\Scheduling\Schedule;
 use Royalcms\Component\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -65,7 +65,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            DB::table('recent_users')->delete();
+            RC_DB::table('recent_users')->delete();
         })->daily();
     }
 }
@@ -263,7 +263,7 @@ $schedule->command('emails:send')
 
 #### Ping 网址
 
-使用 `pingBefore` 与 `thenPing` 方法，调度器可以在任务完成之前或之后自动 ping 给定的 URL。这个方法对于通知外部服务（例如 [Royalcms Envoyer](https://envoyer.io)）你的调度任务正在开始或已经完成执行很有用：
+使用 `pingBefore` 与 `thenPing` 方法，调度器可以在任务完成之前或之后自动 ping 给定的 URL。这个方法对于通知外部服务（例如 [Envoyer](https://envoyer.io)）你的调度任务正在开始或已经完成执行很有用：
 
 ````
 $schedule->command('emails:send')
