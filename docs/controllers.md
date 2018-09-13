@@ -233,7 +233,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
      */
     public function boot()
     {
-        RC_Route::resourceVerbs([
+        Route::resourceVerbs([
             'create' => 'crear',
             'edit' => 'editar',
         ]);

@@ -101,7 +101,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Component\Support\Facades\Storage;
     
-    RC_Storage::put('avatars/1', $fileContents);
+    Storage::put('avatars/1', $fileContents);
 
 如果应用程序和多个磁盘交互，则可以使用 `Storage` facade 上的 `disk` 方法来处理特定磁盘上的文件：
 
@@ -125,7 +125,7 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Component\Support\Facades\Storage;
     
-    $url = RC_Storage::url('file1.jpg');
+    $url = Storage::url('file1.jpg');
 
 > {note} 切记，如果使用的是 `local` 驱动，则所有想被公开访问的文件都应该放在 `storage/app/public` 目录下。此外，你应该在 `public/storage` [创建一个符号链接 ](#the-public-disk) 来指向 `storage/app/public` 目录。
 
@@ -155,11 +155,11 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Royalcms\Support\Facades\Storage;
     
-    $size = RC_Storage::size('file1.jpg');
+    $size = Storage::size('file1.jpg');
 
 `lastModified` 方法返回最后一次文件被修改的 UNIX 时间戳：
 
-    $time = RC_Storage::lastModified('file1.jpg');
+    $time = Storage::lastModified('file1.jpg');
 
 <a name="storing-files"></a>
 ## 保存文件
@@ -168,9 +168,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Royalcms\Support\Facades\Storage;
     
-    RC_Storage::put('file.jpg', $contents);
+    Storage::put('file.jpg', $contents);
     
-    RC_Storage::put('file.jpg', $resource);
+    Storage::put('file.jpg', $resource);
 
 #### 自动流式传输
 
@@ -271,13 +271,13 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Royalcms\Support\Facades\Storage;
     
-    RC_Storage::put('file.jpg', $contents, 'public');
+    Storage::put('file.jpg', $contents, 'public');
 
 如果文件已经被保存，可以通过 `getVisibility` 和 `setVisibility` 方法检索和设置其可见性。
 
-    $visibility = RC_Storage::getVisibility('file.jpg');
+    $visibility = Storage::getVisibility('file.jpg');
     
-    RC_Storage::setVisibility('file.jpg', 'public')
+    Storage::setVisibility('file.jpg', 'public')
 
 <a name="deleting-files"></a>
 ## 删除文件
@@ -286,9 +286,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Royalcms\Support\Facades\Storage;
     
-    RC_Storage::delete('file.jpg');
+    Storage::delete('file.jpg');
     
-    RC_Storage::delete(['file1.jpg', 'file2.jpg']);
+    Storage::delete(['file1.jpg', 'file2.jpg']);
 
 <a name="directories"></a>
 ## 目录
@@ -299,9 +299,9 @@ Royalcms 的文件系统集成也能很好的支持 Rackspace，不过 Rackspace
 
     use Royalcms\Royalcms\Support\Facades\Storage;
     
-    $files = RC_Storage::files($directory);
+    $files = Storage::files($directory);
     
-    $files = RC_Storage::allFiles($directory);
+    $files = Storage::allFiles($directory);
 
 #### 获取目录内所有目录
 
