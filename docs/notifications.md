@@ -177,9 +177,7 @@ Royalcms 中一条通知就是一个类（通常存在 `app/Notifications` 文�
 
 > {tip} 注意我们在方法中用了 `$this->invoice->id` ，其实你可以传递应用所需要的任何数据来传递给通知的构造器。
 
-在这个例子中，我们注册了一行文本，引导链接 ，然后又是一行文本。 `MailMessage` 提供的这些方法简化了对小的事务性的邮件进行格式化操作。邮件频道将会把这些消息组件转换成漂亮的响应式的 HTML 邮件模板并附上文本。下面是个 `mail` 频道生成的邮件示例：
-
-<img src="https://Royalcms.com/assets/img/notification-example.png" width="551" height="596">
+在这个例子中，我们注册了一行文本，引导链接 ，然后又是一行文本。 `MailMessage` 提供的这些方法简化了对小的事务性的邮件进行格式化操作。邮件频道将会把这些消息组件转换成漂亮的响应式的 HTML 邮件模板并附上文本。
 
 > {tip} 发送邮件通知前，请在 `config/app.php` 中设置 `name` 值。 这将会在邮件通知消息的头部和尾部中被使用。
 
@@ -660,9 +658,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
                     ->content('One of your invoices has been paid!');
     }
 
-这个例子中，我们只发送了一行文本给 Slack，这会创建类似下面的一条消息：
-
-<img src="https://Royalcms.com/assets/img/basic-slack-notification.png">
+这个例子中，我们只发送了一行文本给 Slack。
 
 #### 自定义发件人和收件人
 
@@ -722,9 +718,7 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
                     });
     }
 
-上面这个例子将会生成一条类似下面的 Slack 消息：
 
-<img src="https://Royalcms.com/assets/img/basic-slack-attachment.png">
 
 附加项也允许你指定一个应该被展示给用户的数据的数组。给定的数据将会以表格样式展示出来，这能方便阅读：
 
@@ -751,10 +745,6 @@ Markdown 邮件通知使用 Blade 组件和Markdown语法的组合，允许您�
                                     ]);
                     });
     }
-
-上面的例子将会生成一条类似下面的 Slack 消息：
-
-<img src="https://Royalcms.com/assets/img/slack-fields-attachment.png">
 
 #### Markdown 附件内容
 
