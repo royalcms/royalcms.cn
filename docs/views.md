@@ -38,7 +38,7 @@
 
     use Royalcms\Component\Support\Facades\View;
     
-    if (RC_View::exists('emails.customer')) {
+    if (View::exists('emails.customer')) {
         //
     }
 
@@ -72,7 +72,7 @@
          */
         public function boot()
         {
-            RC_View::share('key', 'value');
+            View::share('key', 'value');
         }
     
         /**
@@ -110,12 +110,12 @@
         public function boot()
         {
             // 使用基于类的 composer...
-            RC_View::composer(
+            View::composer(
                 'profile', 'App\Http\ViewComposers\ProfileComposer'
             );
     
             // 使用基于闭包的 composers...
-            RC_View::composer('dashboard', function ($view) {
+            View::composer('dashboard', function ($view) {
                 //
             });
         }
