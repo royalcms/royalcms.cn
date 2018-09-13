@@ -26,7 +26,7 @@
 <a name="introduction"></a>
 ## 简介
 
-> {tip} Royalcms 现在为你的 Redis 队列 提供了 Horizon，一个漂亮的仪表盘和配置系统。查看完整的 [Horizon 文档](/docs/{{version}}/horizon) 了解更多信息。
+> {tip} Royalcms 现在为你的 Redis 队列 提供了 Horizon，一个漂亮的仪表盘和配置系统。
 
 Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanstalk，Amazon SQS，Redis，甚至其他基于关系型数据库的队列。队列的目的是将耗时的任务延时处理，比如发送邮件，从而大幅度缩短 Web 请求和相应的时间。
 

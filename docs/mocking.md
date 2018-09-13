@@ -270,13 +270,13 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
          */
         public function index()
         {
-            $value = RC_Cache::get('key');
+            $value = Cache::get('key');
     
             //
         }
     }
 
-我们可以通过 `shouldReceive` 方法来模拟 `Cache` facade ，此函数会返回一个 [Mockery](https://github.com/padraic/mockery) 实例，由于对 facade 的调用实际上都是由 Royalcms 的服务容器 管理的，所以 facade 能比传统的静态类表现出更好的测试便利性。接下来，让我们来模拟一下 `Cache` facade 的 `get` 方法的调用：
+我们可以通过 `shouldReceive` 方法来模拟 `RC_Cache` facade ，此函数会返回一个 [Mockery](https://github.com/padraic/mockery) 实例，由于对 facade 的调用实际上都是由 Royalcms 的服务容器 管理的，所以 facade 能比传统的静态类表现出更好的测试便利性。接下来，让我们来模拟一下 `RC_Cache` facade 的 `get` 方法的调用：
 
     <?php
     
@@ -292,7 +292,7 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
     {
         public function testGetIndex()
         {
-            RC_Cache::shouldReceive('get')
+            Cache::shouldReceive('get')
                         ->once()
                         ->with('key')
                         ->andReturn('value');
@@ -303,5 +303,5 @@ Royalcms 针对事件、任务和 facades 的模拟提供了开箱即用的辅�
         }
     }
 
-> {note} 不可以模拟 `Request` facade，测试时，如果需要传递指定的数据请使用 HTTP 辅助函数，例如 `get` 和 `post`。类似的，请在你的测试中通过调用 `Config::set` 来模拟 `Config` facade。
+> {note} 不可以模拟 `RC_Request` facade，测试时，如果需要传递指定的数据请使用 HTTP 辅助函数，例如 `get` 和 `post`。类似的，请在你的测试中通过调用 `RC_Config::set` 来模拟 `RC_Config` facade。
 

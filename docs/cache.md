@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $value = RC_Cache::get('key');
+        $value = Cache::get('key');
 
         //
     }
@@ -360,8 +360,8 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        RC_Cache::extend('mongo', function ($app) {
-            return RC_Cache::repository(new MongoStore);
+        Cache::extend('mongo', function ($app) {
+            return Cache::repository(new MongoStore);
         });
     }
 
