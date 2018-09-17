@@ -170,7 +170,7 @@ Dusk 默认会尝试自动运行 ChromeDriver。如果在你特定的系统中�
         public function testBasicExample()
         {
             $user = factory(User::class)->create([
-                'email' => 'taylor@Royalcms.com',
+                'email' => 'test@royalcms.cn',
             ]);
     
             $this->browse(function ($browser) use ($user) {
@@ -262,7 +262,7 @@ Dusk 提供了几种方法让你和当前页面元素中的显示文本、值和
 
 Dusk 提供了与表单和 input 元素交互的各种方法。首先，让我们来看看一个在 input 框中输入文本的示例：
 
-    $browser->type('email', 'taylor@Royalcms.com');
+    $browser->type('email', 'test@royalcms.cn');
 
 注意：虽然 `type` 方法可以传递 CSS 选择器作为第一个参数，但这并不是强制要求。如果传入的不是 CSS 选择器，Dusk 会尝试匹配传入值与 `name` 属性相符的 input 框，如果没找到，最后 Dusk 会尝试查找匹配传入值与 `name` 属性相符的 `textarea`。
 
