@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $value = RC_Cache::get('key');
+        $value = Cache::get('key');
 
         //
     }
@@ -239,7 +239,7 @@ RC_Cache::flush();
 <a name="the-cache-helper"></a>
 ### 辅助函数 Cache
 
-除了可以使用 `RC_Cache` facade 或者 [cache contract](/docs/contracts)之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
+除了可以使用 `RC_Cache` facade 或者 cache contract 之外，你也可以使用全局帮助函数 `cache` 来获取和保存缓存数据。当 `cache`  只接收一个字符串参数的时候，它将会返回给定键对应的值：
 
 ````
 $value = cache('key');
@@ -360,8 +360,8 @@ class CacheServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        RC_Cache::extend('mongo', function ($app) {
-            return RC_Cache::repository(new MongoStore);
+        Cache::extend('mongo', function ($app) {
+            return Cache::repository(new MongoStore);
         });
     }
 

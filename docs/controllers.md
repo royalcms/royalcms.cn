@@ -233,7 +233,7 @@ Royalcms 资源路由将典型的「CRUD」路由分配给具有单行代码的�
      */
     public function boot()
     {
-        RC_Route::resourceVerbs([
+        Route::resourceVerbs([
             'create' => 'crear',
             'edit' => 'editar',
         ]);
@@ -319,6 +319,7 @@ Royalcms 使用服务容器来解析所有的控制器。因此，你可以在�
 如果控制器方法需要从路由参数中获取输入内容，只需要在其他依赖项后列出路由参数即可。比如，如果你的路由是这样定义的：
 
     RC_Route::put('user/{id}', 'UserController@update');
+    
 你仍然可以类型提示 `Royalcms\Component\Http\Request` 并通过定义控制器方法获取 `id` 参数，如下所示：
 
     <?php

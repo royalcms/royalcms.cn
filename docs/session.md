@@ -38,7 +38,7 @@ Session `driver` 的配置选项定义了每个请求存储 Session 数据的位
 
   </div>
 
-> {tip} 数组驱动一般用于 [测试](/docs/{{version}}/testing)，并防止存储在 Session 中的数据被持久化。
+> {tip} 数组驱动一般用于 [测试](/docs/testing)，并防止存储在 Session 中的数据被持久化。
 
 <a name="driver-prerequisites"></a>
 ### 驱动之前
@@ -72,7 +72,7 @@ Royalcms 在使用 Redis 作为 Session 驱动之前，需要通过 Composer 安
 <a name="retrieving-data"></a>
 ### 获取数据
 
-Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `session` 和通过一个 `Request` 实例。首先，我们来看看通过控制器方法类型提示一个 `Request` 实例来访问 session。控制器方法依赖项会通过 Royalcms [服务容器](/docs/{{version}}/container) 自动注入：
+Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `session` 和通过一个 `Request` 实例。首先，我们来看看通过控制器方法类型提示一个 `Request` 实例来访问 session。控制器方法依赖项会通过 Royalcms [服务容器](/docs/container) 自动注入：
 
     <?php
     
@@ -254,7 +254,7 @@ Royalcms 中处理 Session 数据有两种主要方法：全局辅助函数 `ses
          */
         public function boot()
         {
-            RC_Session::extend('mongo', function ($app) {
+            Session::extend('mongo', function ($app) {
                 // Return implementation of SessionHandlerInterface...
                 return new MongoSessionStore;
             });

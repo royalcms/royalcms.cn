@@ -211,7 +211,7 @@ Royalcms 可以轻松地显示各种 HTTP 状态代码的自定义错误页面�
 <a name="logging"></a>
 ## 日志
 
-Royalcms 在强大的 [Monolog](https://github.com/seldaek/monolog) 库上提供了一个简单的抽象层。默认情况下，Royalcms 的日志文件的存储目录被配置为 `storage/logs` 。你可以使用 `Log` [facade](/docs/{{version}}/facades) 将信息写入日志：
+Royalcms 在强大的 [Monolog](https://github.com/seldaek/monolog) 库上提供了一个简单的抽象层。默认情况下，Royalcms 的日志文件的存储目录被配置为 `storage/logs` 。你可以使用 `Log` [facade](/docs/facades) 将信息写入日志：
 
     <?php
     

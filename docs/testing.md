@@ -23,13 +23,13 @@ Royalcms 天生就具有测试的基因。事实上，Royalcms 默认就支持�
 <a name="creating-and-running-tests"></a>
 ## 定义并运行测试
 
-可以使用 `make:test` Artisan 命令，创建一个测试用例：
+可以使用 `make:test` Royalcms 命令，创建一个测试用例：
 
     // 在 Feature 目录下创建一个测试类...
-    php artisan make:test UserTest
+    php royalcms make:test UserTest
     
     // 在 Unit 目录下创建一个测试类...
-    php artisan make:test UserTest --unit
+    php royalcms make:test UserTest --unit
 
 测试类生成之后，你就可以像平常使用 PHPUnit 一样来定义测试方法。要运行测试只需要在终端上运行 `phpunit` 命令即可：
 

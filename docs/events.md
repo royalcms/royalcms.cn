@@ -150,7 +150,7 @@ class SendShipmentNotification
 }
 ````
 
-> {tip} 你的事件监听器也可以在构造函数中加入任何依赖关系的类型提示。所有的事件监听器都是通过 Royalcms 的 [服务容器](/docs/{{version}}/container) 来解析的，因此所有的依赖都将会被自动注入。
+> {tip} 你的事件监听器也可以在构造函数中加入任何依赖关系的类型提示。所有的事件监听器都是通过 Royalcms 的服务容器来解析的，因此所有的依赖都将会被自动注入。
 
 #### 停止事件传播
 
@@ -159,7 +159,7 @@ class SendShipmentNotification
 <a name="queued-event-listeners"></a>
 ## 事件监听器队列
 
-如果你的监听器中要执行诸如发送邮件或者进行 HTTP 请求等比较慢的任务，你可以选择将其丢给队列处理。在开始使用监听器队列之前，请确保在你的服务器或本地开发环境中能够配置并启动 [队列](/docs/{{version}}/queues) 监听器。
+如果你的监听器中要执行诸如发送邮件或者进行 HTTP 请求等比较慢的任务，你可以选择将其丢给队列处理。在开始使用监听器队列之前，请确保在你的服务器或本地开发环境中能够配置并启动 [队列](/docs/queues) 监听器。
 
 要指定监听器启动队列，只需将 `ShouldQueue` 接口添加到监听器类。由 royalcms 命令 `event:generate` 生成的监听器已经将此接口导入到当前命名空间中，因此你可以直接使用它：
 
@@ -317,7 +317,7 @@ class OrderController extends Controller
 }
 ````
 
-> {tip} 在测试时，Royalcms [内置的测试辅助函数](/docs/{{version}}/mocking#mocking-events) 能不需要实际触发监听器就能对事件类型断言。
+> {tip} 在测试时，Royalcms [内置的测试辅助函数](/docs/mocking#mocking-events) 能不需要实际触发监听器就能对事件类型断言。
 
 <a name="event-subscribers"></a>
 ## 事件订阅者

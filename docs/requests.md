@@ -70,7 +70,7 @@
 
 #### 通过路由闭包获取请求
 
-你也可以在路由闭包中类型提示 Royalcms\Component\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
+你也可以在路由闭包中类型提示 `Royalcms\Component\Http\Request` 类。服务容器在执行时会自动将当前请求注入到闭包中：
 
     use Royalcms\Component\Http\Request;
     

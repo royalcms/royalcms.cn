@@ -19,7 +19,7 @@ Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。
         ...
     </form>
 
-包含在 `web` 中间件组里的 `VerifyCsrfToken` [中间件](/docs/{{version}}/middleware)会自动验证请求里的令牌是否与存储在会话中令牌匹配。
+包含在 `web` 中间件组里的 `VerifyCsrfToken` [中间件](/docs/middleware)会自动验证请求里的令牌是否与存储在会话中令牌匹配。
 
 #### CSRF 令牌 & JavaScript
 

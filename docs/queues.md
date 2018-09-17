@@ -26,7 +26,7 @@
 <a name="introduction"></a>
 ## 简介
 
-> {tip} Royalcms 现在为你的 Redis 队列 提供了 Horizon，一个漂亮的仪表盘和配置系统。查看完整的 [Horizon 文档](/docs/{{version}}/horizon) 了解更多信息。
+> {tip} Royalcms 现在为你的 Redis 队列 提供了 Horizon，一个漂亮的仪表盘和配置系统。
 
 Royalcms 队列为不同的后台队列服务提供统一的 API，例如 Beanstalk，Amazon SQS，Redis，甚至其他基于关系型数据库的队列。队列的目的是将耗时的任务延时处理，比如发送邮件，从而大幅度缩短 Web 请求和相应的时间。
 
@@ -389,7 +389,7 @@ Royalcms 包含一个队列处理器，当新任务被推到队列中时它能�
 
 这个命令将会告诉所有队列处理器在执行完当前任务后结束进程，这样才不会有任务丢失。因为队列处理器在执行 `queue:restart` 命令时对结束进程，你应该运行一个进程管理器，比如 [Supervisor](#supervisor-configuration) 来自动重新启动队列处理器。
 
-> {tip} 队列使用 [缓存](/docs/{{version}}/cache) 来存储重新启动信号，所以在使用此功能之前，你应该确保应用程序的缓存驱动程序已正确配置。
+> {tip} 队列使用 [缓存](/docs/cache) 来存储重新启动信号，所以在使用此功能之前，你应该确保应用程序的缓存驱动程序已正确配置。
 
 <a name="job-expirations-and-timeouts"></a>
 ### 任务过期 & 超时
@@ -425,7 +425,6 @@ Supervisor 是一个 Linux 操作系统上的进程监控软件，它会在 `que
 
     sudo apt-get install supervisor
 
-> {tip} 如果自己手动配置 Supervisor 听起来有点难以应付，可以考虑使用 [Royalcms Forge](https://forge.Royalcms.com)，它能给你的 Royalcms 项目自动安装与配置 Supervisor。
 
 #### 配置 Supervisor
 
@@ -638,7 +637,7 @@ Supervisor 的配置文件一般是放在 `/etc/supervisor/conf.d` 目录下。�
 在 `队列`facade中使用 `looping` 方法，你可以尝试在队列获取任务之前执行指定的回调方法。举个例子，你可以用闭包来回滚之前已失败任务的事务。
 
     RC_Queue::looping(function () {
-        while (DB::transactionLevel() > 0) {
-            DB::rollBack();
+        while (RC_DB::transactionLevel() > 0) {
+            RC_DB::rollBack();
         }
     });

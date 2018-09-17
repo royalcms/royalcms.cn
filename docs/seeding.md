@@ -37,7 +37,7 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
          */
         public function run()
         {
-            DB::table('users')->insert([
+            RC_DB::table('users')->insert([
                 'name' => str_random(10),
                 'email' => str_random(10).'@gmail.com',
                 'password' => bcrypt('secret'),

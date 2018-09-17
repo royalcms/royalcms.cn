@@ -33,7 +33,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 #### 从数据表中获取所有的数据
 
-你可以在 `DB` facade 上使用 `table` 方法开始查询。这个 `table` 方法为给定的表返回一个查询构造器实例，允许你在查询上链式调用更多的约束，最后使用 `get` 方法获取最终结果：
+你可以在 `RC_DB` facade 上使用 `table` 方法开始查询。这个 `table` 方法为给定的表返回一个查询构造器实例，允许你在查询上链式调用更多的约束，最后使用 `get` 方法获取最终结果：
 
     <?php
     
@@ -67,19 +67,19 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 如果你只需要从数据库表中获取一行数据，就使用 `first` 方法。这个方法将返回一个 `StdClass` 对象：
 
-    $user = DB::table('users')->where('name', 'John')->first();
+    $user = RC_DB::table('users')->where('name', 'John')->first();
     
     echo $user->name;
 
 如果你甚至不需要整行数据，就使用 `value` 方法从记录中取出单个值。该方法将直接返回字段的值：
 
-    $email = DB::table('users')->where('name', 'John')->value('email');
+    $email = RC_DB::table('users')->where('name', 'John')->value('email');
 
 #### 获取一列的值
 
 如果你想要获取包含单个字段值的集合，可以使用 `pluck` 方法。在下面的例子中，我们将取出 roles 表中 title 字段的集合：
 
-    $titles = DB::table('roles')->pluck('title');
+    $titles = RC_DB::table('roles')->pluck('title');
     
     foreach ($titles as $title) {
         echo $title;
@@ -87,7 +87,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 你也可以在返回的集合中指定字段的自定义键值：
 
-    $roles = DB::table('roles')->pluck('title', 'name');
+    $roles = RC_DB::table('roles')->pluck('title', 'name');
     
     foreach ($roles as $name => $title) {
         echo $title;
@@ -98,7 +98,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 如果你需要操作数千条数据库记录，可以考虑使用 `chunk` 方法。这个方法每次只取出一小块结果传递给 `闭包` 处理，这对于编写数千条记录的 [royalcms 命令](/docs/royalcms) 而言是非常有用的。例如，一次处理整个 `users` 表中的 100 个记录：
 
-    DB::table('users')->orderBy('id')->chunk(100, function ($users) {
+    RC_DB::table('users')->orderBy('id')->chunk(100, function ($users) {
         foreach ($users as $user) {
             //
         }
@@ -106,7 +106,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 你可以从 `闭包` 中返回 `false` 来阻止进一步的分块的处理：
 
-    DB::table('users')->orderBy('id')->chunk(100, function ($users) {
+    RC_DB::table('users')->orderBy('id')->chunk(100, function ($users) {
         // Process the records...
     
         return false;
@@ -117,13 +117,13 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 查询构造器还提供了各种聚合方法，如 `count`、 `max`、 `min`、 `avg` 和 `sum`。你可以在创建查询后调用其中的任意一个方法：
 
-    $users = DB::table('users')->count();
+    $users = RC_DB::table('users')->count();
     
-    $price = DB::table('orders')->max('price');
+    $price = RC_DB::table('orders')->max('price');
 
 当然，你也可以将这些方法和其它语句结合起来：
 
-    $price = DB::table('orders')
+    $price = RC_DB::table('orders')
                     ->where('finalized', 1)
                     ->avg('price');
 
@@ -134,25 +134,25 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 你并不会总是想从数据表中选出所有的字段，这时可使用 `select` 方法自定义一个 `select` 语句来指定查询的字段：
 
-    $users = DB::table('users')->select('name', 'email as user_email')->get();
+    $users = RC_DB::table('users')->select('name', 'email as user_email')->get();
 
 `distinct` 方法允许你强制让查询返回不重复的结果：
 
-    $users = DB::table('users')->distinct()->get();
+    $users = RC_DB::table('users')->distinct()->get();
 
 如果你已有一个查询构造器实例，并且希望在现有的 select 语句中加入一个字段，则可以使用 `addSelect` 方法：
 
-    $query = DB::table('users')->select('name');
+    $query = RC_DB::table('users')->select('name');
     
     $users = $query->addSelect('age')->get();
 
 <a name="raw-expressions"></a>
 ## 原生表达式
 
-有时候你可能需要在查询中使用原生表达式，使用 `DB::raw` 方法可以创建原生表达式：
+有时候你可能需要在查询中使用原生表达式，使用 `RC_DB::raw` 方法可以创建原生表达式：
 
-    $users = DB::table('users')
-                         ->select(DB::raw('count(*) as user_count, status'))
+    $users = RC_DB::table('users')
+                         ->select(RC_DB::raw('count(*) as user_count, status'))
                          ->where('status', '<>', 1)
                          ->groupBy('status')
                          ->get();
@@ -163,13 +163,13 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 ### 原生方法
 
-可以使用以下的方法代替 `DB::raw` 将原生表达式插入查询的各个部分。
+可以使用以下的方法代替 `RC_DB::raw` 将原生表达式插入查询的各个部分。
 
 #### `selectRaw`
 
-`selectRaw` 方法可以用来代替 `select(DB::raw(...))`。这个方法的第二个参数接受一个可选的绑定参数的数组：
+`selectRaw` 方法可以用来代替 `select(RC_DB::raw(...))`。这个方法的第二个参数接受一个可选的绑定参数的数组：
 
-    $orders = DB::table('orders')
+    $orders = RC_DB::table('orders')
                     ->selectRaw('price * ? as price_with_tax', [1.0825])
                     ->get();
 
@@ -177,7 +177,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 可以使用 `whereRaw` 和 `orWhereRaw` 方法将原生的 `where` 语句注入到查询中。这些方法接受一个可选的绑定数组作为他们的第二个参数：
 
-    $orders = DB::table('orders')
+    $orders = RC_DB::table('orders')
                     ->whereRaw('price > IF(state = "TX", ?, 100)', [200])
                     ->get();
 
@@ -185,8 +185,8 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `havingRaw` 和 `orHavingRaw` 方法可用于将原生字符串设置为 `having` 语句的值：
 
-    $orders = DB::table('orders')
-                    ->select('department', DB::raw('SUM(price) as total_sales'))
+    $orders = RC_DB::table('orders')
+                    ->select('department', RC_DB::raw('SUM(price) as total_sales'))
                     ->groupBy('department')
                     ->havingRaw('SUM(price) > 2500')
                     ->get();
@@ -195,7 +195,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `orderByRaw` 方法可用于将原生字符串设置为 `order by` 语句的值：
 
-    $orders = DB::table('orders')
+    $orders = RC_DB::table('orders')
                     ->orderByRaw('updated_at - created_at DESC')
                     ->get();
 <a name="joins"></a>
@@ -206,7 +206,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 查询构造器也可以编写 join 语句。若要执行基本的「内连接」，你可以在查询构造器实例上使用 `join` 方法。传递给 `join` 方法的第一个参数是你要需要连接的表的名称，而其它参数则用来指定连接的字段约束。你还可以在单个查询中连接多个数据表：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                 ->join('contacts', 'users.id', '=', 'contacts.user_id')
                 ->join('orders', 'users.id', '=', 'orders.user_id')
                 ->select('users.*', 'contacts.phone', 'orders.price')
@@ -216,7 +216,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 如果你想用「左连接」来代替「内连接」，请使用 `leftJoin` 方法。`leftJoin` 方法的用法和 `join` 方法一样：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                 ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
                 ->get();
 
@@ -224,7 +224,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 使用 `crossJoin` 方法和你想要交叉连接的表名来做「交叉连接」。交叉连接在第一个表和连接之间生成笛卡尔积：
 
-    $users = DB::table('sizes')
+    $users = RC_DB::table('sizes')
                 ->crossJoin('colours')
                 ->get();
 
@@ -232,7 +232,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 你也可以指定更高级的 join 语句。比如传递一个 `闭包` 作为 `join` 方法的第二个参数。此 `闭包` 接收一个 `JoinClause` 对象，从而在其中指定 `join` 语句中指定约束：
 
-    DB::table('users')
+    RC_DB::table('users')
             ->join('contacts', function ($join) {
                 $join->on('users.id', '=', 'contacts.user_id')->orOn(...);
             })
@@ -240,7 +240,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 如果你想要在连接上使用「where」风格的语句，可以在连接上使用 `where` 和 `orWhere` 方法。这些方法可以用来比较值和对应的字段：
 
-    DB::table('users')
+    RC_DB::table('users')
             ->join('contacts', function ($join) {
                 $join->on('users.id', '=', 'contacts.user_id')
                      ->where('contacts.user_id', '>', 5);
@@ -252,10 +252,10 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 查询构造器还提供了将两个查询「合并」起来的快捷方式。例如，你可以先创建一个初始查询，并使用 `union` 方法将它与第二个查询进行合并：
 
-    $first = DB::table('users')
+    $first = RC_DB::table('users')
                 ->whereNull('first_name');
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                 ->whereNull('last_name')
                 ->union($first)
                 ->get();
@@ -271,29 +271,29 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 例如，下面是一个要验证「votes」字段的值等于 100 的查询：
 
-    $users = DB::table('users')->where('votes', '=', 100)->get();
+    $users = RC_DB::table('users')->where('votes', '=', 100)->get();
 
 如果你只是想简单的校验某个字段等于指定的值，你可以直接将这个值作为第二个参数传递给 `where` 方法：
 
-    $users = DB::table('users')->where('votes', 100)->get();
+    $users = RC_DB::table('users')->where('votes', 100)->get();
 
 当然，在编写 `where` 语句时，也可以使用其它各种数据库支持的运算符：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->where('votes', '>=', 100)
                     ->get();
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->where('votes', '<>', 100)
                     ->get();
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->where('name', 'like', 'T%')
                     ->get();
 
 你也可以传递条件数组给 `where` 函数：
 
-    $users = DB::table('users')->where([
+    $users = RC_DB::table('users')->where([
         ['status', '=', '1'],
         ['subscribed', '<>', '1'],
     ])->get();
@@ -302,7 +302,7 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 你可以一起链式调用 where，也可以在查询添加中 `or` 语句。`orWhere` 方法接受与 `where` 方法相同的参数：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->where('votes', '>', 100)
                         ->orWhere('name', 'John')
                         ->get();
@@ -313,14 +313,14 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `whereBetween` 方法用来验证字段的值介于两个值之间：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereBetween('votes', [1, 100])->get();
 
 **whereNotBetween**
 
 `whereNotBetween` 方法验证字段的值不在两个值之间：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereNotBetween('votes', [1, 100])
                         ->get();
 
@@ -328,13 +328,13 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `whereIn` 方法验证字段的值在指定的数组内：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereIn('id', [1, 2, 3])
                         ->get();
 
 `whereNotIn` 方法验证字段的值不在指定的数组内：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereNotIn('id', [1, 2, 3])
                         ->get();
 
@@ -342,13 +342,13 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `whereNull` 方法验证字段的值为 `NULL`：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereNull('updated_at')
                         ->get();
 
 `whereNotNull` 方法验证字段的值不为 `NULL`：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                         ->whereNotNull('updated_at')
                         ->get();
 
@@ -356,32 +356,32 @@ Royalcms 的查询构造器使用 PDO 参数绑定来保护你的应用程序免
 
 `whereDate` 方法用于比较字段的值和日期：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereDate('created_at', '2016-12-31')
                     ->get();
 
 `whereMonth` 方法用于比较字段的值与一年的特定月份：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereMonth('created_at', '12')
                     ->get();
 
 `whereDay` 方法用于比较字段的值与特定的一个月的某一天：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereDay('created_at', '31')
                     ->get();
 
 `whereYear` 方法用于比较字段的值与特定年份：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereYear('created_at', '2016')
                     ->get();
 
 `whereTime` 方法用于比较字段的值与特定的时间：
 
 ```
-$users = DB::table('users')
+$users = RC_DB::table('users')
                 ->whereTime('created_at', '=', '11:20')
                 ->get();
 ```
@@ -390,19 +390,19 @@ $users = DB::table('users')
 
  `whereColumn` 方法用于验证两个字段是否相等：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereColumn('first_name', 'last_name')
                     ->get();
 
 还可以将比较运算符传递给该方法：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereColumn('updated_at', '>', 'created_at')
                     ->get();
 
 `whereColumn` 方法也可以传递一个包含多个条件的数组。这些条件将使用 `and` 运算符进行连接：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->whereColumn([
                         ['first_name', '=', 'last_name'],
                         ['updated_at', '>', 'created_at']
@@ -413,7 +413,7 @@ $users = DB::table('users')
 
 有时你可能需要创建更高级的 where 语句，例如「where exists」或者嵌套的参数分组。Royalcms 的查询构造器也能够处理这些。下面有一个括号内的分组约束的示例：
 
-    DB::table('users')
+    RC_DB::table('users')
                 ->where('name', '=', 'John')
                 ->orWhere(function ($query) {
                     $query->where('votes', '>', 100)
@@ -430,9 +430,9 @@ $users = DB::table('users')
 
 `whereExists` 方法允许你编写 `where exists` SQL 语句。此方法接受一个 `闭包` 参数，此闭包要接收一个查询构造器实例，让你可以定义放在「exists」语句中的查询：
 
-    DB::table('users')
+    RC_DB::table('users')
                 ->whereExists(function ($query) {
-                    $query->select(DB::raw(1))
+                    $query->select(RC_DB::raw(1))
                           ->from('orders')
                           ->whereRaw('orders.user_id = users.id');
                 })
@@ -450,11 +450,11 @@ $users = DB::table('users')
 
 Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的数据库上）。目前，本特性仅支持 MySQL 5.7+ 和 Postgres数据库。可以使用 `->` 运算符来查询 JSON 列数据：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->where('options->language', 'en')
                     ->get();
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->where('preferences->dining->meal', 'salad')
                     ->get();
 
@@ -465,7 +465,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 `orderBy` 方法允许你根据指定字段对查询结果进行排序。`orderBy` 方法的第一个参数是你想要用来排序的字段，而第二个参数控制排序的方向，可以是 `asc` 或 `desc`：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->orderBy('name', 'desc')
                     ->get();
 
@@ -473,7 +473,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 `latest` 和 `oldest` 方法允许你轻松地按日期对查询结果排序。默认情况下是对 `created_at` 字段进行排序。或者，你可以传递你想要排序的字段名称：
 
-    $user = DB::table('users')
+    $user = RC_DB::table('users')
                     ->latest()
                     ->first();
 
@@ -481,7 +481,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 `inRandomOrder` 方法可以将查询结果随机排序。例如，你可以使用这个方法获取一个随机用户：
 
-    $randomUser = DB::table('users')
+    $randomUser = RC_DB::table('users')
                     ->inRandomOrder()
                     ->first();
 
@@ -489,14 +489,14 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 `groupBy` 和 `having` 方法可用来对查询结果进行分组。`having` 方法的用法和 `where` 方法类似：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->groupBy('account_id')
                     ->having('account_id', '>', 100)
                     ->get();
 
 可以将多个参数传递给 `groupBy` 方法，按多个字段进行分组：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->groupBy('first_name', 'status')
                     ->having('account_id', '>', 100)
                     ->get();
@@ -507,11 +507,11 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
  可以使用 `skip` 和 `take` 方法来限制从查询返回的结果数量或跳过查询中给定数量的结果：
 
-    $users = DB::table('users')->skip(10)->take(5)->get();
+    $users = RC_DB::table('users')->skip(10)->take(5)->get();
 
 或者，你也可以使用 `limit` 和 `offset` 方法：
 
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->offset(10)
                     ->limit(5)
                     ->get();
@@ -523,7 +523,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
     $role = $request->input('role');
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->when($role, function ($query) use ($role) {
                         return $query->where('role_id', $role);
                     })
@@ -536,7 +536,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
     $sortBy = null;
     
-    $users = DB::table('users')
+    $users = RC_DB::table('users')
                     ->when($sortBy, function ($query) use ($sortBy) {
                         return $query->orderBy($sortBy);
                     }, function ($query) {
@@ -550,13 +550,13 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 查询构造器也提供了将记录插入数据库表的 `insert` 方法。`insert` 方法接受一个字段名和值的数组作为参数：
 
-    DB::table('users')->insert(
+    RC_DB::table('users')->insert(
         ['email' => 'john@example.com', 'votes' => 0]
     );
 
 你还可以在 `insert` 中传入一个嵌套数组向表中插入多条记录。每个数组代表要插入表中的行：
 
-    DB::table('users')->insert([
+    RC_DB::table('users')->insert([
         ['email' => 'taylor@example.com', 'votes' => 0],
         ['email' => 'dayle@example.com', 'votes' => 0]
     ]);
@@ -565,7 +565,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 若数据表存在自增的 ID，则可以使用 `insertGetId` 方法来插入记录然后获取其 ID：
 
-    $id = DB::table('users')->insertGetId(
+    $id = RC_DB::table('users')->insertGetId(
         ['email' => 'john@example.com', 'votes' => 0]
     );
 
@@ -576,7 +576,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 当然，除了在数据库中插入记录外，你也可以使用 `update` 来更新已存在的记录。`update` 方法和 `insert` 方法一样，接受包含要更新的字段及值的数组。你可以使用 `where` 语句来约束 `update` 的查询：
 
-    DB::table('users')
+    RC_DB::table('users')
                 ->where('id', 1)
                 ->update(['votes' => 1]);
 
@@ -585,7 +585,7 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 更新 JSON 字段时，应该使用 `->` 语法来访问 JSON 对象中的相应键。此操作只能在支持 JSON 字段的数据库上操作：
 
-    DB::table('users')
+    RC_DB::table('users')
                 ->where('id', 1)
                 ->update(['options->enabled' => true]);
 
@@ -596,38 +596,38 @@ Royalcms 也支持查询 JSON 类型的字段（仅在对 JSON 类型支持的�
 
 这两个方法都必须接收至少一个参数——要修改的字段。可以选择传递第二个参数来控制字段递增或递减的量：
 
-    DB::table('users')->increment('votes');
+    RC_DB::table('users')->increment('votes');
     
-    DB::table('users')->increment('votes', 5);
+    RC_DB::table('users')->increment('votes', 5);
     
-    DB::table('users')->decrement('votes');
+    RC_DB::table('users')->decrement('votes');
     
-    DB::table('users')->decrement('votes', 5);
+    RC_DB::table('users')->decrement('votes', 5);
 
 你也可以在操作过程中指定要更新的字段：
 
-    DB::table('users')->increment('votes', 1, ['name' => 'John']);
+    RC_DB::table('users')->increment('votes', 1, ['name' => 'John']);
 
 <a name="deletes"></a>
 ## Deletes
 
 查询构造器也可使用 `delete` 方法从数据表中删除记录。在调用 `delete` 方法前，还可以通过添加 `where` 语句来约束 `delete` 语句：
 
-    DB::table('users')->delete();
+    RC_DB::table('users')->delete();
     
-    DB::table('users')->where('votes', '>', 100)->delete();
+    RC_DB::table('users')->where('votes', '>', 100)->delete();
 
 如果你需要清空表，你可以使用 `truncate` 方法，这将删除所有行，并重置自动递增 ID 为零：
 
-    DB::table('users')->truncate();
+   RC_DB::table('users')->truncate();
 
 <a name="pessimistic-locking"></a>
 ## 悲观锁
 
 查询构造器也包含一些可以帮助你在 `select` 语句上实现「悲观锁定」的函数 。若要在查询中使用「共享锁」，可以使用 `sharedLock` 方法。共享锁可以防止选中的行被篡改，直到事务被提交为止：
 
-    DB::table('users')->where('votes', '>', 100)->sharedLock()->get();
+    RC_DB::table('users')->where('votes', '>', 100)->sharedLock()->get();
 
 或者，你也可以使用 `lockForUpdate` 方法。使用「更新」锁可避免行被其它共享锁修改或选取：
 
-    DB::table('users')->where('votes', '>', 100)->lockForUpdate()->get();
+    RC_DB::table('users')->where('votes', '>', 100)->lockForUpdate()->get();

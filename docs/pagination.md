@@ -53,7 +53,7 @@
 
 如果你只需要在分页视图中显示简单的「下一页」和「上一页」的链接，即不需要显示每个页码的链接，更推荐使用 `simplePaginate` 方法来执行更高效的查询：
 
-    $users = DB::table('users')->simplePaginate(15);
+    $users = RC_DB::table('users')->simplePaginate(15);
 
 <a name="paginating-eloquent-results"></a>
 ### Eloquent 模型分页

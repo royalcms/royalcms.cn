@@ -10,11 +10,11 @@
 <a name="introduction"></a>
 ## 简介
 
-> {tip} **想要快速上手此功能？** 只需在新的 Royalcms 应用中运行 `php artisan make:auth` 命令，然后在浏览器中打开 `http://your-app.dev/register`，或者给应用分配任何一个 URL。这个命令会负责构建整个身份验证系统，包括重置密码！
+> {tip} **想要快速上手此功能？** 只需在新的 Royalcms 应用中运行 `php royalcms make:auth` 命令，然后在浏览器中打开 `http://your-app.dev/register`，或者给应用分配任何一个 URL。这个命令会负责构建整个身份验证系统，包括重置密码！
 
 大部分 web 应用为用户提供了重置密码的功能。 Royalcms 并不是强迫每个应用程序都要使用这个，仅仅只是想提供方法来发送密码提醒和执行密码重置。
 
-> {note} 在使用 Royalcms 的密码重置功能之前，你的用户模型必须使用 `Royalcms\Notifications\Notifiable` trait。
+> {note} 在使用 Royalcms 的密码重置功能之前，你的用户模型必须使用 `Royalcms\Component\Notifications\Notifiable` trait。
 
 <a name="resetting-database"></a>
 ## 数据库注意事项
