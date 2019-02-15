@@ -101,3 +101,6 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
     - [浏览器测试 Dusk](/docs/dusk)
     - [数据库测试](/docs/database-testing)
     - [测试模拟器](/docs/mocking)
+
+## 相关组件
+- [royalcms/metable](/docs/metable/datatypes)
