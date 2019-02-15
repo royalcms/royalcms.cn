@@ -1,15 +1,15 @@
-## Introduction
+## 介绍
 
-Royalcms-Metable is a package for easily attaching arbitrary data to Eloquent models for Royalcms 5.
+Royalcms-Metable是一个可以轻松将任意数据附加到Royalcms 5的Eloquent模型的软件包。
 
-Features
+## 功能
 
-One-to-many polymorphic relationship allows attaching data to Eloquent models without needing to adjust the database schema.
-Type conversion system allows data of numerous different scalar and object types to be stored, queried and retrieved. See the list of supported :ref:`datatypes`.
+一对多的多态关系允许将数据附加到Eloquent模型，而无需调整数据库模式。
+类型转换系统允许存储，查询和检索多种不同标量和对象类型的数据。 请参阅支持列表：[`datatypes`](datatypes)。
 
-## Example Usage
+## 使用场景
 
-Attach some metadata to an eloquent model
+将一些元数据附加到Eloquent的模型中
 
 ```php
 <?php
@@ -17,21 +17,21 @@ $post = Post::create($this->request->input());
 $post->setMeta('color', 'blue');
 ```
 
-Query the model by its metadata
+通过元数据查询模型
 
 ```php
 <?php
 $post = Post::whereMeta('color', 'blue');
 ```
 
-Retrieve the metadata from a model
+从模型中检索元数据
 
 ```php
 <?php
 $value = $post->getMeta('color');
 ```
 
-## Documents
+## 相关文档
 
 - [Handling Meta](handling_meta)
 - [Querying Meta](querying_meta)
