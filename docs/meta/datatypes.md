@@ -129,7 +129,7 @@ $metable->setMeta('example', $serializable);
 
 ### Plain Objects
 
-Any other objects will be converted to stdClass plain objects. You can control what properties are stored by implementing the JsonSerializable interface on the class of your stored object.
+任何其他对象都将转换为stdClass普通对象。 您可以通过在存储对象的类上实现JsonSerializable接口来控制存储的属性。
 
 ```php
 <?php
@@ -137,16 +137,16 @@ $metable->setMeta('weight', new Weight(10, 'kg'));
 $weight = $metable->getMeta('weight') // stdClass($amount = 10; $unit => 'kg');
 ```
 
-##### Note
+##### 备注
 
-The Royalcms\Component\Metable\DataType\ObjectHandler class should always be the last entry the config/metable.php datatypes array, as it will accept any object, causing any handlers below it to be ignored.
+Royalcms\Component\Metable\DataType\ObjectHandler类应该始终是config/metable.php数据类型数组的最后一个条目，因为它将接受任何对象，导致其下面的任何处理程序被忽略。
 
-##### Warning
+##### 警告
 
-Royalcms-Metable uses json_encode() and json_decode() under the hood for plain object serialization. This will cause any arrays within the object's properties to be cast to a stdClass object.
+Royalcms-Metable在引擎盖下使用json_encode()和json_decode()进行普通对象序列化。 这将导致对象属性中的任何数组转换为stdClass对象。
 
 ### Adding Custom Data Types
 
-You can add support for other data types by creating a new Handler for your class, which can take care of serialization. Only objects which can be converted to a string and then rebuilt from that string should be handled.
+您可以通过为类创建新的Handler来添加对其他数据类型的支持，这可以处理序列化。 只应处理可以转换为字符串然后从该字符串重建的对象。
 
-Define a class which implements the Royalcms\Component\Metable\DataType\Handler interface and register it to the 'datatypes' array in config/metable.php. The order of the handlers in the array is important, as Laravel-Metable will iterate through them and use the first entry that returns true for the canHandleValue() method for a given value. Make sure more concrete classes come before more abstract ones.
+定义一个实现Royalcms\Component\Metable\DataType\Handler接口的类，并将其注册到config/metable.php中的'datatypes'数组。 数组中处理程序的顺序很重要，因为Royalcms-Metable将遍历它们并使用第一个为给定值的canHandleValue()方法返回true的条目。 确保在更抽象的类之前有更多具体的类。
