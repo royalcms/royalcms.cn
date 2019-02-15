@@ -28,7 +28,7 @@ $metable->setMeta('information', [
 
 ##### 警告
 
-Royalcms-Metable在引擎盖下使用json_encode（）和json_decode（）进行数组序列化。 这将导致嵌套在数组中的任何对象都被强制转换为数组。
+Royalcms-Metable在引擎盖下使用json_encode()和json_decode()进行数组序列化。 这将导致嵌套在数组中的任何对象都被强制转换为数组。
 
 ### Boolean
 
