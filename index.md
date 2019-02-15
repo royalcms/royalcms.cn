@@ -103,4 +103,4 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
     - [测试模拟器](/docs/mocking)
 
 ## 相关组件
-- [royalcms/metable](/docs/metable/datatypes)
+- [royalcms/metable](/docs/metable/index)
