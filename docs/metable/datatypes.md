@@ -1,4 +1,11 @@
-## Data Types 
+目录
+ 
+- [Meta介绍](index)
+- [Meta使用](handling_meta)
+- [Meta查询](querying_meta)
+- [Meta数据类型](datatypes)
+
+## Meta数据类型 
 
 您可以将多种不同类型的值附加到Metable模型。 Royalcms-Mediable支持的数据类型开箱即用。
 
@@ -145,7 +152,7 @@ Royalcms\Component\Metable\DataType\ObjectHandler类应该始终是config/metabl
 
 Royalcms-Metable在引擎盖下使用json_encode()和json_decode()进行普通对象序列化。 这将导致对象属性中的任何数组转换为stdClass对象。
 
-### Adding Custom Data Types
+### 添加自定义的数据类型
 
 您可以通过为类创建新的Handler来添加对其他数据类型的支持，这可以处理序列化。 只应处理可以转换为字符串然后从该字符串重建的对象。
 

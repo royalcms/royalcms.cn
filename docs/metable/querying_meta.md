@@ -1,10 +1,18 @@
-Querying Meta
+目录
+ 
+- [Meta介绍](index)
+- [Meta使用](handling_meta)
+- [Meta查询](querying_meta)
+- [Meta数据类型](datatypes)
 
-The Metable trait provides a number of query scopes to facilitate modifying queries based on the meta attached to your models
 
-Checking for Presence of a key
+## Meta查询
 
-To only return records that have a value assigned to a particular key, you can use whereHasMeta(). You can also pass an array to this method, which will cause the query to return any models attached to one or more of the provided keys.
+Metable特征提供了许多查询范围，以便于根据模型附带的元修改查询。
+
+## 检查是否存在键值
+
+要仅返回具有分配给特定键的值的记录，可以使用whereHasMeta()。 您还可以将数组传递给此方法，这将导致查询返回附加到一个或多个提供的键的任何模型。
 
 ```php
 <?php
@@ -12,14 +20,14 @@ $models = MyModel::whereHasMeta('notes')->get();
 $models = MyModel::whereHasMeta(['queued_at', 'sent_at'])->get();
 ```
 
-If you would like to restrict your query to only return models with meta for all of the provided keys, you can use whereHasMetaKeys().
+如果您希望将查询限制为仅返回包含所有提供的键的meta的模型，则可以使用whereHasMetaKeys()。
 
 ```php
 <?php
 $models = MyModel::whereHasMetaKeys(['step1', 'step2', 'step3'])->get();
 ```
 
-You can also query for records that does not contain a meta key using the whereDoesntHaveMeta(). It's signature is identical to that of ``whereHasMeta()`.
+您还可以使用whereDoesntHaveMeta()查询不包含元键的记录。 它的签名与`whereHasMeta()`的签名相同。
 
 ```php
 <?php
@@ -27,9 +35,9 @@ $models = MyModel::whereDoesntHaveMeta('notes')->get();
 $models = MyModel::whereDoesntHaveMeta(['queued_at', 'sent_at'])->get();
 ```
 
-Comparing value
+## 比较键值
 
-You can restrict your query based on the value stored at a meta key. The whereMeta() method can be used to compare the value using any of the operators accepted by the Laravel query builder's where() method.
+您可以根据存储在元键中的值来限制查询。 whereMeta()方法可用于使用Royalcms查询构建器的where()方法接受的任何运算符来比较值。
 
 ```php
 <?php
@@ -45,14 +53,14 @@ $models = MyModel::whereMeta('summary', 'like', '%bacon%')->get();
 //etc.
 ```
 
-The whereMetaIn() method is also available to find records where the value is matches one of a predefined set of options.
+whereMetaIn()方法也可用于查找值与预定义选项集之一匹配的记录。
 
 ```php
 <?php
 $models = MyModel::whereMetaIn('country', ['CAN', 'USA', 'MEX']);
 ```
 
-The whereMeta() and whereMetaIn() methods perform string comparison (lexicographic ordering). Any non-string values passed to these methods will be serialized to a string. This is useful for evaluating equality (=) or inequality (<>), but may behave unpredictably with some other operators for non-string data types.
+whereMeta()和whereMetaIn()方法执行字符串比较（词典排序）。 传递给这些方法的任何非字符串值都将序列化为字符串。 这对于评估等式（=）或不等式（<>）很有用，但对于非字符串数据类型可能与其他一些运算符不可预测。
 
 ```php
 <?php
@@ -64,7 +72,7 @@ $model->setMeta('letters', ['a', 'b', 'c']);
 $model = MyModel::whereMeta('letters', ['a', 'b', 'c'])->first();
 ```
 
-Depending on the format of the original data, it may be possible to compare against subsets of the data using the SQL like operator and a string argument.
+根据原始数据的格式，可以使用SQL like运算符和字符串参数来比较数据的子集。
 
 ```php
 <?php
@@ -75,16 +83,16 @@ $model->setMeta('letters', ['a', 'b', 'c']);
 $model = MyModel::whereMeta('letters', 'like', '%"b"%' )->first();
 ```
 
-When comparing integer or float values with the <, <=, >= or > operators, use the whereMetaNumeric() method. This will cast the values to a number before performing the comparison, in order to avoid common pitfalls of lexicographic ordering (e.g. '11' is greater than '100').
+将整数或浮点值与<，<=，> =或>运算符进行比较时，请使用whereMetaNumeric()方法。 这将在执行比较之前将值转换为数字，以避免词典排序的常见缺陷（例如，'11'大于'100'）。
 
 ```php
 <?php
 $models = MyModel::whereMetaNumeric('counter', '>', 42)->get();
 ```
 
-Ordering results
+## 结果排序
 
-You can apply an order by clause to the query to sort the results by the value of a meta key.
+您可以将order by子句应用于查询，以按元键的值对结果进行排序。
 
 ```php
 <?php
@@ -95,9 +103,9 @@ $models = MyModel::orderByMeta('nickname', 'asc')->get();
 $models = MyModel::orderByMetaNumeric('score', 'desc')->get();
 ```
 
-By default, all records matching the rest of the query will be ordered. Any records which have no meta assigned to the key being sorted on will be considered to have a value of null.
+默认情况下，将对与查询的其余部分匹配的所有记录进行排序。 没有分配给要排序的键的元数据的任何记录将被视为具有null值。
 
-To automatically exclude all records that do not have meta assigned to the sorted key, pass true as the third argument. This will perform an inner join instead of a left join when sorting.
+要自动排除未分配给排序键的所有记录，请将true作为第三个参数传递。 这将在排序时执行内部联接而不是左联接。
 
 ```php
 <?php
@@ -109,10 +117,10 @@ $models = MyModel::whereHasMeta('score')
     ->orderByMetaNumeric('score', 'desc')->get();
 ```
 
-A Note on Optimization
+## 关于优化的记录
 
-Royalcms-Metable is intended a convenient means for handling data of many different shapes and sizes. It was designed for dealing with data that only a subset of all models in a table would have any need for.
+Royalcms-Metable是处理许多不同形状和大小数据的便捷方式。 它被设计用于处理只有表中所有模型的子集才有需要的数据。
 
-For example, you have a Page model with a template field and each template needs some number of additional fields to modify how it displays. If you have X templates which each have up to Y fields, adding all of these as columns to pages table will quickly get out of hand. Instead, appending these template fields to the Page model as meta can make handling this use case trivial.
+例如，您有一个带有模板字段的页面模型，每个模板都需要一些额外的字段来修改它的显示方式。 如果你有X模板，每个模板最多有Y个字段，那么将所有这些作为列添加到页面表将很快失控。 相反，将这些模板字段作为元素附加到Page模型可以使处理此用例变得微不足道。
 
-Royalcms-Metable makes it very easy to append just about any data to your models. However, for sufficiently large data sets or data that is queried very frequently, it will often be more efficient to use regular database columns instead in order to take advantage of native SQL data types and indexes. The optimal solution will depend on your use case.
+Royalcms-Metable可以很容易地将任何数据附加到您的模型中。 但是，对于足够大的数据集或经常查询的数据，使用常规数据库列通常会更有效，以便利用本机SQL数据类型和索引。 最佳解决方案取决于您的使用案例。

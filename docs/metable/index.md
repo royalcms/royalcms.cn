@@ -33,6 +33,6 @@ $value = $post->getMeta('color');
 
 ## 相关文档
 
-- [Handling Meta](handling_meta)
-- [Querying Meta](querying_meta)
-- [Data Types](datatypes)
+- [Meta使用](handling_meta)
+- [Meta查询](querying_meta)
+- [Meta数据类型](datatypes)
