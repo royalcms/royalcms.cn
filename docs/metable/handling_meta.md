@@ -1,6 +1,6 @@
-Handling Meta
+## 元数据使用
 
-before you can attach meta to an Eloquent model, you must first add the Metable trait to your Eloquent model.
+在将meta附加到Eloquent模型之前，必须先将Metable特征添加到您的Eloquent模型中。
 
 ```php
 <?php
@@ -18,16 +18,16 @@ class Page extends Model
 }
 ```
 
-Attaching Meta
+## 添加元数据
 
-Attach meta to a model with the setMeta() method. The method accepts two arguments: a string to use as a key and a value. The value argument will accept a number of different inputs, which will be converted to a string for storage in the database. See the list of a supported :ref:`datatypes`.
+使用setMeta()方法将meta附加到模型。 该方法接受两个参数：用作键的字符串和值。 value参数将接受许多不同的输入，这些输入将转换为字符串以存储在数据库中。 请参阅支持的列表：`datatypes`。
 
 ```php
 <?php
 $model->setMeta('key', 'value');
 ```
 
-To set multiple meta key and value pairs at once, you can pass an associative array or collection to syncMeta().
+要一次设置多个元键和值对，可以将关联数组或集合传递给syncMeta()。
 
 ```php
 <?php
@@ -37,9 +37,9 @@ $model->syncMeta([
 ]);
 ```
 
-Retrieving Meta
+## 检索元数据
 
-You can retrieve the value of the meta at a given key with the getMeta() method. The value should be returned in the same format that it was stored. For example, if an array is set, you will receive an array back when retrieving it.
+您可以使用getMeta()方法检索给定键的元数值。 应以与存储的格式相同的格式返回该值。 例如，如果设置了数组，则在检索数组时将返回一个数组。
 
 ```php
 <?php
@@ -54,38 +54,39 @@ $model = $model->fresh();
 $age = $model->getMeta('age'); //returns an integer
 $approved = $model->getMeta('approved'); //returns a boolean
 $accessDate = $model->getMeta('accessed_at'); //returns a Carbon instance
-```
 
 //etc.
-You may pass a second parameter to the method in order to specify a default value to return if no meta had been set at that key.
+```
+
+您可以将第二个参数传递给方法，以指定在该键未设置元数据时返回的默认值。
 
 ```php
 <?php
 $model->getMeta('status', 'draft');
 ```
 
-Note
+##### 备注
 
-If a falsey value (e.g. 0, false, null, '') has been manually set for the key, that value will be returned instead of the default value. The default value will only be returned if no meta exists at the key.
+如果已为该键手动设置了falsey值（例如0，false，null，''），则将返回该值而不是默认值。 仅当元键值中不存在元时，才会返回默认值。
 
-Once loaded, all meta attached to a model instance are cached in the model's meta relationship. As such, successive calls to getMeta() will not hit the database repeatedly.
+一次加载后，附加到模型实例的所有元都将缓存在模型的元关系中。 因此，对getMeta()的连续调用不会重复命中数据库。
 
-Similarly, the unserialized value of each meta is cached once accessed. This is particularly relevant for attached :ref:`eloquent_models` and similar database-dependant objects.
+类似地，每个元的反序列化值一旦被访问就被缓存。 这对于附加：`eloquent_models`和类似的依赖于数据库的对象特别相关。
 
-Setting a new value for a key automatically updates all caches.
+为元键值设置新值会自动更新所有缓存。
 
-Retrieving All Meta
+## 检索所有元数据
 
-To retrieve a collection of all meta attached to a model, expressed as key and value pairs, use getAllMeta().
+要检索附加到模型的所有元的集合（表示为键和值对），请使用getAllMeta()。
 
 ```php
 <?php
 $meta = $model->getAllMeta();
 ```
 
-Checking For Presence of Meta
+## 检查元数据存在
 
-You can check if a value has been assigned to a given key with the hasMeta() method.
+您可以使用hasMeta()方法检查是否已将值分配给给定键。
 
 ```php
 <?php
@@ -94,27 +95,27 @@ if ($model->hasMeta('background-color')) {
 }
 ```
 
-Note
+##### 备注
 
-This method will return true even if a falsey value (e.g. 0, false, null, '') has been manually set for the key.
+即使已为该键手动设置了falsey值（例如0，false，null，''），此方法也将返回true。
 
-Deleting Meta
+## 删除元数据
 
-To remove the meta stored at a given key, use removeMeta().
+要删除存储在给定键中的元数据，请使用removeMeta()。
 
 ```php
 <?php
 $model->removeMeta('prefered_language');
 ```
 
-To Remove all meta from a model, use purgeMeta().
+要从模型中删除所有元数据，请使用purgeMeta()。
 
 ```php
 <?php
 $model->purgeMeta();
 ```
 
-Attached meta is automatically purged from the database when a Metable model is manually deleted. Meta will not be cascaded if the model is deleted by the query builder.
+手动删除Metable模型时，会自动从数据库中清除附加的元数据。 如果查询构建器删除了模型，则不会级联Meta。
 
 ```php
 <?php
@@ -122,25 +123,25 @@ $model->delete(); // will delete attached meta
 MyModel::where(...)->delete() // will NOT delete attached meta
 ```
 
-Eager Loading Meta
+## 加载元数据
 
-When working with collections of Metable models, be sure to eager load the meta relation for all instances together to avoid repeated database queries (i.e. N+1 problem).
+使用Metable模型的集合时，请务必将所有实例的元关系一起加载，以避免重复的数据库查询（即N + 1问题）。
 
-Eager load from the query builder:
+来自查询构建器的即时加载：
 
 ```php
 <?php
 $models = MyModel::with('meta')->where(...)->get();
 ```
 
-Lazy eager load from an Eloquent collection:
+来自Eloquent系列的懒人加载：
 
 ```php
 <?php
 $models->load('meta');
 ```
 
-You can also instruct your model class to always eager load the meta relationship by adding 'meta' to your model's $with property.
+您还可以通过向模型的$with属性添加“meta”来指示模型类始终急切加载元关系。
 
 ```php
 <?php
