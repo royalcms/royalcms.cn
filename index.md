@@ -212,7 +212,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 
 
 
-**[5.x 版本文档看](docs/5.x/index.md)**
+**[Royalcms 5.x 版本文档看此](docs/5.x/index.md)**
 
 
 
