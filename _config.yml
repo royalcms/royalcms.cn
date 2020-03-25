@@ -1,6 +1,9 @@
 theme: jekyll-theme-hacker
 
-webrick:
-  headers:
-    My-Header: Royalcms Open Source Component
-    My-Other-Header: An PHP Components.
+title: Royalcms Open Source Component
+name: royalcms
+description: An PHP Components.
+
+github: https://github.com/royalcms/royalcms-framework
+rss: true
+
