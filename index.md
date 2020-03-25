@@ -40,9 +40,9 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 
 ### Royalcms 目录结构：
 
-	.															根目录
-	├── content										功能模块目录
-	│   ├── apps									应用模块目录
+	.                             根目录
+	├── content                   功能模块目录
+	│   ├── apps                  应用模块目录
 	│   │   ├── achievement				
 	│   │   ├── adsense
 	│   │   ├── affiliate
@@ -83,7 +83,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── toutiao
 	│   │   ├── user
 	│   │   └── visual
-	│   ├── bootstrap						启动入口文件
+	│   ├── bootstrap           启动入口文件
 	│   │   ├── autoload.php
 	│   │   ├── cache
 	│   │   ├── classalias.php
@@ -91,7 +91,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── console.php
 	│   │   ├── kernel.php
 	│   │   └── royalcms.php
-	│   ├── configs							配置文件
+	│   ├── configs             配置文件
 	│   │   ├── api.php
 	│   │   ├── bundles.php
 	│   │   ├── cache.php
@@ -118,13 +118,13 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── storage.php
 	│   │   ├── system.php
 	│   │   └── upload.php
-	│   ├── database							数据迁移文件
+	│   ├── database              数据迁移文件
 	│   │   └── migrations
-	│   ├── kernel								内核文件
+	│   ├── kernel                内核文件
 	│   │   ├── Console
 	│   │   ├── Exceptions
 	│   │   └── Http
-	│   ├── plugins								插件目录
+	│   ├── plugins               插件目录
 	│   │   ├── captcha_royalcms
 	│   │   ├── login_mobile
 	│   │   ├── pay_alipay
@@ -157,15 +157,15 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── sms_messagebird
 	│   │   ├── ucenter
 	│   │   └── ueditor
-	│   ├── resources							资源目录
+	│   ├── resources             资源目录
 	│   │   └── components
-	│   ├── routes								路由目录
+	│   ├── routes                路由目录
 	│   │   ├── bootstrap.php
 	│   │   ├── command.php
 	│   │   ├── global.php
 	│   │   ├── local.php
 	│   │   └── routes.php
-	│   ├── system								管理后台目录
+	│   ├── system                管理后台目录
 	│   │   ├── apis
 	│   │   ├── classes
 	│   │   ├── configs
@@ -176,7 +176,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── smarty
 	│   │   ├── statics
 	│   │   └── templates
-	│   ├── tests									测试用例目录
+	│   ├── tests                 测试用例目录
 	│   │   ├── ApiTest
 	│   │   ├── Bootstrap.php
 	│   │   ├── CreatesApplication.php
@@ -185,30 +185,30 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 	│   │   ├── FrameworkTest
 	│   │   ├── TestCase.php
 	│   │   └── Unit
-	│   └── uploads								附件上传目录
+	│   └── uploads               附件上传目录
 	│       └── data
-	├── sites											多站点目录
-	│   ├── admincp								管理后台入口
+	├── sites                     多站点目录
+	│   ├── admincp               管理后台入口
 	│   │   └── index.php
-	│   ├── api										API站点
+	│   ├── api                   API站点
 	│   │   ├── content
 	│   │   ├── index.php
 	│   │   └── notify
-	│   ├── app										APP站点
+	│   ├── app                   APP站点
 	│   │   ├── content
 	│   │   └── index.php
-	│   ├── cron									计划任务站点
+	│   ├── cron                  计划任务站点
 	│   │   ├── content
-	│   │   ├── ecjia							命令行工具
+	│   │   ├── ecjia             命令行工具
 	│   │   ├── index.php			
 	│   │   └── vendor
-	│   └── testapi								API测试工具
+	│   └── testapi               API测试工具
 	│       ├── content
 	│       └── index.php
-	├── vendor  									框架目录
-	├── index.php									入口文件
-	├── phpunit.php								单元测试入口
-	├── phpunit.xml								单元测试配置文件
+	├── vendor                    框架目录
+	├── index.php                 入口文件
+	├── phpunit.php               单元测试入口
+	├── phpunit.xml               单元测试配置文件
 
 
 
