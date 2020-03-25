@@ -3,6 +3,7 @@ theme: jekyll-theme-hacker
 title: Royalcms Open Source Component
 name: royalcms
 description: An PHP Components.
+locale: zh_CN
 
 github: https://github.com/royalcms/royalcms-framework
 rss: true
