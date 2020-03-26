@@ -12,15 +12,15 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Component\Database\Eloquent
 默认情况下 Eloquent 返回的都是一个 `Royalcms\Component\Database\Eloquent\Collection` 对象的实例，包括通过 `get` 方法检索或通过访问关联关系获取到的结果。Eloquent 的集合对象继承了 Royalcms 的 [集合基类](/docs/collections)，因此它自然也继承了数十种能优雅地处理 Eloquent 模型底层数组的方法。
 
 当然，所有的集合都可以作为迭代器，可以就像简单的 PHP 数组一样来遍历它们：
-
+```
     $users = App\User::where('active', 1)->get();
     
     foreach ($users as $user) {
         echo $user->name;
     }
-
+```
 然而，集合比数组更加强大，它通过更直观的接口暴露出可链式调用的 map/reduce 等操作。举个例子，我们要删除模型中所有未激活的并收集剩余用户的名字：
-
+```
     $users = App\User::where('active', 1)->get();
     
     $names = $users->reject(function ($user) {
@@ -29,7 +29,7 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Component\Database\Eloquent
     ->map(function ($user) {
         return $user->name;
     });
-
+```
 > {note} 大多数 Eloquent 集合方法会返回新的 Eloquent 集合实例，但是 `pluck`, `keys`, `zip`, `collapse`, `flatten` 和 `flip` 方法除外，它们会返回 [集合基类](/docs/collections) 实例。同样，如果 `map` 操作返回的集合不包含任何 Eloquent 模型，那么它会被自动转换成集合基类。
 
 
@@ -140,7 +140,7 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Component\Database\Eloquent
 
 
 如果你需要在自己的扩展方法中使用自定义的 `Collection` 对象，可以在你自己的模型中重写 `newCollection` 方法：
-
+```
     <?php
     
     namespace App;
@@ -161,5 +161,5 @@ Eloquent 返回的所有多结果集都是 `Royalcms\Component\Database\Eloquent
             return new CustomCollection($models);
         }
     }
-
+```
 一旦你定义了 `newCollection` 方法，任何时候都可以在 Eloquent 返回的模型的 `Collection` 实例中获取你的自定义集合实例。如果你想要在应用程序的每个模型中使用自定义集合，则应该在所有的模型继承的模型基类中重写 `newCollection` 方法。

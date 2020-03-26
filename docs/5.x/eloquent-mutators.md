@@ -23,7 +23,7 @@
 ### 定义一个访问器
 
 若要定义一个访问器，则须在你的模型上创建一个 `getFooAttribute` 方法。要访问的 `Foo` 字段需使用「驼峰式」来命名。在这个例子中，我们将为 `first_name` 属性定义一个访问器。当 Eloquent 尝试获取 `first_name` 的值时，将会自动调用此访问器：
-
+```
     <?php
     
     namespace App;
@@ -43,18 +43,18 @@
             return ucfirst($value);
         }
     }
-
+```
 如你所见，字段的原始值被传递到访问器中，允许你对它进行处理并返回结果。如果想获取被修改后的值，你可以在模型实例上访问 `first_name` 属性：
-
+```
     $user = App\User::find(1);
     
     $firstName = $user->first_name;
-
+```
 <a name="defining-a-mutator"></a>
 ### 定义一个修改器
 
 若要定义一个修改器，则须在模型上定义一个 `setFooAttribute` 方法。要访问的 `Foo` 字段需使用「驼峰式」来命名。让我们再来定义 `first_name` 属性的修改器。当我们尝试在模型上设置 `first_name` 的值时，该修改器将被自动调用：
-
+```
     <?php
     
     namespace App;
@@ -74,20 +74,20 @@
             $this->attributes['first_name'] = strtolower($value);
         }
     }
-
+```
 修改器会获取属性已经被设置的值，允许你操作该值并将其设置到 Eloquent 模型内部的 `$attributes` 属性上。举个例子，如果我们尝试将 `first_name` 属性设置成 `Sally`：
-
+```
     $user = App\User::find(1);
     
     $user->first_name = 'Sally';
-
+```
 在这个例子中，`setFirstNameAttribute` 方法在调用的时候会接收 `Sally` 这个值作为参数。接着修改器会使用 `strtolower` 函数并将其值设置到内部的 `$attributes` 数组。
 
 <a name="date-mutators"></a>
 ## 日期转换器
 
 默认情况下，Eloquent 将会把 `created_at` 和 `updated_at` 字段转换成 [Carbon](https://github.com/briannesbitt/Carbon) 实例，它继承了 PHP 原生的 DateTime 类，并提供了各种有用的方法。你可以通过重写模型的 `$dates` 属性，自行定义哪些日期类型字段会被自动转换，或者完全禁止所有日期类型字段的转换：
-
+```
     <?php
     
     namespace App;
@@ -107,25 +107,25 @@
             'deleted_at'
         ];
     }
-
+```
 当某个字段被认为是日期格式时，你或许想将其数值设置成一个 UNIX 时间戳、日期字符串（`Y-m-d`）、日期时间（ `date-time` ）字符串，当然还有 `DateTime` 或 `Carbon` 实例，并且让日期值自动正确地保存到你的数据库中：
-
+```
     $user = App\User::find(1);
     
     $user->deleted_at = Carbon::now();
     
     $user->save();
-
+```
 就如上面所说的，当获取到的属性包含在 `$dates` 属性时，都将会自动转换成 [Carbon](https://github.com/briannesbitt/Carbon) 实例，允许你在属性上使用任意的 `Carbon` 方法：
-
+```
     $user = App\User::find(1);
     
     return $user->deleted_at->getTimestamp();
-
+```
 #### 日期格式
 
 默认情况下，时间戳将会以 `'Y-m-d H:i:s'` 的形式格式化。如果你想要自定义自己的时间戳格式，可在模型中设置 `$dateFormat` 属性。该属性决定了日期属性应以何种格式被保存到数据表中，以及当模型被序列化成数组或是 JSON 格式时，这些日期属性以何种格式被保存：
-
+```
     <?php
     
     namespace App;
@@ -141,7 +141,7 @@
          */
         protected $dateFormat = 'U';
     }
-
+```
 <a name="attribute-casting"></a>
 ## 属性类型转换
 
@@ -161,7 +161,7 @@
 + timestamp
 
 例如，让我们转换 `is_admin` 属性，将整数（`0` 或 `1`）转换为布尔值：
-
+```
     <?php
     
     namespace App;
@@ -179,20 +179,20 @@
             'is_admin' => 'boolean',
         ];
     }
-
+```
 现在当你访问 `is_admin` 属性时，它将会被转换成布尔值类型，即便保存在数据库里的的值是一个整数类型：
-
+```
     $user = App\User::find(1);
     
     if ($user->is_admin) {
         //
     }
-
+```
 <a name="array-and-json-casting"></a>
 ### 数组 & JSON 转换
 
 如果一个字段是以被序列化的 JSON 来存储在数据库中, `array` 类型转换将会非常有用。例如，当你在 Eloquent 模型上访问的某个属性在数据库里是一个 `JSON` 或 `TEXT` 字段类型，它包含了被序列化的 JSON，而且你对该字段添加了 `array` 类型转换，那么它将会自动反序列化成一个 PHP 数组：
-
+```
     <?php
     
     namespace App;
@@ -210,9 +210,9 @@
             'options' => 'array',
         ];
     }
-
+```
 一旦类型转换被定义，你就可以访问 `options` 属性，它将会自动把 JSON 反序列化成一个 PHP 数组。当你设置 `options` 属性的值时，接收到的数组将会被自动序列化成 JSON 以便进行保存：
-
+```
     $user = App\User::find(1);
     
     $options = $user->options;
@@ -222,3 +222,4 @@
     $user->options = $options;
     
     $user->save();
+```

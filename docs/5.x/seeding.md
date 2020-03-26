@@ -22,7 +22,7 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
 > {tip} 在数据填充期间，[批量赋值保护](https://Royalcms.com/docs/5.5/eloquent#mass-assignment) 会自动禁用。
 
 如下所示，在默认的 `DatabaseSeeder` 类中的 `run` 方法中添加一条数据插入语句：
-
+```
     <?php
     
     use Royalcms\Component\Database\Seeder;
@@ -44,14 +44,14 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
             ]);
         }
     }
-
+```
 <a name="using-model-factories"></a>
 ### 使用模型工厂
 
 手动为每个模型填充指定属性很麻烦。作为替代方案，你可以使用 [模型工厂](/docs/database-testing#writing-factories) 来轻松地生成大量数据库数据。首先，阅读 [模型工厂文档](/docs/database-testing#writing-factories) 来学习如何使用工厂，然后就可以使用 `factory` 这个辅助函数来向数据库中插入数据。
 
 例如，创建 50 个用户并为每个用户创建关联：
-
+```
     /**
      * 运行数据库填充
      *
@@ -63,12 +63,12 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
             $u->posts()->save(factory(App\Post::class)->make());
         });
     }
-
+```
 <a name="calling-additional-seeders"></a>
 ### 调用其他 Seeders
 
 在 `DatabaseSeeder` 类中，你可以使用 `call` 方法来运行其他的 seed 类。使用 `call` 方法可以将数据填充拆分成多个文件，这样就不会使单个 seeder 变得非常大。只需简单传递要运行的 seeder 类名称即可：
-
+```
     /**
      * Run the database seeds.
      *
@@ -82,7 +82,7 @@ Royalcms 可以用 seed 类轻松地为数据库填充测试数据。所有的 s
             CommentsTableSeeder::class,
         ]);
     }
-
+```
 <a name="running-seeders"></a>
 ## 运行 Seeders
 
@@ -93,10 +93,12 @@ composer dump-autoload
 ```
 
 接着就可以使用 royalcms 命令 `db:seed` 来填充数据库了。默认情况下，`db:seed` 命令将运行 `DatabaseSeeder` 类，这个类可以用来调用其它 Seed 类。不过，你也可以使用 `--class` 选项来指定一个特定的 seeder 类：
-
+```
     php royalcms db:seed
     
     php royalcms db:seed --class=UsersTableSeeder
+```
 你也可以使用 `migrate:refresh` 命令来填充数据库，该命令会回滚并重新运行所有迁移。这个命令可以用来重建数据库：
-
+```
     php royalcms migrate:refresh --seed
+```

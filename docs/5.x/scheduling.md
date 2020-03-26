@@ -25,9 +25,9 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 
 使用调度器时，只需将以下 Cron 项目添加到服务器。如果你不知道如何将 Cron 项目添加到服务器，可以考虑使用“在线服务”来管理你的 Cron 项目：
 
-````
+```
 * * * * * php /path-to-your-project/royalcms schedule:run >> /dev/null 2>&1
-````
+```
 
 上面这个 Cron 会每分钟调用一次 Royalcms 命令调度器。执行 `schedule:run` 命令时， Royalcms 会根据你的调度运行预定任务。
 
@@ -36,7 +36,7 @@ Royalcms 的命令调度程序允许你在 Royalcms 中对命令调度进行清�
 
 你可以在 `App\Console\Kernel` 类的 `schedule` 方法中定义所有调度任务。在开始之前，先看看一个调度任务的例子。在该例子中，我们将计划在每天午夜调用一个 `Closure`。在这个 `Closure` 中，将执行一个数据库查询来清除一个表：
 
-````
+```
 <?php
 
 namespace App\Console;
@@ -69,7 +69,7 @@ class Kernel extends ConsoleKernel
         })->daily();
     }
 }
-````
+```
 
 <a name="scheduling-royalcms-commands"></a>
 
@@ -77,29 +77,29 @@ class Kernel extends ConsoleKernel
 
 除了计划 `Closure` 调用，你还能调度 [royalcms 命令](/docs/royalcms) 和操作系统命令。举个例子，你可以给 `command` 方法传递命令名称或者类名称来调度一个 `royalcms` 命令：
 
-````
+```
 $schedule->command('emails:send --force')->daily();
 
 $schedule->command(EmailsCommand::class, ['--force'])->daily();
-````
+```
 <a name="scheduling-queued-jobs"></a>
 
 ### 队列任务调度
 
 `job` 方法可以用来调度 [队列任务](/docs/queues)。这个方法提供了一种快捷方式来调度任务，无需使用 `call` 方法手动创建闭包来调度任务：
 
-````
+```
 $schedule->job(new Heartbeat)->everyFiveMinutes();
-````
+```
 
 <a name="scheduling-shell-commands"></a>
 ### Shell 命令调度
 
 `exec` 方法可用于向操作系统发出命令：
 
-````
+```
 $schedule->exec('node /home/forge/script.js')->daily();
-````
+```
 
 <a name="schedule-frequency-options"></a>
 ### 调度频率设置
@@ -128,7 +128,7 @@ $schedule->exec('node /home/forge/script.js')->daily();
 
 这些方法可以合并其它限制条件以生成更精确的调度。例如，计划每周周一的调度：
 
-````
+```
 // 每周一的下午一点钟运行
 $schedule->call(function () {
     //
@@ -140,7 +140,7 @@ $schedule->command('foo')
           ->hourly()
           ->timezone('America/Chicago')
           ->between('8:00', '17:00');
-````
+```
 
 以下是额外限制条件的列表：
 
@@ -161,37 +161,37 @@ $schedule->command('foo')
 
 `between` 方法可以用来限制一天中某个时间范围内的任务执行：
 
-````
+```
 $schedule->command('reminders:send')
     ->hourly()
     ->between('7:00', '22:00');
-````
+```
 
 类似的，`unlessBetween` 方法可以用来在一段时间内排除任务的执行：
 
-````
+```
 $schedule->command('reminders:send')
     ->hourly()
     ->unlessBetween('23:00', '4:00');
-````
+```
 
 #### 闭包测试限制
 
 `when` 方法可以用来根据给定的测试的结果来限制任务的执行。换句话说，如果给定的 `Closure` 返回 `true`，那么只要没有其他约束条件阻止任务运行，任务就会执行：
 
-````
+```
 $schedule->command('emails:send')->daily()->when(function () {
     return true;
 });
-````
+```
 
 `skip` 方法可以被看作是 `when` 的逆过程。如果 `skip` 方法返回 `true` 的话，那么任务将不会运行：
 
-````
+```
 $schedule->command('emails:send')->daily()->skip(function () {
     return true;
 });
-````
+```
 
 当链式调用多个 `when` 方法时，调度命令只有在所有的 `when` 条件返回 `true` 时才运行。
 
@@ -200,9 +200,9 @@ $schedule->command('emails:send')->daily()->skip(function () {
 
 默认情况，即便有相同的任务还在运行，调度内的任务依旧会被执行。为了避免这个问题，你可以使用  `withoutOverlapping` 方法：
 
-````
+```
 $schedule->command('emails:send')->withoutOverlapping();
-````
+```
 
 在上面这个例子中，如果没有其它 [royalcms 命令](/docs/royalcms)  `emails:send` 在运行的话，此任务将于每分钟被运行一次。如果你的任务在执行时间上有很大的不同，你无法准确预测给定任务需要多长时间，`withoutOverlapping` 方法将会特别有帮助。
 
@@ -211,37 +211,37 @@ $schedule->command('emails:send')->withoutOverlapping();
 
 当 Royalcms 处于维护模式时，Royalcms 的调度功能将不会生效。这是因为我们不想让任务调度干扰你服务器上可能还未完成的项目。然而，如果你想强制某个任务在维护模式下运行的话，你可以使用 `evenInMaintenanceMode` 方法：
 
-````
+```
 $schedule->command('emails:send')->evenInMaintenanceMode();
-````
+```
 
 <a name="task-output"></a>
 ## 任务输出
 
 Royalcms 调度器提供了几个方便的方法来处理调度任务生成的输出。首先，使用 `sendOutputTo` 方法可以将输出发送到单个文件上以便后续检查：
 
-````
+```
 $schedule->command('emails:send')
      ->daily()
      ->sendOutputTo($filePath);
-````
+```
 
 如果想将输出附加到指定的文件上，则可以使用 `appendOutputTo` 方法:
 
-````
+```
 $schedule->command('emails:send')
      ->daily()
      ->appendOutputTo($filePath);
-````
+```
 
 使用 `emailOutputTo` 方法，你可以通过电子邮件将输出发送到你所指定的邮箱上。在发送任务的输出之前，你应该先配置 Royalcms 的 [电子邮件服务](/docs/mail):
 
-````
+```
 $schedule->command('foo')
      ->daily()
      ->sendOutputTo($filePath)
      ->emailOutputTo('foo@example.com');
-````
+```
 
 > {note} `emailOutputTo`、`sendOutputTo` 和 `appendOutputTo` 方法是 `command` 方法才有的，不支持在 `call` 方法上使用。
 
@@ -250,7 +250,7 @@ $schedule->command('foo')
 
 通过 `before` 与 `after` 方法，你可以指定要在调度任务完成之前和之后执行的代码：
 
-````
+```
 $schedule->command('emails:send')
      ->daily()
      ->before(function () {
@@ -259,21 +259,21 @@ $schedule->command('emails:send')
      ->after(function () {
          // 任务完成…
      });
-````
+```
 
 #### Ping 网址
 
 使用 `pingBefore` 与 `thenPing` 方法，调度器可以在任务完成之前或之后自动 ping 给定的 URL。这个方法对于通知外部服务（例如 [Envoyer](https://envoyer.io)）你的调度任务正在开始或已经完成执行很有用：
 
-````
+```
 $schedule->command('emails:send')
      ->daily()
      ->pingBefore($url)
      ->thenPing($url);
-````
+```
 
 无论是使用 `pingBefore($url)` 还是 `thenPing($url)` 的功能，都需要 Guzzle HTTP 函数库的支持。你可以使用 `Composer` 将 Guzzle 函数库添加到你的项目中：
 
-````
+```
 composer require guzzlehttp/guzzle
-````
+```

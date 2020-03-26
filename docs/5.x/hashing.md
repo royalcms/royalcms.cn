@@ -14,7 +14,7 @@ Royalcms `Hash` Facade提供安全的 Bcrypt 哈希保存用户密码。 如果�
 ## 基本用法
 
 你可以通过调用 `Hash` Facade 的 `make` 方法来填写密码：
-
+```
     <?php
     
     namespace App\Http\Controllers;
@@ -40,7 +40,7 @@ Royalcms `Hash` Facade提供安全的 Bcrypt 哈希保存用户密码。 如果�
             ])->save();
         }
     }
-
+```
 `make` 方法还能使用 `rounds` 选项来管理 bcrypt 哈希算法的加密系数。然而，大多数应用程序还是能接受默认值的：
 
 ```
@@ -52,15 +52,16 @@ $hashed = Hash::make('password', [
 #### 根据哈希值验证密码
 
 `check` 方法可以验证给定的纯文本字符串对应于给定的散列。 如果使用 [Royalcms 内置的](/docs/authentication) `LoginController`，则不需要直接使用该方法，因为该控制器会自动调用此方法：
-
+```
     if (Hash::check('plain-text', $hashedPassword)) {
         // 密码对比...
     }
-
+```
 #### 检查密码是否需要重新加密
 
 `needsRehash` 函数允许你检查已加密的密码所使用的加密系数是否被修改：
-
+```
     if (Hash::needsRehash($hashed)) {
         $hashed = Hash::make('plain-text');
     }
+```

@@ -10,7 +10,7 @@
 ## 简介
 
 Royalcms 为 HTTP 请求的生成和输出的检查都提供了非常流畅的 API。例如，你可以查看下面的这个测试用例:
-
+```
     <?php
     
     namespace Tests\Feature;
@@ -34,14 +34,14 @@ Royalcms 为 HTTP 请求的生成和输出的检查都提供了非常流畅的 A
             $response->assertStatus(200);
         }
     }
-
+```
 `get` 方法会创建一个 `GET` 请求来请求你的应用，而 `assertStatus` 方法断言返回的响应是指定的 HTTP 状态码。除了这个简单的断言之外，Royalcms 也包含检查响应标头、内容、JSON 结构等各种断言。
 
 <a name="session-and-authentication"></a>
 ## Session / 认证
 
 Royalcms 提供了几个可在测试时使用 Session 的辅助函数。首先，你需要传递一个数组给 `withSession` 方法来设置 Seesion 数据。这让你在应用程序的测试请求发送之前，先给数据加载 Session 变得简单：
-
+```
     <?php
     
     class ExampleTest extends TestCase
@@ -52,9 +52,9 @@ Royalcms 提供了几个可在测试时使用 Session 的辅助函数。首先�
                              ->get('/');
         }
     }
-
+```
 当然，一般使用 Session 时都是用于维持用户的状态，如认证用户。`actingAs` 辅助函数提供了简单的方式来让指定的用户认证为当前的用户。例如，我们可以使用 [模型工厂](/docs/database-testing#writing-factories) 来生成并认证用户：
-
+```
     <?php
     
     use App\User;
@@ -70,16 +70,16 @@ Royalcms 提供了几个可在测试时使用 Session 的辅助函数。首先�
                              ->get('/');
         }
     }
-
+```
 你也可以通过传递 guard 名称作为 `actingAs` 的第二参数以指定用户通过哪种 guard 来认证:
-
+```
     $this->actingAs($user, 'api')
-
+```
 <a name="testing-json-apis"></a>
 ## Testing JSON APIs
 
 Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如，`json`，`get`，`post`，`put`，`patch` 和 `delete` 方法可以用于发出各种 HTTP 动作的请求。你也可以轻松的传入数据或标头到这些方法上。首先，让我们来编写一个测试，将一个 `POST` 请求发送至 `/user` ，并断言其会返回预期数据：
-
+```
     <?php
     
     class ExampleTest extends TestCase
@@ -100,14 +100,14 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
                 ]);
         }
     }
-
+```
 > {tip} `assertJson` 方法会将响应转换为数组并且利用 `PHPUnit::assertArraySubset` 方法来验证传入的数组是否在应用返回的 JSON 中。也就是说，即使有其它的属性存在于该 JSON 响应中，但是只要指定的片段存在，此测试仍然会通过。
 
 <a name="verifying-exact-match"></a>
 ### 验证完全匹配
 
 如果你想验证传入的数组是否与应用返回的 JSON **完全** 匹配，你可以使用 `assertExactJson` 方法：
-
+```
     <?php
     
     class ExampleTest extends TestCase
@@ -128,12 +128,12 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
                 ]);
         }
     }
-
+```
 <a name="testing-file-uploads"></a>
 ## 测试文件上传
 
 `Royalcms\Http\UploadedFile` 类提供了一个 `fake` 方法，可用其生成用于测试的模拟文件或图像。将其与 `Storage` facade 的 `fake` 方法结合使用，可极大地简化文件上传的测试。例如，你可以结合这两个功能轻松测试头像上传表单：
-
+```
     <?php
     
     namespace Tests\Feature;
@@ -162,17 +162,17 @@ Royalcms 也提供了几个辅助函数来测试 JSON APIs 及其响应。例如
             RC_Storage::disk('avatars')->assertMissing('missing.jpg');
         }
     }
-
+```
 #### 自定义模拟文件
 
 当使用 `fake` 方法创建文件时，你可以指定图片的宽度、高度和大小，以便更好地测试你的验证规则：
-
+```
     UploadedFile::fake()->image('avatar.jpg', $width, $height)->size(100);
-
+```
 除了创建图片，你还可以使用 `create` 方法创建任何其他类型的文件：
-
+```
     UploadedFile::fake()->create('document.pdf', $sizeInKilobytes);
-
+```
 <a name="available-assertions"></a>
 ## 可用的断言方法
 

@@ -13,12 +13,12 @@ Royalcms 可以轻松地保护应用程序免受 [跨站请求伪造](https://en
 Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。该令牌用于验证经过身份验证的用户是否是向应用程序发出请求的用户。
 
 任何情况下当你在应用程序中定义 HTML 表单时，都应该在表单中包含一个隐藏的 CSRF 令牌字段，以便 CSRF 保护中间件可以验证该请求。可以使用辅助函数 `csrf_field` 来生成令牌字段：
-
+```
     <form method="POST" action="/profile">
         {{ csrf_field() }}
         ...
     </form>
-
+```
 包含在 `web` 中间件组里的 `VerifyCsrfToken` [中间件](/docs/middleware)会自动验证请求里的令牌是否与存储在会话中令牌匹配。
 
 #### CSRF 令牌 & JavaScript
@@ -31,7 +31,7 @@ Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。
 有时候你可能希望设置一组并不需要 CSRF 保护的 URI。例如，如果你正在使用 [Stripe](https://stripe.com) 处理付款并使用了他们的 webhook 系统，你会需要从 CSRF 的保护中排除 Stripe Webhook 处理程序路由，因为 Stripe 并不会给你的路由发送 CSRF 令牌。
 
 你可以把这类路由放到 `routes/web.php` 外，因为 `RouteServiceProvider` 的 `web` 中间件适用于该文件中的所有路由。不过，你也可以通过将这类 URI 添加到 `VerifyCsrfToken` 中间件中的 `$except` 属性来排除对这类路由的 CSRF 保护：
-
+```
     <?php
     
     namespace App\Http\Middleware;
@@ -49,22 +49,22 @@ Royalcms 会自动为每个活跃用户的会话生成一个 CSRF「令牌」。
             'stripe/*',
         ];
     }
-
+```
 <a name="csrf-x-csrf-token"></a>
 ## X-CSRF-TOKEN
 
 除了检查 POST 参数中的 CSRF 令牌外，`VerifyCsrfToken` 中间件还会检查 `X-CSRF-TOKEN` 请求头。你可以将令牌保存在 HTML `meta` 标签中：
-
+```
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+```
 然后你就可以使用类似 jQuery 的库自动将令牌添加到所有请求的头信息中。这可以为基于 AJAX 的应用提供简单、方便的 CSRF 保护：
-
+```
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
+```
 > {tip} 默认情况下， `resources/assets/js/bootstrap.js` 文件会用 Axios HTTP 函数库注册 `csrf-token` meta 标签中的值。如果你不使用这个函数库，则需要为你的应用手动配置此行为。
 
 <a name="csrf-x-xsrf-token"></a>

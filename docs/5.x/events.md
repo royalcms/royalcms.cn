@@ -26,7 +26,7 @@ Royalcms 的事件提供了一个简单的观察者实现，能够订阅和监�
 
 Royalcms 应用中的 `EventServiceProvider` 有个 `listen` 数组包含所有的事件（键）以及事件对应的监听器（值）来注册所有的事件监听器，可以灵活地根据需求来添加事件。例如，让我们增加一个 `OrderShipped` 事件：
 
-````
+```
 /**
  * 应用程序的事件监听器映射。
  *
@@ -37,23 +37,23 @@ protected $listen = [
         'App\Listeners\SendShipmentNotification',
     ],
 ];
-````
+```
 
 <a name="generating-events-and-listeners"></a>
 ### 生成事件 & 监听器
 
 为每个事件和监听器手动创建文件是件很麻烦的事情，而在这里，你只需将监听器和事件添加到  `EventServiceProvider` 中，再使用 `event:generate` 命令即可。这个命令会生成在 `EventServiceProvider` 中列出的所有事件和监听器。当然，已经存在的事件和监听器将保持不变：
 
-````
+```
 php royalcms event:generate
-````
+```
 
 <a name="manually-registering-events"></a>
 ### 手动注册事件
 
 事件通常是在 `EventServiceProvider` 类的 `$listen` 数组中注册，但是，你也可以在 `EventServiceProvider` 类的 `boot` 方法中注册基于事件的闭包。
 
-````
+```
 /**
  * 注册应用程序中的任何其他事件。
  *
@@ -67,24 +67,24 @@ public function boot()
         //
     });
 }
-````
+```
 
 #### 通配符事件监听器
 
 你可以在注册监听器时使用 `*` 通配符参数，这样能够在同一个监听器上捕获多个事件。通配符监听器接受事件名称作为其第一个参数，并将整个事件数据数组作为其第二个参数：
 
-````
+```
 RC_Event::listen('event.*', function ($eventName, array $data) {
     //
 });
-````
+```
 
 <a name="defining-events"></a>
 ## 定义事件
 
 事件类其实就只是一个保存与事件相关的信息的数据容器。例如，假设我们生成的 `OrderShipped` 事件接收一个 [Eloquent ORM](/docs/{{version}}/eloquent) 对象：
 
-````
+```
 <?php
 
 namespace App\Events;
@@ -109,7 +109,7 @@ class OrderShipped
         $this->order = $order;
     }
 }
-````
+```
 
 正如你所见，这个事件类中没有包含其它逻辑。它只是一个被构建的 `Order` 对象的容器。如果使用 PHP 的 `serialize` 函数序列化事件对象，事件使用的 `SerializesModels` trait 将会优雅地序列化任何 Eloquent 模型。
 
@@ -118,7 +118,7 @@ class OrderShipped
 
 接下来，让我们看一下例子中事件的监听器。事件监听器在 `handle` 方法中接收事件实例。 `event:generate` 命令会自动加载正确的事件类和在 `handle` 加入的类型提示。在 `handle` 方法中，你可以执行任何必要的响应事件的操作：
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -148,7 +148,7 @@ class SendShipmentNotification
         // 使用 $event->order 来访问 order ...
     }
 }
-````
+```
 
 > {tip} 你的事件监听器也可以在构造函数中加入任何依赖关系的类型提示。所有的事件监听器都是通过 Royalcms 的服务容器来解析的，因此所有的依赖都将会被自动注入。
 
@@ -163,7 +163,7 @@ class SendShipmentNotification
 
 要指定监听器启动队列，只需将 `ShouldQueue` 接口添加到监听器类。由 royalcms 命令 `event:generate` 生成的监听器已经将此接口导入到当前命名空间中，因此你可以直接使用它：
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -175,7 +175,7 @@ class SendShipmentNotification implements ShouldQueue
 {
     //
 }
-````
+```
 
 当这个监听器被事件调用时，事件调度器会自动使用 Royalcms 的 [队列系统](/docs/{{version}}/queues)。如果在队列中执行监听器时没有抛出异常，任务会在执行完成后自动从队列中删除。
 
@@ -183,7 +183,7 @@ class SendShipmentNotification implements ShouldQueue
 
 如果你想要自定义事件监听器使用的队列的连接和名称，可以在监听器类中定义 `$connection` 和 `$queue` 属性。
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -207,14 +207,14 @@ class SendShipmentNotification implements ShouldQueue
      */
     public $queue = 'listeners';
 }
-````
+```
 
 <a name="manually-accessing-the-queue"></a>
 ### 手动访问队列
 
 如果你需要手动访问监听器下面队列任务的 `delete` 和 `release` 方法，你可以添加 `Royalcms\Component\Queue\InteractsWithQueue` trait 来实现。这个 trait 会默认加载到生成的监听器中，并提供对这些方法的访问：
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -239,14 +239,14 @@ class SendShipmentNotification implements ShouldQueue
             $this->release(30);
         }
 }
-````
+```
 
 <a name="handling-failed-jobs"></a>
 ### 处理失败任务
 
 事件监听器的队列任务可能会失败，而如果监听器的队列任务超过了队列中定义的最大尝试次数，则会监听器上调用 `failed` 方法。`failed` 方法接受接收事件实例和导致失败的异常作为参数：
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -282,14 +282,14 @@ class SendShipmentNotification implements ShouldQueue
         //
     }
 }
-````
+```
 
 <a name="dispatching-events"></a>
 ## 分发事件
 
 如果要分发事件，你可以将事件实例传递给辅助函数 `event`。这个函数将会把事件分发到所有已经注册的监听器上。因为辅助函数 `event` 是全局可访问的，所以你可以在应用中的任何地方调用它：
 
-````
+```
 <?php
 
 namespace App\Http\Controllers;
@@ -315,7 +315,7 @@ class OrderController extends Controller
         event(new OrderShipped($order));
     }
 }
-````
+```
 
 > {tip} 在测试时，Royalcms [内置的测试辅助函数](/docs/mocking#mocking-events) 能不需要实际触发监听器就能对事件类型断言。
 
@@ -327,7 +327,7 @@ class OrderController extends Controller
 
 事件订阅者是一个可以在自身内部订阅多个事件的类，即能够在单个类中定义多个事件处理器。订阅者应该定义一个 `subscribe` 方法，这个方法接受一个事件分发器的实例。你可以调用给定的事件分发器上的 `listen` 方法来注册事件监听器：
 
-````
+```
 <?php
 
 namespace App\Listeners;
@@ -363,14 +363,14 @@ class UserEventSubscriber
     }
 
 }
-````
+```
 
 <a name="registering-event-subscribers"></a>
 ### 注册事件订阅者
 
 订阅者写好后，就将其注册到事件分发器中。你可以在 `EventServiceProvider` 类的 `$subscribe` 属性中注册订阅者。例如，将 `UserEventSubscriber` 添加到数组列表中：
 
-````
+```
 <?php
 
 namespace App\Providers;
@@ -397,4 +397,4 @@ class EventServiceProvider extends ServiceProvider
         'App\Listeners\UserEventSubscriber',
     ];
 }
-````
+```
