@@ -282,7 +282,7 @@ Royalcms 核心组件最新版是对接的Laravel 7.x版本的，以下基于Lar
 - royalcms/memcache
 - royalcms/model
 - royalcms/native-session
-- royalcms/pacage
+- royalcms/package
 - royalcms/page
 - royalcms/pay
 - royalcms/pinyin
