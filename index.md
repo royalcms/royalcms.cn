@@ -218,7 +218,7 @@ Royalcms框架是由一个具有多年行业开发经验的iOS工程师设计、
 
 ## ROYALCMS 核心组件
 
-Royalcms 核心组件最新版是对接的Laravel 7.x版本的，以下基于Laravel组件的包装是为了兼容Royalcms框架之前的所有资源。
+Royalcms 核心组件最新版是对接的 `Laravel 7.x` 版本的，以下基于Laravel组件的包装是为了兼容Royalcms框架之前的所有资源。
 
 - royalcms/auth（[laravel/auth](https://learnku.com/docs/laravel/7.x/authentication/7474)）
 - royalcms/broadcasting（[laravel/broadcasting](https://learnku.com/docs/laravel/7.x/broadcasting/7481)）
